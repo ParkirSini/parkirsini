@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Controller = require("../controllers/index");
+const reviewRouter = require('./reviewRouter')
 const ControllerImage = require("../controllers/ImageUpload");
 const multer = require('multer')
 const { storage, cloudinary } = require("../cloudinary")
@@ -15,6 +16,7 @@ router
    .use("/owner", landlordRouter)
    .use(errorHandler);
 router.get("/", Controller.home);
+router.use('/review', reviewRouter)
 router.use("/pub", customerRouter)
 router.use("/owner", landlordRouter)
 router.use(errorHandler);
