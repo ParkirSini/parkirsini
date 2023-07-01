@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const Auth = require("../controllers/admin-auth");
 const Admin = require("../controllers/admin");
-const { adminAuthentication } = require("../middlewares/authentication");
+const { authenticationAdmin } = require("../middlewares/authentication");
 
 router.post("/login", Auth.login);
 router.post("/register", Auth.register);
 
-router.use(adminAuthentication);
+router.use(authenticationAdmin);
 
 router.get("/parking-space", Admin.fetchParkingSpace);
 router.post("/parking-space", Admin.createParkingSpace);
