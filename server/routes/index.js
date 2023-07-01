@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Controller = require("../controllers/index");
+const adminRouter = require("./adminRouter");
 const reviewRouter = require('./reviewRouter')
 const ControllerImage = require("../controllers/ImageUpload");
 const multer = require('multer')
@@ -19,6 +20,7 @@ router.get("/", Controller.home);
 router.use('/review', reviewRouter)
 router.use("/pub", customerRouter)
 router.use("/owner", landlordRouter)
-router.use(errorHandler);
+router.use("/admin", adminRouter)
+router.use(errorHandler)
 
-module.exports = router;
+module.exports = router
