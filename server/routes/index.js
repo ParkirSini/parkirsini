@@ -14,5 +14,9 @@ router
    .use("/pub", customerRouter)
    .use("/owner", landlordRouter)
    .use(errorHandler);
+router.get("/", Controller.home);
+router.use("/pub", customerRouter)
+router.use("/owner", landlordRouter)
+router.use(errorHandler);
 
 module.exports = router;
