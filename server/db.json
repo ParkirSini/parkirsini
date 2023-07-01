@@ -1,0 +1,108 @@
+{
+    "facilities": [
+      {
+        "name": "Facility 1"
+      },
+      {
+        "name": "Facility 2"
+      }
+    ],
+    "landlords": [
+      {
+        "id": 1,
+        "email": "landlord1@example.com",
+        "password": "password1",
+        "username": "landlord1",
+        "phoneNumber": "1234567890",
+        "address": "Address 1",
+        "amount": 1000
+      },
+      {
+        "id": 2,
+        "email": "landlord2@example.com",
+        "password": "password2",
+        "username": "landlord2",
+        "phoneNumber": "9876543210",
+        "address": "Address 2",
+        "amount": 2000
+      }
+    ],
+    "parkingSpaces": [
+      {
+        "landlordId": 1,
+        "stock": 10,
+        "mapLong": "123.456",
+        "mapLat": "78.90",
+        "name": "Parking Space 1",
+        "subtitle": "Subtitle 1",
+        "description": "Description 1",
+        "city": "City 1"
+      },
+      {
+        "landlordId": 2,
+        "stock": 5,
+        "mapLong": "45.678",
+        "mapLat": "12.34",
+        "name": "Parking Space 2",
+        "subtitle": "Subtitle 2",
+        "description": "Description 2",
+        "city": "City 2"
+      }
+    ],
+    "facilityParking": [
+      {
+        "facilityId": 1,
+        "parkingSpaceId": 1
+      },
+      {
+        "facilityId": 2,
+        "parkingSpaceId": 2
+      }
+    ],
+    "customers": [
+      {
+        "email": "customer1@example.com",
+        "password": "password3",
+        "username": "customer1",
+        "phoneNumber": "1234567890",
+        "address": "Address 1"
+      },
+      {
+        "email": "customer2@example.com",
+        "password": "password4",
+        "username": "customer2",
+        "phoneNumber": "9876543210",
+        "address": "Address 2"
+      }
+    ],
+    "bookings": [
+      {
+        "parkingSpaceId": 1,
+        "customerId": 1,
+        "paid": true,
+        "price": 100,
+        "duration": 2
+      },
+      {
+        "parkingSpaceId": 2,
+        "customerId": 2,
+        "paid": true,
+        "price": 150,
+        "duration": 3
+      }
+    ],
+    "parkingSpaceReviews": [
+      {
+        "parkingSpaceId": 1,
+        "customerId": 1,
+        "rating": 4,
+        "review": "Good parking space"
+      },
+      {
+        "parkingSpaceId": 2,
+        "customerId": 2,
+        "rating": 5,
+        "review": "Excellent parking space"
+      }
+    ]
+  }

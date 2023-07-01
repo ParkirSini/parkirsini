@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     //     },
     //   }
     // },
-    stock: {
+    stock:{
       allowNull: false,
       type: DataTypes.INTEGER,
       validate: {
