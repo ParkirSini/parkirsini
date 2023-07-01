@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     stock:{
       allowNull: false,
-      type: DataTypes.Integer,
+      type: DataTypes.INTEGER,
       validate: {
         notNull: {
           msg: "Stock is required"
