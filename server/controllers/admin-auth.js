@@ -1,5 +1,6 @@
 const { Landlord } = require("../models");
 const { compareHash } = require("../helpers/bcrypt");
+const { createToken } = require("../helpers/jwt");
 
 async function processLogin(email, password) {
   const findUser = await Landlord.findOne({
@@ -10,9 +11,10 @@ async function processLogin(email, password) {
   if (!findUser) throw { name: "DataNotFound" };
   const checkPassword = compareHash(password, findUser.password);
   if (!checkPassword) throw { name: "InvalidUser" };
-  const access_token = encodeToken({
+  const access_token = createToken({
     id: findUser.id,
     email: findUser.email,
+    role: findUser.role,
   });
 
   return access_token;
