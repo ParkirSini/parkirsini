@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class Landlord extends Model {
     /**
@@ -11,81 +10,101 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Landlord.hasMany(models.ParkingSpace, { foreignKey: 'landlordId' });
+      Landlord.hasMany(models.ParkingSpace, { foreignKey: "landlordId" });
     }
   }
-  Landlord.init({
-    email: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      unique:{
-        args:true,
-        msg: "Email must be unique"
+  Landlord.init(
+    {
+      email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: {
+          args: true,
+          msg: "Email must be unique",
+        },
+        validate: {
+          notNull: {
+            msg: "Email is required",
+          },
+          notEmpty: {
+            msg: "Email is required",
+          },
+          isEmail: {
+            msg: "Format must be Email",
+          },
+        },
       },
-      validate: {
-        notNull: {
-          msg: "Email is required"
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Password is required",
+          },
+          notEmpty: {
+            msg: "Password is required",
+          },
         },
-        notEmpty: {
-          msg: "Email is required"
+      },
+      username: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Username is required",
+          },
+          notEmpty: {
+            msg: "Username is required",
+          },
         },
-        isEmail: {
-          msg: "Format must be Email"
+      },
+      role: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Role is required",
+          },
+          notEmpty: {
+            msg: "Role is required",
+          },
         },
-      }
+      },
+      phoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Phone Number is required",
+          },
+          notEmpty: {
+            msg: "Phone Number is required",
+          },
+        },
+      },
+      address: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "Address is required",
+          },
+          notEmpty: {
+            msg: "Address is required",
+          },
+        },
+      },
+      amount: DataTypes.INTEGER,
     },
-    password:{
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: "Password is required"
+    {
+      hooks: {
+        beforeCreate(user) {
+          user.password = hashPassword(user.password);
         },
-        notEmpty: {
-          msg: "Password is required"
-        }
-      }
-    },
-    username: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: "Username is required"
-        },
-        notEmpty: {
-          msg: "Username is required"
-        },
-      }
-    },
-    phoneNumber: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: "Phone Number is required"
-        },
-        notEmpty: {
-          msg: "Phone Number is required"
-        },
-      }
-    },
-    address:  {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: "Address is required"
-        },
-        notEmpty: {
-          msg: "Address is required"
-        },
-      }
-    },
-    amount: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Landlord',
-  });
+      },
+      sequelize,
+      modelName: "Landlord",
+    }
+  );
   return Landlord;
 };
