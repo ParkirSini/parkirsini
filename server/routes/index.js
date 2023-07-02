@@ -10,6 +10,7 @@ const adminRouter = require("./adminRouter");
 const reviewRouter = require("./reviewRouter");
 const customerRouter = require("./customer");
 const landlordRouter = require("./landlord");
+const bookingRouter = require("./createBooking")
 
 router
   .get("/", Controller.home)
@@ -18,6 +19,7 @@ router
   .use("/pub", customerRouter)
   .use("/owner", landlordRouter)
   .use("/admin", adminRouter)
+  .use("/booking", bookingRouter)
   .use(errorHandler);
 
 module.exports = router;
