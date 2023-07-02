@@ -31,7 +31,7 @@ async function authenticationCustomer(req, res, next) {
     let customer = await Customer.findByPk(payload.id);
     if (!customer) throw { name: "Unauthenticated" };
 
-    req.customer = {
+    req.user = {
       id: customer.id,
     };
 
@@ -52,7 +52,7 @@ async function authenticationLandlord(req, res, next) {
     let landlord = await Landlord.findByPk(payload.id);
     if (!landlord) throw { name: "Unauthenticated" };
 
-    req.landlord = {
+    req.user = {
       id: landlord.id,
     };
 
