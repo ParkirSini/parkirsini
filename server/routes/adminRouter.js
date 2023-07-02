@@ -11,7 +11,7 @@ router.use(authenticationAdmin);
 router.get("/parking-space", Admin.fetchParkingSpace);
 router.get("/parking-space/:id", Admin.fetchParkingSpaceDetail);
 router.post("/parking-space", Admin.createParkingSpace);
-router.put("/parking-space", Admin.editParkingSpace);
+router.put("/parking-space/:id", Admin.editParkingSpace);
 router.delete("/parking-space/:id", Admin.deleteParkingSpace);
 
 router.get("/parking-space-image", Admin.fetchParkingSpaceImages);

@@ -8,6 +8,7 @@ class Admin {
           { model: Landlord, attributes: { exclude: ["password"] } },
           { model: ParkingSpaceImage },
         ],
+        order: [["id", "ASC"]],
       });
       res.json(data);
     } catch (error) {
@@ -61,23 +62,28 @@ class Admin {
 
   static async editParkingSpace(req, res, next) {
     try {
+      const id = req.params.id;
       const { stock, name, subtitle, description, city } = req.body;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
 
-      const updateSpace = await ParkingSpace.update({
-        stock,
-        mapLong,
-        mapLat,
-        name,
-        subtitle,
-        description,
-        city,
-      });
-      res
-        .status(201)
-        .json({ message: "Update parking space success", data: updateSpace });
+      await ParkingSpace.update(
+        {
+          stock,
+          mapLong,
+          mapLat,
+          name,
+          subtitle,
+          description,
+          city,
+        },
+        {
+          where: { id },
+        }
+      );
+      res.status(201).json({ message: "Update parking space success" });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -95,7 +101,7 @@ class Admin {
   //PARKING SPACE IMAGE
   static async fetchParkingSpaceImages(req, res, next) {
     try {
-      const data = await ParkingSpaceImage.findAll();
+      const data = await ParkingSpaceImage.findAll({ order: [["id", "ASC"]] });
       res.json(data);
     } catch (error) {
       next(error);
