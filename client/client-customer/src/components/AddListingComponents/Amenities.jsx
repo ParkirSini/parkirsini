@@ -5,27 +5,27 @@ const Amenities = () => {
     <div>
       <div className="listing-title">
         <span className="ti-gift"></span>
-        <h4>Amenities</h4>
-        <p>Write Something General Information About Your Listing</p>
+        <h4>Fasilitas</h4>
+        <p>Pilih lebih dari satu fasilitas apa saja yang tersedia</p>
       </div>
 
       <div className="row">
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i1" type="checkbox" />
-            <label htmlFor="i1">Alarm system</label>
+            <label htmlFor="i1">Tenaga keamanan 24 jam</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i2" type="checkbox" />
-            <label htmlFor="i2">Laundry room in building</label>
+            <label htmlFor="i2">Wifi gratis</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i3" type="checkbox" />
-            <label htmlFor="i3">Elevator</label>
+            <label htmlFor="i3">Atap tertutup</label>
           </div>
         </div>
       </div>
@@ -34,19 +34,19 @@ const Amenities = () => {
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i4" type="checkbox" />
-            <label htmlFor="i4">Depanneur in building</label>
+            <label htmlFor="i4">Atap terbuka</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i5" type="checkbox" />
-            <label htmlFor="i5">Door attendant</label>
+            <label htmlFor="i5">No smoking</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i6" type="checkbox" />
-            <label htmlFor="i6">Wheelchair accessible</label>
+            <label htmlFor="i6">Lantai semen atau lebih baik</label>
           </div>
         </div>
       </div>
@@ -55,19 +55,19 @@ const Amenities = () => {
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i7" type="checkbox" />
-            <label htmlFor="i7">Onsite management</label>
+            <label htmlFor="i7">Lantai tanah</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i8" type="checkbox" />
-            <label htmlFor="i8">Street parking</label>
+            <label htmlFor="i8">Menjual minuman/makanan</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i9" type="checkbox" />
-            <label htmlFor="i9">Heating</label>
+            <label htmlFor="i9">Rantai penghalang per 1 mobil</label>
           </div>
         </div>
       </div>
@@ -76,40 +76,19 @@ const Amenities = () => {
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i11" type="checkbox" />
-            <label htmlFor="i11">Janitor</label>
+            <label htmlFor="i11">Terdapat pagar dan gerbang</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i12" type="checkbox" />
-            <label htmlFor="i12">Intercom</label>
+            <label htmlFor="i12">Lokasi bebas banjir</label>
           </div>
         </div>
         <div className="col-md-4 responsive-wrap">
           <div className="md-checkbox">
             <input id="i13" type="checkbox" />
-            <label htmlFor="i13">Hot water</label>
-          </div>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="col-md-4 responsive-wrap">
-          <div className="md-checkbox">
-            <input id="i14" type="checkbox" />
-            <label htmlFor="i14">Security cameras</label>
-          </div>
-        </div>
-        <div className="col-md-4 responsive-wrap">
-          <div className="md-checkbox">
-            <input id="i15" type="checkbox" />
-            <label htmlFor="i15">Attached garage</label>
-          </div>
-        </div>
-        <div className="col-md-4 responsive-wrap">
-          <div className="md-checkbox">
-            <input id="i16" type="checkbox" />
-            <label htmlFor="i16">Electricity</label>
+            <label htmlFor="i13">Jasa tambahan cuci mobil</label>
           </div>
         </div>
       </div>

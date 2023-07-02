@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const AddListing = () => {
   return (
@@ -10,9 +11,11 @@ const AddListing = () => {
               <h2>Jangkau Jutaan Orang</h2>
               <p>Bila punya lahan yang dapat disewakan, jadikan sebagai penghasilan tambahanmu</p>
             </div>
-            <div className="btn-wrap btn-wrap2">
-              <a href="add-listing.html" className="btn btn-simple">Daftarkan lahan parkir →</a>
-            </div>
+            <Link to="/add-listing">
+              <div className="btn-wrap btn-wrap2">
+                <a className="btn btn-simple" style={{ color: 'white' }}>Daftarkan lahan parkir →</a>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

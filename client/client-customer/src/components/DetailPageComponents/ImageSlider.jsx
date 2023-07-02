@@ -6,6 +6,8 @@ import '../../assets/css/swiper.min.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from "react-redux";
+import MapComponent from "../MapComponent.jsx";
 
 const CustomPrevArrow = ({ onClick }) => (
   <button type="button" className="custom-prev-arrow btn btn-link" onClick={onClick}>
@@ -20,6 +22,8 @@ const CustomNextArrow = ({ onClick }) => (
 );
 
 const ImageSlider = () => {
+  const parkingSpace = useSelector(state => state.detail.detail)
+
   const handlePrevArrowClick = () => {
     sliderRef.slickPrev();
   };
@@ -43,7 +47,12 @@ const ImageSlider = () => {
     }
   };
 
+  if (!parkingSpace || !parkingSpace.images || parkingSpace.images.length === 0) {
+    return null; // Return null or a placeholder if data is not available
+  }
+
   return (
+    <>
     <div style={{ maxWidth: '600px', margin: '0 auto' }}>
       <div className="image-slider-container">
         <Slider ref={slider => (sliderRef = slider)} {...settings}>
@@ -78,6 +87,29 @@ const ImageSlider = () => {
         <CustomNextArrow onClick={handleNextArrowClick} />
       </div>
     </div>
+
+    <h1>di bawah ini pakai redux json-server</h1>
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div className="image-slider-container">
+          <Slider ref={slider => (sliderRef = slider)} {...settings}>
+            {parkingSpace.images.map((image, index) => (
+              <div key={index}>
+                <div className="image-slide">
+                  <img src={image.imgUrl} alt="#" />
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+        {/*<MapComponent latitude={parkingSpace.mapLat} longitude={parkingSpace.mapLong} />*/}
+        {/*{parkingSpace.mapLat}*/}
+        {/*{parkingSpace.mapLong}*/}
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <CustomPrevArrow onClick={handlePrevArrowClick} />
+          <CustomNextArrow onClick={handleNextArrowClick} />
+        </div>
+      </div>
+    </>
   );
 };
 

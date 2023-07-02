@@ -15,11 +15,11 @@ const GeneralInformation = () => {
   return (
     <div className="listing-title">
       <h4>General Information</h4>
-      <p>Write Something General Information About Your Listing</p>
+      <p>Data lahan parkir yang akan disewakan</p>
       <div className="row">
         <div className="col-md-6">
           <div className="form-group">
-            <label>Nama Tempat</label>
+            <label>Nama Tempat Parkir</label>
             <input type="text" className="form-control add-listing_form" value={namaTempat} onChange={handleNamaTempatChange} />
           </div>
         </div>
