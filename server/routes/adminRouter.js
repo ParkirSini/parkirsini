@@ -16,5 +16,7 @@ router.delete("/parking-space/:id", Admin.deleteParkingSpace);
 
 router.get("/parking-space-image", Admin.fetchParkingSpaceImages);
 router.get("/parking-space-image/:id", Admin.fetchOneParkingSpaceImage);
+router.post("/parking-space-image/:id", Admin.uploadParkingSpaceImage);
+router.delete("/parking-space-image/:id", Admin.deleteParkingSpaceImage);
 
 module.exports = router;

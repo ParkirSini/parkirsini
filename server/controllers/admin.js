@@ -117,26 +117,30 @@ class Admin {
     }
   }
 
-  static async createParkingSpaceImage(req, res, next) {
+  static async uploadParkingSpaceImage(req, res, next) {
     try {
-      const { stock, name, subtitle, description, city } = req.body;
-      const landlordId = req.user.id;
-      const mapLong = req.body.mapLong || 0;
-      const mapLat = req.body.mapLat || 0;
+      const parkingSpaceId = req.params.id;
+      const { imgUrl } = req.body;
 
-      const newSpace = await ParkingSpace.create({
-        landlordId,
-        stock,
-        mapLong,
-        mapLat,
-        name,
-        subtitle,
-        description,
-        city,
+      const newImage = await ParkingSpaceImage.create({
+        parkingSpaceId,
+        imgUrl,
       });
-      res
-        .status(201)
-        .json({ message: "Create parking space success", data: newSpace });
+      res.status(201).json({
+        message: `Added new image for Parking Space ${parkingSpaceId}`,
+        data: newImage,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteParkingSpaceImage(req, res, next) {
+    try {
+      const id = req.params.id;
+
+      const newImage = await ParkingSpaceImage.destroy({ where: { id } });
+      res.status(201).json({ message: "Parking space image deleted" });
     } catch (error) {
       next(error);
     }
