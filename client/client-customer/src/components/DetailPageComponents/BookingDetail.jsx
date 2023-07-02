@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import ImageSlider from "./ImageSlider.jsx";
+import MapComponent from "../MapComponent.jsx";
 
 const BookingDetail = () => {
+  const parkingSpace = useSelector(state => state.detail.detail);
+
   return (
+    <>
     <section className="gray-dark booking-details_wrap">
       <div className="container">
         <div className="row">
@@ -176,6 +181,85 @@ const BookingDetail = () => {
         </div>
       </div>
     </section>
+
+      <h1>di bawah ini pakai redux json-server</h1>
+      <section className="gray-dark booking-details_wrap">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 responsive-wrap">
+              <div className="booking-checkbox_wrap">
+
+                <ImageSlider parkingSpace={parkingSpace} />
+
+                <div className="booking-checkbox">
+                  <p>{parkingSpace.description}</p>
+                  <hr />
+                </div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <label className="custom-checkbox">
+                      <span className="ti-check-box"></span>
+                      <span className="custom-control-description">Keamanan 24 Jam</span>
+                    </label>
+                    <label className="custom-checkbox">
+                      <span className="ti-check-box"></span>
+                      <span className="custom-control-description">Wireless Internet</span>
+                    </label>
+                  </div>
+                  <div className="col-md-4">
+                    <label className="custom-checkbox">
+                      <span className="ti-check-box"></span>
+                      <span className="custom-control-description">Atap Tertutup</span>
+                    </label>
+                    <label className="custom-checkbox">
+                      <span className="ti-check-box"></span>
+                      <span className="custom-control-description">No Smoking</span>
+                    </label>
+                  </div>
+                  <div className="col-md-4">
+                    <label className="custom-checkbox">
+                      <span className="ti-check-box"></span>
+                      <span className="custom-control-description">Lantai Plestered</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div className="col-md-4 responsive-wrap">
+              <div className="contact-info">
+                <MapComponent latitude={parkingSpace.mapLong} longitude={parkingSpace.mapLat} />
+                {/*{parkingSpace.mapLat}*/}
+                {/*{parkingSpace.mapLong}*/}
+                <div className="address">
+                  <span className="icon-location-pin"></span>
+                  <p>{parkingSpace.city}</p>
+                </div>
+                <div className="address">
+                  <span className="icon-screen-smartphone"></span>
+                  <p> +44 20 7336 8898</p>
+                </div>
+                <div className="address">
+                  <span className="icon-clock"></span>
+                  <p>Senin - Minggu</p>
+                  <p>00:00 am - 23:59 pm </p>
+                  <a href="#" className="featured-open">OPEN NOW</a>
+                </div>
+                <a href="#" className="btn btn-outline-danger btn-contact">SEND A MESSAGE</a>
+              </div>
+              <div className="follow">
+                <div className="follow-img">
+                  <img src="images/follow-img.jpg" className="img-fluid" alt="#" />
+                  <h6>Christian Sugiono</h6>
+                  <span>Jakarta</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </>
   );
 };
 
