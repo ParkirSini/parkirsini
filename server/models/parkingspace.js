@@ -20,18 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   ParkingSpace.init({
     landlordId: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   type: DataTypes.INTEGER,
-    //   validate: {
-    //     notNull: {
-    //       msg: "Landlord is required"
-    //     },
-    //     notEmpty: {
-    //       msg: "Landlord is required"
-    //     },
-    //   }
-    // },
-    stock:{
+    stock: {
       allowNull: false,
       type: DataTypes.INTEGER,
       validate: {
@@ -101,6 +90,30 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "City is required"
+        },
+      }
+    },
+    price: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          msg: "price is required"
+        },
+        notEmpty: {
+          msg: "price is required"
+        },
+      }
+    },
+    mainImg: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "mainImg is required"
+        },
+        notEmpty: {
+          msg: "mainImg is required"
         },
       }
     },

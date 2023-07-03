@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore} from 'redux';
+import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import mainReducer from "./reducers/mainReducer.js";
 // import logger from "./middlewares/logger.js";
 import thunk from "redux-thunk";

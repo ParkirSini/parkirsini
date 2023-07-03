@@ -8,6 +8,7 @@ const upload = multer({ storage })
 const errorHandler = require("../middlewares/errorHandler");
 const customerRouter = require("./customer")
 const landlordRouter = require("./landlord")
+const parkingSpaceRouter = require('./parkingSpaceRouter');
 
 router
    .get("/", Controller.home)
@@ -19,6 +20,8 @@ router.get("/", Controller.home);
 router.use('/review', reviewRouter)
 router.use("/pub", customerRouter)
 router.use("/owner", landlordRouter)
+router.use(parkingSpaceRouter)
+
 router.use(errorHandler);
 
 module.exports = router;

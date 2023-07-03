@@ -1,17 +1,18 @@
-import React from 'react';
+import React from "react";
 
-const Reserve = () => {
+const Reserve = ({ park }) => {
   return (
     <section className="reserve-block">
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <h5>Dukom Car Park</h5>
+            <h5>{park.name}</h5>
             <p>
-              <span>$$$$$</span>
+              <span>{park.price}</span>
             </p>
             <p className="reserve-description">
-              Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.
+              Tempat paling aman dan bersih, sudah pakai eskalator mobil guys!
+              Mobil bagusmu akan merasa nyaman di sini.
             </p>
           </div>
           <div className="col-md-6">
@@ -34,4 +35,4 @@ const Reserve = () => {
   );
 };
 
-export default Reserve
+export default Reserve;
