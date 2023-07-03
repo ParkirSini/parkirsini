@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       ParkingSpaceReview.belongsTo(models.ParkingSpace, { foreignKey: 'parkingSpaceId' });
+      ParkingSpaceReview.belongsTo(models.Customer, { foreignKey: 'customerId' });
+
     }
   }
   ParkingSpaceReview.init({

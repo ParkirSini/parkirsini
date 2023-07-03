@@ -14,14 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Customer.hasMany(models.Booking, { foreignKey: 'customerId' });
       Customer.hasMany(models.ParkingSpaceReview, { foreignKey: 'customerId' });
+      // Customer.hasOne(models.)
     }
   }
   Customer.init({
     email: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique:{
-        args:true,
+      unique: {
+        args: true,
         msg: "Email must be unique"
       },
       validate: {
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    password:{
+    password: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
@@ -63,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: {
       type: DataTypes.STRING,
     },
-    address:  {
+    address: {
       type: DataTypes.STRING,
     },
   }, {
@@ -74,6 +75,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Customer.beforeCreate((customer, options) => {
     customer.password = hashPassword(customer.password)
-  }) 
+  })
   return Customer;
 };
