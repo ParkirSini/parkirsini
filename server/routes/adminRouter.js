@@ -11,6 +11,7 @@ router.use(authenticationAdmin);
 router.get("/parking-space", Admin.fetchParkingSpace);
 router.get("/parking-space/:id", Admin.fetchParkingSpaceDetail);
 router.post("/parking-space", Admin.createParkingSpace);
+router.post("/parking-space-transaction", Admin.createParkingSpaceTransaction);
 router.put("/parking-space/:id", Admin.editParkingSpace);
 router.delete("/parking-space/:id", Admin.deleteParkingSpace);
 
