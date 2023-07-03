@@ -1,4 +1,9 @@
-const { ParkingSpace, ParkingSpaceImage, Landlord } = require("../models");
+const {
+  ParkingSpace,
+  ParkingSpaceImage,
+  Landlord,
+  sequelize,
+} = require("../models");
 class Admin {
   //PARKING SPACE
   static async fetchParkingSpace(req, res, next) {
@@ -37,7 +42,8 @@ class Admin {
 
   static async createParkingSpace(req, res, next) {
     try {
-      const { stock, name, subtitle, description, city } = req.body;
+      const { stock, name, subtitle, description, city, price, mainImg } =
+        req.body;
       const landlordId = req.user.id;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
@@ -51,6 +57,8 @@ class Admin {
         subtitle,
         description,
         city,
+        price,
+        mainImg,
       });
       res
         .status(201)
@@ -60,12 +68,71 @@ class Admin {
     }
   }
 
+  static async createParkingSpaceTransaction(req, res, next) {
+    const transaction = await sequelize.transaction();
+    try {
+      const {
+        stock,
+        name,
+        subtitle,
+        description,
+        city,
+        price,
+        mainImg,
+        images,
+      } = req.body;
+      const landlordId = req.user.id;
+      const mapLong = req.body.mapLong || 0;
+      const mapLat = req.body.mapLat || 0;
+
+      const newSpace = await ParkingSpace.create(
+        {
+          landlordId,
+          stock,
+          mapLong,
+          mapLat,
+          name,
+          subtitle,
+          description,
+          city,
+          price,
+          mainImg,
+        },
+        { transaction }
+      );
+
+      const imagePromises = images.map(async (imgUrl) => {
+        await ParkingSpaceImage.create(
+          {
+            parkingSpaceId: newSpace.id,
+            imgUrl,
+          },
+          { transaction }
+        );
+      });
+
+      await Promise.all(imagePromises);
+      await transaction.commit();
+
+      res
+        .status(201)
+        .json({ message: "Create parking space success", data: newSpace });
+    } catch (error) {
+      await transaction.rollback();
+      next(error);
+    }
+  }
+
   static async editParkingSpace(req, res, next) {
     try {
       const id = req.params.id;
-      const { stock, name, subtitle, description, city } = req.body;
+      const { stock, name, subtitle, description, city, price, mainImg } =
+        req.body;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
+
+      const checkData = await ParkingSpace.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
 
       await ParkingSpace.update(
         {
@@ -76,6 +143,8 @@ class Admin {
           subtitle,
           description,
           city,
+          price,
+          mainImg,
         },
         {
           where: { id },
@@ -91,6 +160,10 @@ class Admin {
   static async deleteParkingSpace(req, res, next) {
     try {
       const id = req.params.id;
+
+      const checkData = await ParkingSpace.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
+
       await ParkingSpace.destroy({ where: { id } });
       res.status(201).json({ message: "Parking Space Deleted" });
     } catch (error) {
@@ -144,6 +217,9 @@ class Admin {
   static async deleteParkingSpaceImage(req, res, next) {
     try {
       const id = req.params.id;
+
+      const checkData = await ParkingSpaceImage.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
 
       const newImage = await ParkingSpaceImage.destroy({ where: { id } });
       res.status(201).json({ message: "Parking space image deleted" });

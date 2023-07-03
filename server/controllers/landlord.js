@@ -1,6 +1,6 @@
 const { compareHash } = require("../helpers/bcrypt");
 const { createToken, verifyToken } = require("../helpers/jwt");
-const { Landlord } = require("../models");
+const { Landlord, ParkingSpace, Booking, ParkingSpaceReview, FacilityParking } = require("../models");
 
 class landlordController {
     static async register(req, res, next) {
@@ -39,6 +39,43 @@ class landlordController {
             next(error);
         }
     }
+
+    static async fetchParkingSpacesByLandlord(req, res, next) {
+        try {
+            const LandlordId = req.user.id;
+            console.log(LandlordId);
+            const parkingSpace = await ParkingSpace.findOne({
+                where: { landlordId: LandlordId },
+                include: [
+                    {
+                        model: Landlord,
+                        attributes: { exclude: ['password'] },
+                    },
+                    {
+                        model: FacilityParking,
+                    },
+                    {
+                        model: Booking,
+                    },
+                    {
+                        model: ParkingSpaceReview,
+                    },
+                ],
+            });
+
+            if (!parkingSpace) {
+                const error = new Error("ParkingSpace not found");
+                error.name = "Not Found";
+                throw error;
+            }
+
+            res.status(200).json(parkingSpace);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
 }
+
 
 module.exports = landlordController

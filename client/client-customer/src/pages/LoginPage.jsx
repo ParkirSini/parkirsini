@@ -20,7 +20,7 @@ const LoginPage = () => {
     setPassword('');
 
     // Redirect to another page after successful login
-    navigate('/landlordListings')
+    navigate('/dashboard-landlord')
   };
 
   return (

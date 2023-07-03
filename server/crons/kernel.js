@@ -6,12 +6,13 @@ const apiKey = defaultClient.authentications['api-key']
 
 const job = new CronJob(
    //  "*/10 * * * * *",//untuk cek tiap 10 detik
-   "0 0 * * *",
-   async function () {
-      console.log("Running your scheduled task...");
-      try {
-         const bookings = await Booking.findAll();
-         console.log("Fetched bookings:", bookings);
+    "0 0 * * *",
+    async function () {
+        console.log("Running your scheduled task...");
+        try {
+            const bookings = await Booking.findAll();
+            console.log("Fetched bookings:", bookings);
+
 
          for (const booking of bookings) {
             if (booking.duration === 0) {
