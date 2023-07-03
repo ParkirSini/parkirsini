@@ -1,4 +1,4 @@
-const { ParkingSpaceReview, ParkingSpace } = require('./../models')
+const { ParkingSpaceReview, ParkingSpace, Customer } = require('./../models')
 
 class ParkingSpaceController {
     static async findAllParkingSpace(req, res, next) {
@@ -15,9 +15,12 @@ class ParkingSpaceController {
         try {
             const id = req.params.id
             const parkingSpace = await ParkingSpace.findByPk(id, {
-                include: [
-                    { model: ParkingSpaceReview },
-                ],
+                include: {
+                    model: ParkingSpaceReview,
+                    include: {
+                        model: Customer
+                    }
+                },
             })
             res.status(200).json(parkingSpace)
         } catch (error) {

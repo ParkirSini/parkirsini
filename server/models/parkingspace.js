@@ -22,31 +22,20 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-// <<<<<<< malik-1
-//   ParkingSpace.init({
-//     landlordId: DataTypes.INTEGER,
-//     stock: {
-//       allowNull: false,
-//       type: DataTypes.INTEGER,
-//       validate: {
-//         notNull: {
-//           msg: "Stock is required"
-// =======
+  // <<<<<<< malik-1
+  //   ParkingSpace.init({
+  //     landlordId: DataTypes.INTEGER,
+  //     stock: {
+  //       allowNull: false,
+  //       type: DataTypes.INTEGER,
+  //       validate: {
+  //         notNull: {
+  //           msg: "Stock is required"
+  // =======
 
   ParkingSpace.init(
     {
       landlordId: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   type: DataTypes.INTEGER,
-    //   validate: {
-    //     notNull: {
-    //       msg: "Landlord is required"
-    //     },
-    //     notEmpty: {
-    //       msg: "Landlord is required"
-    //     },
-    //   }
-    // },
       stock: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -57,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Stock is required",
           },
-// >>>>>>> dev
         },
       },
       mapLong: {
@@ -122,33 +110,33 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       price: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {
-          msg: "price is required"
-        },
-        notEmpty: {
-          msg: "price is required"
-        },
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: {
+            msg: "price is required"
+          },
+          notEmpty: {
+            msg: "price is required"
+          },
+        }
+      },
+      mainImg: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            msg: "mainImg is required"
+          },
+          notEmpty: {
+            msg: "mainImg is required"
+          },
+        }
       }
-    },
-    mainImg: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {
-          msg: "mainImg is required"
-        },
-        notEmpty: {
-          msg: "mainImg is required"
-        },
-      }
-    }
-  }, {
+    }, {
     sequelize,
     modelName: 'ParkingSpace',
   });
-   
+
   return ParkingSpace;
 };

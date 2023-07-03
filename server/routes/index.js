@@ -6,6 +6,7 @@ const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
 const errorHandler = require("../middlewares/errorHandler");
 const parkingSpaceRouter = require('./parkingSpaceRouter');
+
 // <<<<<<< malik-1
 // const customerRouter = require("./customer")
 // const landlordRouter = require("./landlord")
@@ -43,6 +44,6 @@ router
   .use("/booking", bookingRouter)
   .use(parkingSpaceRouter)
   .use(errorHandler);
-// >>>>>>> dev
+router.use(parkingSpaceRouter)
 
 module.exports = router;
