@@ -5,6 +5,7 @@ const multer = require("multer");
 const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
 const errorHandler = require("../middlewares/errorHandler");
+const parkingSpaceRouter = require('./parkingSpaceRouter');
 // <<<<<<< malik-1
 // const customerRouter = require("./customer")
 // const landlordRouter = require("./landlord")
@@ -33,12 +34,14 @@ const bookingRouter = require("./createBooking")
 
 router
   .get("/", Controller.home)
+  .use(parkingSpaceRouter)
   .use("/review", reviewRouter)
   .post("/image", upload.array("image"), ControllerImage.upload)
   .use("/pub", customerRouter)
   .use("/owner", landlordRouter)
   .use("/admin", adminRouter)
   .use("/booking", bookingRouter)
+  .use(parkingSpaceRouter)
   .use(errorHandler);
 // >>>>>>> dev
 
