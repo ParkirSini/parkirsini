@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const { hashPassword } = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class Customer extends Model {
     /**
@@ -61,19 +60,32 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     phoneNumber: {
+      allowNull: false,
       type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "Phone Number is required"
+        },
+        notEmpty: {
+          msg: "Phone Number is required"
+        },
+      }
     },
     address:  {
+      allowNull: false,
       type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "Address is required"
+        },
+        notEmpty: {
+          msg: "Address is required"
+        },
+      }
     },
   }, {
     sequelize,
     modelName: 'Customer',
   });
-
-
-  Customer.beforeCreate((customer, options) => {
-    customer.password = hashPassword(customer.password)
-  }) 
   return Customer;
 };
