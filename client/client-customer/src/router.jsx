@@ -19,19 +19,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: "/detail/:id",
-        element: <DetailPage />
-      },
-      {
-        path: "/detail",
-        element: <DetailPage />
+        element: <DetailPage />,
       },
       {
         path: "/landlordListings",
-        element: <LandlordListings />
+        element: <LandlordListings />,
       },
       {
         path: "/landlordListings/:id",
@@ -39,15 +35,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-listing",
-        element: <AddListingPage />
+        element: <AddListingPage />,
       },
       {
         path: "/thankyou-listing",
-        element: <ThankYouListing />
+        element: <ThankYouListing />,
       },
       {
         path: "/thankyou-payment",
-        element: <ThankYouPayment />
+        element: <ThankYouPayment />,
       },
       {
         path: "/location",
@@ -77,4 +73,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default router
+export default router;

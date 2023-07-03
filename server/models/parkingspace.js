@@ -22,6 +22,16 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+// <<<<<<< malik-1
+//   ParkingSpace.init({
+//     landlordId: DataTypes.INTEGER,
+//     stock: {
+//       allowNull: false,
+//       type: DataTypes.INTEGER,
+//       validate: {
+//         notNull: {
+//           msg: "Stock is required"
+// =======
 
   ParkingSpace.init(
     {
@@ -47,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Stock is required",
           },
+// >>>>>>> dev
         },
       },
       mapLong: {
@@ -110,7 +121,34 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      price: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          msg: "price is required"
+        },
+        notEmpty: {
+          msg: "price is required"
+        },
+      }
     },
+    mainImg: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "mainImg is required"
+        },
+        notEmpty: {
+          msg: "mainImg is required"
+        },
+      }
+    }
+  }, {
+    sequelize,
+    modelName: 'ParkingSpace',
+  });
     {
       sequelize,
       modelName: "ParkingSpace",

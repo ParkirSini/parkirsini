@@ -1,8 +1,10 @@
 const ReviewController = require("../controllers/reviewController");
+const { authenticationCustomer } = require("../middlewares/authentication");
 const router = require('express').Router()
 
-router.get('/', (req, res) => { })
-router.post('/', ReviewController.createReview)
+router.get('/', ReviewController.getAllReview)
+router.get('/:id', ReviewController.getReviewbyParkingSpaceId)
+router.post('/:parkingSpaceId', authenticationCustomer, ReviewController.createReview)
 router.patch('/:id', ReviewController.editReview)
 router.delete('/:id', ReviewController.deleteReview)
 
