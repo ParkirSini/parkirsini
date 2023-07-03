@@ -1,4 +1,9 @@
-const { ParkingSpace, ParkingSpaceImage, Landlord } = require("../models");
+const {
+  ParkingSpace,
+  ParkingSpaceImage,
+  Landlord,
+  sequelize,
+} = require("../models");
 class Admin {
   //PARKING SPACE
   static async fetchParkingSpace(req, res, next) {
@@ -59,6 +64,61 @@ class Admin {
         .status(201)
         .json({ message: "Create parking space success", data: newSpace });
     } catch (error) {
+      next(error);
+    }
+  }
+
+  static async createParkingSpaceTransaction(req, res, next) {
+    const transaction = await sequelize.transaction();
+    try {
+      const {
+        stock,
+        name,
+        subtitle,
+        description,
+        city,
+        price,
+        mainImg,
+        images,
+      } = req.body;
+      const landlordId = req.user.id;
+      const mapLong = req.body.mapLong || 0;
+      const mapLat = req.body.mapLat || 0;
+
+      const newSpace = await ParkingSpace.create(
+        {
+          landlordId,
+          stock,
+          mapLong,
+          mapLat,
+          name,
+          subtitle,
+          description,
+          city,
+          price,
+          mainImg,
+        },
+        { transaction }
+      );
+
+      const imagePromises = images.map(async (imgUrl) => {
+        await ParkingSpaceImage.create(
+          {
+            parkingSpaceId: newSpace.id,
+            imgUrl,
+          },
+          { transaction }
+        );
+      });
+
+      await Promise.all(imagePromises);
+      await transaction.commit();
+
+      res
+        .status(201)
+        .json({ message: "Create parking space success", data: newSpace });
+    } catch (error) {
+      await transaction.rollback();
       next(error);
     }
   }
