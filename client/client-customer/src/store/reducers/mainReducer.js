@@ -1,3 +1,4 @@
+
 import {combineReducers} from "redux";
 import {
   parkingSpaceDetailReducer,
@@ -19,4 +20,5 @@ const mainReducer = combineReducers({
   relation: parkingSpaceRelation
 })
 
-export default mainReducer
+
+export default mainReducer;
