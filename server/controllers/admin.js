@@ -37,7 +37,8 @@ class Admin {
 
   static async createParkingSpace(req, res, next) {
     try {
-      const { stock, name, subtitle, description, city } = req.body;
+      const { stock, name, subtitle, description, city, price, mainImg } =
+        req.body;
       const landlordId = req.user.id;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
@@ -51,6 +52,8 @@ class Admin {
         subtitle,
         description,
         city,
+        price,
+        mainImg,
       });
       res
         .status(201)
@@ -63,9 +66,13 @@ class Admin {
   static async editParkingSpace(req, res, next) {
     try {
       const id = req.params.id;
-      const { stock, name, subtitle, description, city } = req.body;
+      const { stock, name, subtitle, description, city, price, mainImg } =
+        req.body;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
+
+      const checkData = await ParkingSpace.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
 
       await ParkingSpace.update(
         {
@@ -76,6 +83,8 @@ class Admin {
           subtitle,
           description,
           city,
+          price,
+          mainImg,
         },
         {
           where: { id },
@@ -91,6 +100,10 @@ class Admin {
   static async deleteParkingSpace(req, res, next) {
     try {
       const id = req.params.id;
+
+      const checkData = await ParkingSpace.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
+
       await ParkingSpace.destroy({ where: { id } });
       res.status(201).json({ message: "Parking Space Deleted" });
     } catch (error) {
@@ -144,6 +157,9 @@ class Admin {
   static async deleteParkingSpaceImage(req, res, next) {
     try {
       const id = req.params.id;
+
+      const checkData = await ParkingSpaceImage.findOne({ where: { id } });
+      if (!checkData) throw { name: "Not Found" };
 
       const newImage = await ParkingSpaceImage.destroy({ where: { id } });
       res.status(201).json({ message: "Parking space image deleted" });
