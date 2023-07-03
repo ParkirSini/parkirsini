@@ -58,14 +58,14 @@ module.exports = {
             }
         ];
 
-        // await queryInterface.bulkInsert('Landlords', data.landlords, {});
-        // await queryInterface.bulkInsert('Customers', data.customers, {});
-        // await queryInterface.bulkInsert('Facilities', data.facilities, {});
-        // await queryInterface.bulkInsert('ParkingSpaces', data.parkingSpaces, {});
-        // await queryInterface.bulkInsert('FacilityParkings', data.facilityParking, {});
-        // await queryInterface.bulkInsert('Bookings', data.bookings, {});
-        // await queryInterface.bulkInsert('ParkingSpaceReviews', data.parkingSpaceReviews, {});
-        // await queryInterface.bulkInsert('ParkingSpaceImages', parkingSpaceImages, {});
+        await queryInterface.bulkInsert('Landlords', data.landlords, {});
+        await queryInterface.bulkInsert('Customers', data.customers, {});
+        await queryInterface.bulkInsert('Facilities', data.facilities, {});
+        await queryInterface.bulkInsert('ParkingSpaces', data.parkingSpaces, {});
+        await queryInterface.bulkInsert('FacilityParkings', data.facilityParking, {});
+        await queryInterface.bulkInsert('Bookings', data.bookings, {});
+        await queryInterface.bulkInsert('ParkingSpaceReviews', data.parkingSpaceReviews, {});
+        await queryInterface.bulkInsert('ParkingSpaceImages', parkingSpaceImages, {});
     },
 
     async down(queryInterface, Sequelize) {

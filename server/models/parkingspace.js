@@ -149,10 +149,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'ParkingSpace',
   });
-    {
-      sequelize,
-      modelName: "ParkingSpace",
-    }
-  );
+   
   return ParkingSpace;
 };
