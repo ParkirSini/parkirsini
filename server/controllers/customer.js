@@ -95,6 +95,7 @@ class customerController {
                 include: [
                     {
                         model: Landlord,
+                        attributes: { exclude: ['password'] },
                     },
                     {
                         model: FacilityParking,

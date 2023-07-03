@@ -5,8 +5,8 @@ const defaultClient = SibApiV3Sdk.ApiClient.instance
 const apiKey = defaultClient.authentications['api-key']
 
 const job = new CronJob(
-    "*/10 * * * * *",//untuk cek tiap 10 detik
-    // "0 0 * * *",
+   //  "*/10 * * * * *",//untuk cek tiap 10 detik
+    "0 0 * * *",
     async function () {
         console.log("Running your scheduled task...");
         try {

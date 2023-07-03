@@ -67,7 +67,6 @@ describe("customerController", () => {
           email: "johndoe@example.com",
           password: "password",
         });
-
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("access_token");
     });
