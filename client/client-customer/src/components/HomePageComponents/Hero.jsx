@@ -1,6 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/result');
+  };
+
   return (
     <>
       <section className="hero-wrap d-flex align-items-center">
@@ -20,7 +27,13 @@ const Hero = () => {
                       <div className="search-box2">
                         <div className="search-box-title">
                           <label>Cari nama jalan atau nama daerah</label><br />
-                          <input type="text" name="#" className="search-form" placeholder="Contoh: jl. kuningan raya" />
+                          <input
+                            type="text"
+                            name="#"
+                            className="search-form"
+                            placeholder="Contoh: jl. kuningan raya"
+                            onClick={handleClick}
+                          />
                         </div>
                       </div>
                     </div>
@@ -36,7 +49,7 @@ const Hero = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

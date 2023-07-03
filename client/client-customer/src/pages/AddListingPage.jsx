@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import MapComponent from "../components/MapComponent.jsx";
-import {useDispatch} from "react-redux";
-import {addParkingSpaces} from "../store/actions/index.js";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addParkingSpaces } from '../store/actions/index.js';
+import MapComponent from '../components/MapComponent.jsx';
 
 const AddListingPage = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -17,8 +19,8 @@ const AddListingPage = () => {
           setLongitude(position.coords.longitude);
           setFormData(prevFormData => ({
             ...prevFormData,
-            mapLat: position.coords.latitude,
-            mapLong: position.coords.longitude,
+            mapLat: position.coords.latitude.toString(),
+            mapLong: position.coords.longitude.toString(),
           }));
         },
         error => {
@@ -31,43 +33,42 @@ const AddListingPage = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    // landlordIdL: belum
     name: '',
     subtitle: '',
     description: '',
     city: '',
     stock: '',
     mapLong: '',
-    mapLat: ''
+    mapLat: '',
+    price: '',
+    mainImg: '',
   });
 
-
-
   if (latitude && longitude) {
-    const handleInputChange = (event) => {
+    const handleInputChange = event => {
       const { name, value } = event.target;
-      setFormData((prevFormData) => ({
+      setFormData(prevFormData => ({
         ...prevFormData,
         [name]: value,
       }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
       event.preventDefault();
-      // Handle form submission, e.g., send data to the server
       console.log(formData);
-
-      dispatch(addParkingSpaces(
-        formData.name,
-        formData.subtitle,
-        formData.description,
-        formData.city,
-        formData.stock,
-        formData.mapLong,
-        formData.mapLat
-      ));
-
-      // Reset form data
+      dispatch(
+        addParkingSpaces(
+          formData.name,
+          formData.subtitle,
+          formData.description,
+          formData.city,
+          formData.stock,
+          formData.mapLong,
+          formData.mapLat,
+          formData.price,
+          formData.mainImg
+        )
+      );
       setFormData({
         name: '',
         subtitle: '',
@@ -75,12 +76,13 @@ const AddListingPage = () => {
         city: '',
         stock: '',
         mapLong: '',
-        mapLat: ''
+        mapLat: '',
+        price: '',
+        mainImg: '',
       });
+
+      navigate('/landlordListings');
     };
-
-
-    // console.log(formData, '<--- form data AddListing')
 
     return (
       <>
@@ -93,59 +95,83 @@ const AddListingPage = () => {
                     <div className="listing-title">
                       <h4>General Information</h4>
                       <p>Data lahan parkir yang akan disewakan</p>
-                      <div className="form-group">
-                        <label>Nama Tempat Parkir</label>
-                        <input
-                          type="text"
-                          className="form-control add-listing_form"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Subtitle</label>
-                        <input
-                          type="text"
-                          className="form-control add-listing_form"
-                          name="subtitle"
-                          value={formData.subtitle}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Description</label>
-                        <textarea
-                          className="form-control add-listing_form"
-                          name="description"
-                          value={formData.description}
-                          onChange={handleInputChange}
-                        ></textarea>
-                      </div>
-                      <div className="form-group">
-                        <label>City</label>
-                        <input
-                          type="text"
-                          className="form-control add-listing_form"
-                          name="city"
-                          value={formData.city}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Stock</label>
-                        <input
-                          type="text"
-                          className="form-control add-listing_form"
-                          name="stock"
-                          value={formData.stock}
-                          onChange={handleInputChange}
-                        />
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label>Nama Tempat Parkir</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Subtitle</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="subtitle"
+                              value={formData.subtitle}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Description</label>
+                            <textarea
+                              className="form-control add-listing_form"
+                              name="description"
+                              value={formData.description}
+                              onChange={handleInputChange}
+                            ></textarea>
+                          </div>
+                          <div className="form-group">
+                            <label>Stock</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="stock"
+                              value={formData.stock}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <label>City</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="city"
+                              value={formData.city}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Price</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="price"
+                              value={formData.price}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Main Image</label>
+                            <input
+                              type="text"
+                              className="form-control add-listing_form"
+                              name="mainImg"
+                              value={formData.mainImg}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
                       </div>
                       <MapComponent latitude={latitude} longitude={longitude} />
-
                     </div>
-
                     <div className="row">
                       <div className="col-md-12">
                         <div className="btn-wrap btn-wrap2">
@@ -164,8 +190,6 @@ const AddListingPage = () => {
       </>
     );
   }
-
-
 };
 
 export default AddListingPage;

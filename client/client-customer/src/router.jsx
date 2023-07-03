@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ResultPage from "./pages/ResultPage.jsx";
 import RentalApproval from "./pages/RentalApproval.jsx";
+import DashboardLandlord from "./pages/DashboardLandlord.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "/approval",
         element: <RentalApproval />
+      },
+      {
+        path: "/dashboard-landlord",
+        element: <DashboardLandlord />
       },
     ]
   },

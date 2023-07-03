@@ -1,6 +1,8 @@
 const initialState = {
   data: [],
-  detail: {}
+  dataByLandlord: [],
+  detail: {},
+  relation: {}
 };
 
 export const parkingSpaceReducer = (state = initialState, action) => {
@@ -22,6 +24,32 @@ export const parkingSpaceDetailReducer = (state = initialState, action) => {
       return {
         ...state,
         detail: action.payload
+      }
+
+    default:
+      return state
+  }
+};
+
+export const parkingSpaceReducerByLandlord = (state = initialState, action) => {
+  switch (action.type) {
+    case 'parkingSpaceByLandlord/fetch':
+      return {
+        ...state,
+        dataByLandlord: action.payload
+      }
+
+    default:
+      return state
+  }
+};
+
+export const parkingSpaceRelation = (state = initialState, action) => {
+  switch (action.type) {
+    case 'facilityParkingSpaceRelation/fetch':
+      return {
+        ...state,
+        relation: action.payload
       }
 
     default:
