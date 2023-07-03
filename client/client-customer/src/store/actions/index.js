@@ -333,7 +333,7 @@
 export const fetchParkingSpaces = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/parkingSpaces')
+      const response = await fetch('http://localhost:3000/parkingSpace')
       const data = await response.json()
       const action = {
         type: "parkingSpace/fetch",
@@ -346,10 +346,84 @@ export const fetchParkingSpaces = () => {
   }
 }
 
+export const fetchReviewDetail = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/review/' + id)
+      const data = await response.json()
+      const action = {
+        type: "reviewDetail/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}
+
+export const fetchFacilityDetail = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/owner/facility/')
+      const data = await response.json()
+      const action = {
+        type: "facilityDetail/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}
+
+export const fetchParkingSpaceRelation= (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/pub/spaces/' + id)
+      const data = await response.json()
+      const action = {
+        type: "facilityParkingSpaceRelation/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}
+
+export const fetchParkingSpacesByLandlord = () => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch('http://localhost:3000/owner/spaces', {
+        headers: {
+          'Content-Type': 'application/json',
+          'access_token': `${token}`
+        },
+      });
+
+      const data = await response.json();
+      const action = {
+        type: "parkingSpaceByLandlord/fetch",
+        payload: data,
+      };
+
+      console.log(response);
+      dispatch(action);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+};
+
+
 export const fetchParkingSpacesDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/parkingSpaces/' + id)
+      const response = await fetch('http://localhost:3000/parkingSpace/' + id)
       const data = await response.json()
       const action = {
         type: "parkingSpaceDetail/fetch",
@@ -368,13 +442,17 @@ export const addParkingSpaces = (name,
                                  city,
                                  stock,
                                  mapLong,
-                                 mapLat) => {
+                                 mapLat,
+                                 price,
+                                 mainImg) => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/parkingSpaces/', {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch('http://localhost:3000/admin/parking-space', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'access_token': `${token}`
         },
         body: JSON.stringify({
           name,
@@ -383,11 +461,42 @@ export const addParkingSpaces = (name,
           city,
           stock,
           mapLong,
-          mapLat
+          mapLat,
+          price,
+          mainImg
         }),
       })
+      console.log(response)
+      const data = await response.json();
+      console.log(data);
 
       dispatch(fetchParkingSpaces())
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addParkingSpaceReview = (parkingSpaceId, review, rating) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch('http://localhost:3000/review/' + parkingSpaceId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'access_token': `${token}`
+        },
+        body: JSON.stringify({
+          review, rating
+        }),
+      })
+      console.log(response)
+      const data = await response.json();
+      console.log(data);
+
+      dispatch(fetchReviewDetail(parkingSpaceId))
 
     } catch (error) {
       console.log(error)
@@ -454,11 +563,11 @@ export const updateParkingSpace = (landlordId, parkingSpaceId, customerId, newSt
 };
 
 
-export const newLandlord = (email, password, name, phoneNumber, address) => {
+export const newLandlord = (email, password, username, phoneNumber, address) => {
 
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/landlords', {
+      const response = await fetch('http://localhost:3000/admin/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -466,12 +575,12 @@ export const newLandlord = (email, password, name, phoneNumber, address) => {
         body: JSON.stringify({
           email,
           password,
-          name,
+          username,
           phoneNumber,
           address
         }),
       })
-
+      console.log(response)
       dispatch(fetchLandlords())
 
     } catch (error) {
@@ -483,23 +592,31 @@ export const newLandlord = (email, password, name, phoneNumber, address) => {
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3000/landlords');
-      const landlords = await response.json();
+      const response = await fetch('http://localhost:3000/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      const user = landlords.find(
-        (landlord) => landlord.email === email && landlord.password === password
-      );
-
-      if (user) {
-        const access_token = 'berhasilmasuk';
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        const access_token = data.access_token;
         localStorage.setItem('access_token', access_token);
-        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
       } else {
         dispatch({ type: 'LOGIN_FAILURE', payload: 'Invalid email or password' });
       }
+
     } catch (error) {
       console.log(error);
     }
   };
 };
+
 

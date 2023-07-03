@@ -55,8 +55,8 @@ const NavigationBar = () => {
                         <NavDropdown.Item as={Link} to="/login">
                           Login
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/approval">
-                          Approval
+                        <NavDropdown.Item as={Link} to="/dashboard-landlord">
+                          Dashboard
                         </NavDropdown.Item>
                       </NavDropdown>
                     </Nav>

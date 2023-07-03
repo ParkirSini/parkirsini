@@ -1,109 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchParkingSpaces } from '../store/actions';
+import {Link} from "react-router-dom";
 
 const ResultPage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const parkingSpaces = useSelector((state) => state.data.data);
-
+  console.log(parkingSpaces)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchParkingSpaces());
   }, [dispatch]);
 
+  const filteredSpaces = parkingSpaces.filter((space) => {
+    const { name, subtitle, description, city } = space;
+    const query = searchQuery.toLowerCase();
+
+    return (
+      name.toLowerCase().includes(query) ||
+      subtitle.toLowerCase().includes(query) ||
+      description.toLowerCase().includes(query) ||
+      city.toLowerCase().includes(query)
+    );
+  });
+
   return (
     <>
-      <section className="main-block featured-wrap">
-        <div className="container-fluid">
-          <div className="row justify-content-center">
-            <div className="col-md-10">
-              <div className="titile-block">
-                <h2>Hasil Pencarian</h2>
-              </div>
+      <section className="hero-wrap d-flex align-items-center">
+        <div className="container">
+          <div className="row d-flex justify-content-center">
+            <div className="hero-title">
+              <h1>Parkir sini yuk!</h1>
+              <h3>Temukan tempat parkir yang sesuai dengan kebutuhanmu di lebih dari 431 lokasi</h3>
             </div>
           </div>
-
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
+          <div className="row">
+            <div className="col-md-12">
+              <form>
+                <div className="search-box">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="search-box2">
+                        <div className="search-box-title">
+                          <label>Cari nama kota atau keterangan lain sesuai kebutuhan</label><br />
+                          <input
+                            type="text"
+                            name="#"
+                            className="search-form"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="btn-search">
+                  <a href="#" className="btn btn-simple">Search →</a>
+                </div>
+              </form>
+              <p className="search-bottom-title">Allow permission untuk lokasi ya bila diperlukan!</p>
             </div>
           </div>
-
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-3 article-first">
-            <div className="news-block">
-              <img src="images/article-img1.jpg" alt="#" className="img-fluid" />
-              <div className="news-title">
-                <p>Rating 4.5</p>
-                <h5>Dukom Car Park</h5>
-                <p className="blog2-thumbnail-name">Tempat paling aman dan bersih, sudah pakai eskalator mobil guys! Mobil bagusmu akan merasa nyaman di sini.</p>
-                <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
-              </div>
-            </div>
-          </div>
-
         </div>
-      </div>
+      </section>
 
-      </div>
-    </section>
-
-      <h1>di bawah ini hasil redux json-server</h1>
       <section className="main-block featured-wrap">
         <div className="container-fluid">
           <div className="row justify-content-center">
@@ -116,24 +79,27 @@ const ResultPage = () => {
 
           <div className="container-fluid">
             <div className="row">
-              {parkingSpaces.map((parkingSpace) => (
+              {filteredSpaces.map((parkingSpace) => (
                 <div className="col-md-6 col-lg-3 article-first" key={parkingSpace.id}>
                   <div className="news-block">
-                    {/* Display the first image as the image source */}
-                    {parkingSpace.images.length > 0 && (
-                      <img src={parkingSpace.images[0].imgUrl} alt="#" className="img-fluid"
-                        style={{
-                          width: '100%',
-                          height: '250px',
-                          objectFit: 'cover'
-                        }}
-                      />
-                    )}
+                    <img
+                      src={parkingSpace.mainImg}
+                      alt={parkingSpace.name}
+                      className="img-fluid"
+                      style={{
+                        width: '100%',
+                        height: '250px',
+                        objectFit: 'cover',
+                      }}
+                    />
                     <div className="news-title">
-                      <p>Rating {parkingSpace.rating}</p>
                       <h5>{parkingSpace.name}</h5>
                       <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
-                      <a href="blog-detail.html" className="blog2-link">Lihat ➝</a>
+                      <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
+                      <p className="blog2-thumbnail-name">{parkingSpace.city}</p>
+                      <Link to={`/detail/${parkingSpace.id}`}className="blog2-link">
+                        Lihat ➝
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -143,7 +109,7 @@ const ResultPage = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default ResultPage
+export default ResultPage;
