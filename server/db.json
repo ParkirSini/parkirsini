@@ -66,6 +66,8 @@
         "mapLong": "123.456",
         "mapLat": "78.90",
         "name": "Parking Space 1",
+        "price": 100000,
+        "mainImg": "a",
         "subtitle": "Subtitle 1",
         "description": "Description 1",
         "city": "City 1"
@@ -76,6 +78,8 @@
         "mapLong": "45.678",
         "mapLat": "12.34",
         "name": "Parking Space 2",
+        "price": 100000,
+        "mainImg": "a",
         "subtitle": "Subtitle 2",
         "description": "Description 2",
         "city": "City 2"
