@@ -5,40 +5,40 @@ const defaultClient = SibApiV3Sdk.ApiClient.instance
 const apiKey = defaultClient.authentications['api-key']
 
 const job = new CronJob(
-    "*/10 * * * * *",//untuk cek tiap 10 detik
-    // "0 0 * * *",
-    async function () {
-        console.log("Running your scheduled task...");
-        try {
-            const bookings = await Booking.findAll();
-            console.log("Fetched bookings:", bookings);
+   "*/10 * * * *",//untuk cek tiap 10 detik
+   // "0 0 * * *",
+   async function () {
+      console.log("Running your scheduled task...");
+      try {
+         const bookings = await Booking.findAll();
+         console.log("Fetched bookings:", bookings);
 
-            for (const booking of bookings) {
-                if (booking.duration === 0) {
-                    booking.paid = false;
-                } else if (booking.duration === 3) {
-                    apiKey.apiKey = process.env.SENDINBLUE_KEY
-                    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
-                    const customer = await Customer.findOne({
-                        where: {
-                            id: booking.customerId
-                        }
-                    });
-                    console.log(customer.email);
-                    const sender = {
-                        email: "parkirsini@gmail.com",
-                        name: "Parkir Sini"
-                    }
-                    const receivers = [
-                        {
-                            email: `${customer.email}`
-                        }
-                    ]
-                    const sendEmail = await apiInstance.sendTransacEmail({
-                        sender,
-                        to: receivers,
-                        subject: "Payment Receipt",
-                        htmlContent: `<!DOCTYPE html
+         for (const booking of bookings) {
+            if (booking.duration === 0) {
+               booking.paid = false;
+            } else if (booking.duration === 3) {
+               apiKey.apiKey = process.env.SENDINBLUE_KEY
+               const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
+               const customer = await Customer.findOne({
+                  where: {
+                     id: booking.customerId
+                  }
+               });
+               console.log(customer.email);
+               const sender = {
+                  email: "parkirsini@gmail.com",
+                  name: "Parkir Sini"
+               }
+               const receivers = [
+                  {
+                     email: `${customer.email}`
+                  }
+               ]
+               const sendEmail = await apiInstance.sendTransacEmail({
+                  sender,
+                  to: receivers,
+                  subject: "Payment Receipt",
+                  htmlContent: `<!DOCTYPE html
                 PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
                 <html lang="en">
@@ -184,21 +184,21 @@ const job = new CronJob(
                 </body>
                 
                 </html>`
-                    })
-                    booking.duration -= 1;
-                } else if (booking.duration > 0 && booking.paid === true) {
-                    booking.duration -= 1;
-                }
-                await booking.save();
-                console.log("Updated booking:", booking);
+               })
+               booking.duration -= 1;
+            } else if (booking.duration > 0 && booking.paid === true) {
+               booking.duration -= 1;
             }
-        } catch (error) {
-            console.error("Error updating bookings:", error);
-        }
-    },
-    null,
-    true,
-    "Asia/Jakarta"
+            await booking.save();
+            console.log("Updated booking:", booking);
+         }
+      } catch (error) {
+         console.error("Error updating bookings:", error);
+      }
+   },
+   null,
+   true,
+   "Asia/Jakarta"
 );
 
 module.exports = job;
