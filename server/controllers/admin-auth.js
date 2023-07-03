@@ -8,9 +8,9 @@ async function processLogin(email, password) {
       email,
     },
   });
-  if (!findUser) throw { name: "DataNotFound" };
+  if (!findUser) throw { name: "Not Found" };
   const checkPassword = compareHash(password, findUser.password);
-  if (!checkPassword) throw { name: "InvalidUser" };
+  if (!checkPassword) throw { name: "Invalid email/password" };
   const access_token = createToken({
     id: findUser.id,
     email: findUser.email,
