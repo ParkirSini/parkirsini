@@ -6,6 +6,12 @@ import LandlordListings from "./pages/LandlordListings.jsx";
 import AddListingPage from "./pages/AddListingPage";
 import ThankYouListing from "./pages/ThankYouListing.jsx";
 import ThankYouPayment from "./pages/ThankYouPayment.jsx";
+import LocationComponent from "./pages/MapLocation";
+import CustomerRent from "./pages/CustomerRent.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import ResultPage from "./pages/ResultPage.jsx";
+import RentalApproval from "./pages/RentalApproval.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +30,10 @@ const router = createBrowserRouter([
         element: <LandlordListings />,
       },
       {
+        path: "/landlordListings/:id",
+        element: <LandlordListings />
+      },
+      {
         path: "/add-listing",
         element: <AddListingPage />,
       },
@@ -35,7 +45,31 @@ const router = createBrowserRouter([
         path: "/thankyou-payment",
         element: <ThankYouPayment />,
       },
-    ],
+      {
+        path: "/location",
+        element: <LocationComponent />
+      },
+      {
+        path: "/rented",
+        element: <CustomerRent />
+      },
+      {
+        path: "/login",
+        element: <LoginPage />
+      },
+      {
+        path: "/reg",
+        element: <RegisterPage />
+      },
+      {
+        path: "/result",
+        element: <ResultPage />
+      },
+      {
+        path: "/approval",
+        element: <RentalApproval />
+      },
+    ]
   },
 ]);
 

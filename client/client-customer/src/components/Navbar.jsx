@@ -29,17 +29,17 @@ const NavigationBar = () => {
                         </Nav.Link>
                       </Nav.Item>
                       <NavDropdown title="Halaman Customer" id="nav-dropdown">
-                        <NavDropdown.Item as={Link} to="/detail">
+                        <NavDropdown.Item as={Link} to="/detail/1">
                           Detail Page
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/thankyou-payment">
                           Thank You Payment
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="payment-method.html">
-                          Payment Method
+                        <NavDropdown.Item as={Link} to="/rented">
+                          Lahan Disewa
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="contact.html">
-                          Contact
+                        <NavDropdown.Item as={Link} to="/result">
+                          Hasil Pencarian
                         </NavDropdown.Item>
                       </NavDropdown>
                       <NavDropdown title="Halaman Landlord" id="nav-dropdown">
@@ -52,12 +52,13 @@ const NavigationBar = () => {
                         <NavDropdown.Item as={Link} to="/thankyou-listing">
                           Thank You Listing
                         </NavDropdown.Item>
-                      </NavDropdown>
-                      <Nav.Item>
-                        <Nav.Link href="login.html" data-toggle="modal" data-target="#exampleModal">
+                        <NavDropdown.Item as={Link} to="/login">
                           Login
-                        </Nav.Link>
-                      </Nav.Item>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/approval">
+                          Approval
+                        </NavDropdown.Item>
+                      </NavDropdown>
                     </Nav>
                   </Navbar.Collapse>
                 </Navbar>

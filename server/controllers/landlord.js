@@ -10,6 +10,7 @@ class landlordController {
                 username,
                 email,
                 password,
+                role: "Landlord",
                 phoneNumber,
                 address
             });

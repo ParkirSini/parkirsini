@@ -1,10 +1,40 @@
 {
     "facilities": [
       {
-        "name": "Facility 1"
+        "name": "Tenaga Keamanan 24 jam"
       },
       {
-        "name": "Facility 2"
+        "name": "Wifi gratis"
+      },
+      {
+        "name": "Atap Tertutup"
+      },
+      {
+        "name": "Atap Terbuka"
+      },
+      {
+        "name": "No Smoking"
+      },
+      {
+        "name": "Lantai semen atau lebih baik"
+      },
+      {
+        "name": "Lantai tanah"
+      },
+      {
+        "name": "Menjual minuman/makanan"
+      },
+      {
+        "name": "Rantai penghalang per 1 mobil"
+      },
+      {
+        "name": "Terdapat pagar dan gerbang"
+      },
+      {
+        "name": "Jasa tambahan cuci mobil"
+      },
+      {
+        "name": "Lokasi bebas banjir"
       }
     ],
     "landlords": [
@@ -13,6 +43,7 @@
         "email": "landlord1@example.com",
         "password": "password1",
         "username": "landlord1",
+        "role": "Landlord",
         "phoneNumber": "1234567890",
         "address": "Address 1",
         "amount": 1000
@@ -22,6 +53,7 @@
         "email": "landlord2@example.com",
         "password": "password2",
         "username": "landlord2",
+        "role": "Landlord",
         "phoneNumber": "9876543210",
         "address": "Address 2",
         "amount": 2000
