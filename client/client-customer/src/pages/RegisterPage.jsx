@@ -6,7 +6,7 @@ import {newLandlord} from "../store/actions/index.js";
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const dispatch = useDispatch();
@@ -16,11 +16,11 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      await dispatch(newLandlord(email, password, name, phoneNumber, address));
+      await dispatch(newLandlord(email, password, username, phoneNumber, address));
       navigate('/login')
       setEmail('');
       setPassword('');
-      setName('');
+      setUsername('');
       setPhoneNumber('');
       setAddress('');
     } catch (error) {
@@ -65,12 +65,12 @@ const RegisterPage = () => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label>Name</label>
+                          <label>Username</label>
                           <input
                             type="text"
                             className="form-control add-listing_form"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                           />
                         </div>
