@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Controller = require("../controllers/index");
-const ControllerImage = require("../controllers/ImageUpload");
 const multer = require("multer");
 const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
@@ -37,7 +36,6 @@ router
   .get("/", Controller.home)
   .use(parkingSpaceRouter)
   .use("/review", reviewRouter)
-  .post("/image", upload.array("image"), ControllerImage.upload)
   .use("/pub", customerRouter)
   .use("/owner", landlordRouter)
   .use("/admin", adminRouter)
