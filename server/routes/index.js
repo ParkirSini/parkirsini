@@ -1,10 +1,9 @@
 const router = require("express").Router();
-const Controller = require("../controllers/index");
 const multer = require("multer");
 const { storage, cloudinary } = require("../cloudinary");
 const upload = multer({ storage });
 const errorHandler = require("../middlewares/errorHandler");
-const parkingSpaceRouter = require('./parkingSpaceRouter');
+const parkingSpaceRouter = require("./parkingSpaceRouter");
 
 // <<<<<<< malik-1
 // const customerRouter = require("./customer")
@@ -30,10 +29,9 @@ const adminRouter = require("./adminRouter");
 const reviewRouter = require("./reviewRouter");
 const customerRouter = require("./customer");
 const landlordRouter = require("./landlord");
-const bookingRouter = require("./createBooking")
+const bookingRouter = require("./createBooking");
 
 router
-  .get("/", Controller.home)
   .use(parkingSpaceRouter)
   .use("/review", reviewRouter)
   .use("/pub", customerRouter)
