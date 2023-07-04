@@ -1,17 +1,17 @@
-const { Booking, Landlord } = require("../models");
+const { Booking, Landlord, Customer } = require("../models");
 const midtransClient = require('midtrans-client');
 const { sequelize } = require("../models");
 const SibApiV3Sdk = require('sib-api-v3-sdk')
 const defaultClient = SibApiV3Sdk.ApiClient.instance
 const apiKey = defaultClient.authentications['api-key']
-const { generateHTML } = require("./emailHtmlContent")
+const { generateHTML } = require("../helpers/emailHtmlContent")
 
 class CreateBooking {
    static async generateMidtransToken(req, res, next) {
       try {
          const { amount } = req.body
-         // const { id } = req.user
-         // let findUser = await User.findByPk(id)
+         const { id } = req.user
+         let findUser = await Customer.findByPk(id)
          let snap = new midtransClient.Snap({
             isProduction: false,
             serverKey: process.env.MIDTRANS_KEY
@@ -24,9 +24,8 @@ class CreateBooking {
             credit_card: {
                secure: true
             },
-            // user email masih di-hardcode
             customer_details: {
-               email: "user@gmail.com", // findUser.email
+               email: findUser.email,
             }
          };
          const midtransToken = await snap.createTransaction(parameter)
@@ -40,10 +39,12 @@ class CreateBooking {
       const t = await sequelize.transaction();
       try {
          const { amount, email, parkingSpaceId, price } = req.body
-         // customerId, paid status, dan duration masih di-hardcode
+         const { id } = req.user
+         // paid status dan duration masih di-hardcode
+         let findUser = await Customer.findByPk(id)
          const booking = await Booking.create({
             parkingSpaceId,
-            customerId: 1,
+            customerId: id,
             paid: true,
             duration: 30,
             price
@@ -60,7 +61,8 @@ class CreateBooking {
          }
          const receivers = [
             {
-               email: 'irsantoresa@gmail.com' //receiver email masih di-hardcode
+               //receiver email masih di-hardcode
+               email: 'irsantoresa@gmail.com' // findUser.email
             }
          ]
          const sendEmail = await apiInstance.sendTransacEmail({
@@ -73,7 +75,6 @@ class CreateBooking {
          res.status(201).json({ message: 'Successfully added a new booking' })
       } catch (error) {
          await t.rollback()
-         console.log(error)
          next(error)
       }
    }

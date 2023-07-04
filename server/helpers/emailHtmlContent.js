@@ -166,4 +166,93 @@ const generateHTML = (amount) => {
 </html>`
 }
 
-module.exports = { generateHTML }
+const generateHTMLReminder = () => {
+   return `<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+<html lang="en">
+
+<head></head>
+<div id="__react-email-preview" style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
+   Parkir Sini Receipt<div>
+       ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+   </div>
+</div>
+
+<body style="font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;background-color:#ffffff">
+   <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%"
+      style="max-width:37.5em;margin:0 auto;padding:20px 0 48px;width:660px">
+      <tr style="width:100%">
+         <td>
+            <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+               <tbody>
+                  <tr>
+                     <td>
+                     <td><img alt="Parkir Sini Logo" src="https://i.ibb.co/jL6JKcb/fp-logo.png" width="150" height="50"
+                           style="display:block;outline:none;border:none;text-decoration:none" /></td>
+         </td>
+      </tr>
+      </tbody>
+   </table>
+   <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+      <tbody>
+         <tr>
+            <td>
+               <p
+                  style="font-size:22px;line-height:24px;margin:36px 0 40px 0;text-align:center;font-weight:700;color:#888888">
+                  Friendly Reminder for a Due Date</p>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <div>
+      <div style="font-family: Helvetica, Arial, sans-serif; font-size: 15px; color: #7a7a7a;">
+         <p>Hi, Valued Customer,</p>
+
+         <p>We hope this message finds you well. We would like to inform you that the
+            rental period is about to expire in the upcoming days. To ensure continuous
+            access, we kindly request you to extend your booking before the expiration
+            date. Failure to extend the rental period will result in the deactivation
+            of your booking code.</p>
+
+         <p>To extend your rental period, simply navigate to your dashboard and follow
+            the steps provided. Don't miss out on enjoying our services for a longer
+            duration!</p>
+
+         <p>Thank you for choosing our services. If you have any questions or need
+            assistance, feel free to reach out to our support team.</p>
+
+         <p>Thank you so much for using Parkir Sini!</p>
+
+         <p>Signature</p>
+      </div>
+   </div>
+   <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin:0 0 75px 0" />
+   <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+      <tbody>
+         <tr>
+            <td>
+            <td align="center" style="display:block"><img alt="Parkir Sini Logo"
+                  src="https://i.ibb.co/jL6JKcb/fp-logo.png" width="200" height="70"
+                  style="display:block;outline:none;border:none;text-decoration:none" /></td>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <hr style="width:100%;border:none;border-top:1px solid #eaeaea;margin:65px 0 20px 0" />
+   <p style="font-size:12px;line-height:24px;margin:8px 0 0 0;text-align:center;color:rgb(102,102,102)"><a
+         target="_blank" style="color:#067df7;text-decoration:none" href="#">Account Settings</a> • <a target="_blank"
+         style="color:#067df7;text-decoration:none" href="#">Terms of Sale</a> • <a target="_blank"
+         style="color:#067df7;text-decoration:none" href="#">Privacy Policy </a></p>
+   <p style="font-size:12px;line-height:24px;margin:25px 0 0 0;text-align:center;color:rgb(102,102,102)">Copyright ©
+      2023 Parkir Sini Inc. <br /> <a target="_blank" style="color:#067df7;text-decoration:none" href="#">All rights
+         reserved</a></p>
+   </td>
+   </tr>
+   </table>
+</body>
+
+</html>`
+}
+
+module.exports = { generateHTML, generateHTMLReminder }
