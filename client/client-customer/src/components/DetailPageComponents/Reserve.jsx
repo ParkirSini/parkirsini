@@ -1,16 +1,34 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router-dom";
+import LocalOfferSharpIcon from '@mui/icons-material/LocalOfferSharp';
+import {fetchParkingSpacesDetail} from "../../store/actions/index.js";
 
 const Reserve = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const parkingSpace = useSelector((state) => state.detail.detail);
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
+  const { id } = useParams();
+  const [isReady, setIsReady] = useState(false);
+
+
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((total, review) => total + review.rating, 0) /
-        reviews.length
-      : "no rating yet";
+      reviews.length
+      : "belum ada ulasan";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(fetchParkingSpacesDetail(id));
+      setTimeout(() => {
+        setIsReady(true);
+      }, 500);
+    };
+
+    fetchData();
+  }, [dispatch, id]);
 
   const creteBooking = async () => {
     // const { amount, email, parkingSpaceId, price } = req.body
@@ -78,6 +96,10 @@ const Reserve = () => {
     }
   };
 
+  if (!isReady) {
+    return <div></div>; // Return a loading state or component until the data is ready
+  }
+
   return (
     <>
       <section className="reserve-block">
@@ -85,8 +107,9 @@ const Reserve = () => {
           <div className="row">
             <div className="col-md-6">
               <h5>{parkingSpace.name}</h5>
+              <br />
               <p>
-                <span>Rp. {parkingSpace.price}</span>
+                <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')} / 30 hari</span>
               </p>
               <br />
               <p className="reserve-description">{parkingSpace.subtitle}</p>

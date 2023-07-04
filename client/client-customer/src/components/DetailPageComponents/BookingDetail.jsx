@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider.jsx";
 import MapComponent from "../MapComponent.jsx";
 import { addParkingSpaceReview } from "../../store/actions/index.js";
+import Talk from "talkjs";
+import {Rating} from "@mui/material";
 
 const BookingDetail = () => {
   const dispatch = useDispatch();
@@ -12,7 +14,7 @@ const BookingDetail = () => {
     (state) => state.facilityDetail.facilityDetail
   );
   const relation = useSelector((state) => state.relation.relation);
-  console.log(reviews);
+  // console.log(reviews);
   // console.log(facilities)
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -29,7 +31,7 @@ const BookingDetail = () => {
     // Check if the rating and review text meet the minimum requirements
     if (rating === 0 || reviewText.length < 10) {
       alert(
-        "Please provide a rating and a review with at least 140 characters."
+        "Minimal 10 karakter untuk melakukan review."
       );
       return;
     }
@@ -42,20 +44,67 @@ const BookingDetail = () => {
     setReviewText("");
   };
 
+  //////////////// TALK JS START /////////////////
+  const chatboxEl = useRef();
+
+  // wait for TalkJS to load
+  const [talkLoaded, markTalkLoaded] = useState(false);
+
+  useEffect(() => {
+    Talk.ready.then(() => markTalkLoaded(true));
+  }, []);
+
+  const sendMessage = () => {
+    if (talkLoaded) {
+      const currentUser = new Talk.User({
+        id: '4', // <-- customerId from access_token
+        name: 'Benzema',
+        email: 'ronaldo@example.com',
+        photoUrl: 'https://shorturl.at/avJM3',
+        role: 'default',
+
+      });
+
+      const otherUser = new Talk.User({
+        id: relation.Landlord.id,
+        name: relation.Landlord.username,
+        email: relation.Landlord.email,
+        welcomeMessage: `Selamat datang di ${relation.name}. Terimakasih sudah menghubungi kami, akan kami reply segera. Tunggu ya...`,
+        photoUrl: 'https://shorturl.at/avJM3',
+        role: 'default',
+      });
+
+      const session = new Talk.Session({
+        appId: 'tgKqA2yS',
+        me: currentUser,
+      });
+
+      const conversationId = Talk.oneOnOneId(currentUser, otherUser);
+      const conversation = session.getOrCreateConversation(conversationId);
+      conversation.setParticipant(currentUser);
+      conversation.setParticipant(otherUser);
+
+      const chatbox = session.createChatbox(conversation);
+      chatbox.mount(chatboxEl.current);
+    }
+  }
+  ///////////////// TALK JS END ////////////////////
+  // console.log(reviews)
   return (
     <>
-      <section className="gray-dark booking-details_wrap">
+      <section className="gray-dark booking-details_wrap" ref={chatboxEl}>
         <div className="container">
           <div className="row">
             <div className="col-md-8 responsive-wrap">
               <div className="booking-checkbox_wrap">
-                <ImageSlider parkingSpace={parkingSpace} />
+
+                <ImageSlider relation={relation} parkingSpace={parkingSpace} />
 
                 <div className="booking-checkbox">
                   <p>{parkingSpace.description}</p>
                   <hr />
                 </div>
-                <h3>Facilities:</h3>
+                <h3>Fasilitas:</h3>
                 <br />
                 <div className="row">
                   {/* Check if FacilityParkings exists */}
@@ -81,60 +130,68 @@ const BookingDetail = () => {
               </div>
 
               <div className="booking-checkbox_wrap booking-your-review">
-                <h5>Write a Review</h5>
+                <h5>Beri ulasan untuk lahan parkir ini</h5>
                 <hr />
                 <div className="customer-review_wrap">
                   <div className="customer-content-wrap">
-                    <div className="your-rating-wrap">
-                      <span>Your rating</span>
-                      <div className="customer-review">
-                        <input
-                          type="radio"
-                          name="rating"
-                          value="1"
-                          checked={rating === 1}
-                          onChange={handleRatingChange}
-                        />
-                        <input
-                          type="radio"
-                          name="rating"
-                          value="2"
-                          checked={rating === 2}
-                          onChange={handleRatingChange}
-                        />
-                        <input
-                          type="radio"
-                          name="rating"
-                          value="3"
-                          checked={rating === 3}
-                          onChange={handleRatingChange}
-                        />
-                        <input
-                          type="radio"
-                          name="rating"
-                          value="4"
-                          checked={rating === 4}
-                          onChange={handleRatingChange}
-                        />
-                        <input
-                          type="radio"
-                          name="rating"
-                          value="5"
-                          checked={rating === 5}
-                          onChange={handleRatingChange}
-                        />
-                      </div>
+                    <div>
+                      <span></span>
+                      <Rating
+                        name="simple-controlled"
+                        value={rating}
+                        onChange={(event, newValue) => {
+                          setRating(newValue);
+                        }}
+                      />
+
+                      {/*<div className="customer-review">*/}
+                      {/*  <input*/}
+                      {/*    type="radio"*/}
+                      {/*    name="rating"*/}
+                      {/*    value="1"*/}
+                      {/*    checked={rating === 1}*/}
+                      {/*    onChange={handleRatingChange}*/}
+                      {/*  />*/}
+                      {/*  <input*/}
+                      {/*    type="radio"*/}
+                      {/*    name="rating"*/}
+                      {/*    value="2"*/}
+                      {/*    checked={rating === 2}*/}
+                      {/*    onChange={handleRatingChange}*/}
+                      {/*  />*/}
+                      {/*  <input*/}
+                      {/*    type="radio"*/}
+                      {/*    name="rating"*/}
+                      {/*    value="3"*/}
+                      {/*    checked={rating === 3}*/}
+                      {/*    onChange={handleRatingChange}*/}
+                      {/*  />*/}
+                      {/*  <input*/}
+                      {/*    type="radio"*/}
+                      {/*    name="rating"*/}
+                      {/*    value="4"*/}
+                      {/*    checked={rating === 4}*/}
+                      {/*    onChange={handleRatingChange}*/}
+                      {/*  />*/}
+                      {/*  <input*/}
+                      {/*    type="radio"*/}
+                      {/*    name="rating"*/}
+                      {/*    value="5"*/}
+                      {/*    checked={rating === 5}*/}
+                      {/*    onChange={handleRatingChange}*/}
+                      {/*  />*/}
+                      {/*</div>*/}
                     </div>
                     <div className="your-comment-wrap">
                       <textarea
                         name="#"
                         className="your-rating-content"
-                        placeholder="Enter Your Comments"
+                        placeholder="Berikan komentarmu"
                         value={reviewText}
                         onChange={handleReviewTextChange}
                       ></textarea>
                       <h6 className="your-rating-notify">
-                        at least 10 characters
+                        minimal 10 karakter
                       </h6>
                     </div>
 
@@ -145,7 +202,7 @@ const BookingDetail = () => {
                             className="btn btn-danger btn-block"
                             onClick={handlePublishReview}
                           >
-                            Publish Review
+                            Kirim Ulasan
                           </button>
                         </div>
                       </div>
@@ -155,7 +212,7 @@ const BookingDetail = () => {
               </div>
 
               <div className="booking-checkbox_wrap my-4">
-                <h4>{reviews.length} Reviews</h4>
+                <h4>{reviews.length} Ulasan</h4>
                 <hr />
                 {reviews.map((review) => (
                   <div className="customer-review_wrap" key={review.id}>
@@ -165,7 +222,7 @@ const BookingDetail = () => {
                     <div className="customer-content-wrap">
                       <div className="customer-content">
                         <div className="customer-review">
-                          <h5>{review.review}</h5>
+                          <h5>{review.review} </h5>
                         </div>
                         <div className="customer-rating customer-rating-red">
                           {review.rating}
@@ -204,16 +261,13 @@ const BookingDetail = () => {
                     OPEN NOW
                   </a>
                 </div>
-                <a href="#" className="btn btn-outline-danger btn-contact">
-                  SEND A MESSAGE
-                </a>
+                <a type="button" onClick={sendMessage}  className="btn btn-outline-danger btn-contact" data-bs-toggle="modal" data-bs-target="#modalTalkJsResa">Chat Pemilik Lahan</a>
               </div>
               <div className="follow">
                 <div className="follow-img">
                   {relation.Landlord ? (
                     <>
-                      <h6>{relation.Landlord.username}</h6>
-                      <span>{parkingSpace.city}</span>
+                      <h6>Pemilik: {relation.Landlord.username}</h6>
                     </>
                   ) : (
                     <>
@@ -227,6 +281,24 @@ const BookingDetail = () => {
           </div>
         </div>
       </section>
+
+      <div className="modal fade" id="modalTalkJsResa" tabIndex="-1" aria-labelledby="exampleModalLabel"
+           aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">Send A Message</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <div ref={chatboxEl} style={{height: '80vh'}}/>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
