@@ -49,6 +49,9 @@ const NavigationBar = () => {
                         <NavDropdown.Item as={Link} to="/loginCustomer">
                           Login Customer
                         </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/inbox">
+                          Inbox talkjs
+                        </NavDropdown.Item>
                       </NavDropdown>
                       <NavDropdown title="Halaman Landlord" id="nav-dropdown">
                         <NavDropdown.Item as={Link} to="/add-listing">
@@ -67,6 +70,11 @@ const NavigationBar = () => {
                           Dashboard
                         </NavDropdown.Item>
                       </NavDropdown>
+                      <Nav.Item>
+                        <Nav.Link as={Link} to="/">
+                          Logout
+                        </Nav.Link>
+                      </Nav.Item>
                     </Nav>
                   </Navbar.Collapse>
                 </Navbar>

@@ -32,7 +32,7 @@ const LoginPageCustomer = () => {
             <div className="listing-wrap">
               <form onSubmit={handleSubmit}>
                 <div className="listing-title">
-                  <h4>Login Customer</h4>
+                  <h4>Login Penyewa Lahan Parkir</h4>
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group">

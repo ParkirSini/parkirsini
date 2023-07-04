@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchParkingSpaces } from '../store/actions';
 import {Link} from "react-router-dom";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const ResultPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -95,10 +96,10 @@ const ResultPage = () => {
                     <div className="news-title">
                       <h5>{parkingSpace.name}</h5>
                       <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
+                      <hr />
                       <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
-                      <p className="blog2-thumbnail-name">{parkingSpace.city}</p>
-                      <Link to={`/detail/${parkingSpace.id}`}className="blog2-link">
-                        Lihat ➝
+                      <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>
+                      <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat
                       </Link>
                     </div>
                   </div>

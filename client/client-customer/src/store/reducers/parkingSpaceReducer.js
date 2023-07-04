@@ -57,4 +57,15 @@ export const parkingSpaceRelation = (state = initialState, action) => {
   }
 };
 
+export const parkingSpaceImages = (state = initialState, action) => {
+  switch (action.type) {
+    case 'parkingSpaceImages/fetch':
+      return {
+        ...state,
+        images: action.payload
+      }
 
+    default:
+      return state
+  }
+};

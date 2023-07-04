@@ -437,18 +437,21 @@ export const fetchParkingSpacesDetail = (id) => {
 }
 
 export const addParkingSpaces = (name,
-  subtitle,
-  description,
-  city,
-  stock,
-  mapLong,
-  mapLat,
-  price,
-  mainImg) => {
+                                 subtitle,
+                                 description,
+                                 city,
+                                 stock,
+                                 mapLong,
+                                 mapLat,
+                                 price,
+                                 mainImg,
+                                 images,
+                                 facilities,
+) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("access_token");
-      const response = await fetch('http://localhost:3000/admin/parking-space', {
+      const response = await fetch('http://localhost:3000/admin/parking-space-transaction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -463,7 +466,9 @@ export const addParkingSpaces = (name,
           mapLong,
           mapLat,
           price,
-          mainImg
+          mainImg,
+          images,
+          facilities
         }),
       })
       console.log(response)
@@ -649,4 +654,18 @@ export const loginCustomer = (email, password) => {
   };
 };
 
-
+export const fetchParkingSpacesImages = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/admin/parking-space/' + id)
+      const data = await response.json()
+      const action = {
+        type: "parkingSpaceImages/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}

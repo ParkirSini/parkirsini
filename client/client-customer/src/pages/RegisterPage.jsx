@@ -37,7 +37,7 @@ const RegisterPage = () => {
               <div className="listing-wrap">
                 <form onSubmit={handleSubmit}>
                   <div className="listing-title">
-                    <h4>Register</h4>
+                    <h4>Pendaftaran</h4>
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-group">
@@ -77,7 +77,7 @@ const RegisterPage = () => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label>Phone Number</label>
+                          <label>Nomor Handphone</label>
                           <input
                             type="text"
                             className="form-control add-listing_form"
@@ -89,7 +89,7 @@ const RegisterPage = () => {
                       </div>
                       <div className="col-md-12">
                         <div className="form-group">
-                          <label>Address</label>
+                          <label>Alamat</label>
                           <textarea
                             className="form-control add-listing_form"
                             value={address}
@@ -104,7 +104,7 @@ const RegisterPage = () => {
                     <div className="col-md-12">
                       <div className="btn-wrap btn-wrap2">
                         <button type="submit" className="btn btn-simple">
-                          Register
+                          Daftar
                         </button>
                         <p>
                           Sudah daftar?{' '}
