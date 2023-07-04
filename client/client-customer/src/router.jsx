@@ -13,6 +13,8 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import ResultPage from "./pages/ResultPage.jsx";
 import RentalApproval from "./pages/RentalApproval.jsx";
 import DashboardLandlord from "./pages/DashboardLandlord.jsx";
+import LoginPageCustomer from "./pages/LoginPageCustomer.jsx";
+import RegisterPageCustomer from "./pages/RegisterPageCustomer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/landlordListings/:id",
-        element: <LandlordListings />
+        element: <LandlordListings />,
       },
       {
         path: "/add-listing",
@@ -48,33 +50,41 @@ const router = createBrowserRouter([
       },
       {
         path: "/location",
-        element: <LocationComponent />
+        element: <LocationComponent />,
       },
       {
         path: "/rented",
-        element: <CustomerRent />
+        element: <CustomerRent />,
       },
       {
         path: "/login",
-        element: <LoginPage />
+        element: <LoginPage />,
+      },
+      {
+        path: "/loginCustomer",
+        element: <LoginPageCustomer />,
       },
       {
         path: "/reg",
-        element: <RegisterPage />
+        element: <RegisterPage />,
+      },
+      {
+        path: "/regCustomer",
+        element: <RegisterPageCustomer />,
       },
       {
         path: "/result",
-        element: <ResultPage />
+        element: <ResultPage />,
       },
       {
         path: "/approval",
-        element: <RentalApproval />
+        element: <RentalApproval />,
       },
       {
         path: "/dashboard-landlord",
-        element: <DashboardLandlord />
+        element: <DashboardLandlord />,
       },
-    ]
+    ],
   },
 ]);
 

@@ -8,6 +8,7 @@ const apiKey = defaultClient.authentications['api-key']
 class CreateBooking {
    static async generateMidtransToken(req, res, next) {
       try {
+         console.log("masukk")
          const { amount } = req.body
          // const { id } = req.user
          // let findUser = await User.findByPk(id)
@@ -29,6 +30,7 @@ class CreateBooking {
             }
          };
          const midtransToken = await snap.createTransaction(parameter)
+         console.log(midtransToken, "<<<<<<<<<<<<<<<");
          res.status(201).json(midtransToken)
       } catch (error) {
          next(error)
