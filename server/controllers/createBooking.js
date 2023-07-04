@@ -10,6 +10,7 @@ class CreateBooking {
    static async generateMidtransToken(req, res, next) {
       try {
          const { amount } = req.body
+         if (!amount) throw { name: "Error" }
          const { id } = req.user
          let findUser = await Customer.findByPk(id)
          let snap = new midtransClient.Snap({
@@ -31,6 +32,7 @@ class CreateBooking {
          const midtransToken = await snap.createTransaction(parameter)
          res.status(201).json(midtransToken)
       } catch (error) {
+         console.log(error)
          next(error)
       }
    }
@@ -68,7 +70,7 @@ class CreateBooking {
             sender,
             to: receivers,
             subject: "Payment Receipt",
-            htmlContent: generateHTML(amount, findUser.email, date)
+            htmlContent: generateHTML(amount, findUser.email, date, findUser.address, findUser.username)
          })
          await t.commit()
          res.status(201).json({ message: 'Successfully added a new booking' })
