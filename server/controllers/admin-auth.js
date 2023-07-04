@@ -8,9 +8,9 @@ async function processLogin(email, password) {
       email,
     },
   });
-  if (!findUser) throw { name: "Not Found" };
+  if (!findUser) throw { message: "Invalid email/password" };
   const checkPassword = compareHash(password, findUser.password);
-  if (!checkPassword) throw { name: "Invalid email/password" };
+  if (!checkPassword) throw { message: "Invalid email/password" };
   const access_token = createToken({
     id: findUser.id,
     email: findUser.email,
@@ -24,9 +24,12 @@ class Auth {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
+      if (!email) throw { message: "Email is required" };
+      if (!password) throw { message: "Password is required" };
       const access_token = await processLogin(email, password);
       res.json({ access_token });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
