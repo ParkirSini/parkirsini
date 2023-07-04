@@ -3,6 +3,7 @@ const app = require("../app");
 const { sequelize, ParkingSpace } = require("../models");
 const { hashPassword } = require("../helpers/bcrypt");
 const data = require("../db.json");
+let access_token
 
 beforeAll(async () => {
   await Promise.allSettled([
@@ -64,7 +65,15 @@ beforeAll(async () => {
         return review;
       })
     ),
+
   ]);
+  const response = await request(app)
+    .post('/admin/login')
+    .send({
+      email: 'landlord1@example.com',
+      password: 'password1',
+    });
+  access_token = response.body.access_token;
 });
 
 afterAll(async () => {
@@ -115,7 +124,6 @@ describe("Parking Spaces API", () => {
   describe("GET /pub/spaces - fetchAllParkingSpaces", () => {
     test("should fetch all parking spaces", async () => {
       const response = await request(app).get("/pub/spaces");
-      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(expect.any(Array));
     });
@@ -154,6 +162,76 @@ describe("Parking Spaces API", () => {
 
     test("should handle errors and call the error handler", async () => {
       const response = await request(app).get("/pub/spaces/123");
+
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Data not found!!");
+    });
+  });
+
+  describe("GET /owner/spaces- fetchParkingSpacesByLandlord", () => {
+    test("should fetch parking spaces based on landlord", async () => {
+      const response = await request(app).get(`/owner/spaces`).set({
+        access_token,
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.any(Array));
+      expect(response.body[0]).toHaveProperty("Landlord");
+      expect(response.body[0]).toHaveProperty("Bookings");
+      expect(response.body[0]).toHaveProperty("ParkingSpaceReviews");
+      expect(response.body[0]).toHaveProperty("FacilityParkings");
+      expect(response.body[0]).toHaveProperty("landlordId", 1);
+    });
+
+
+    test("should handle errors and call the error handler", async () => {
+      const response = await request(app).get("/owner/spaces");
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Unauthenticated");
+    });
+
+  });
+
+  describe("GET /parkingSpace - fetchAllParkingSpaces", () => {
+    test("should fetch all parking spaces", async () => {
+      const response = await request(app).get("/parkingSpace");
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.any(Array));
+    });
+
+    test("should fetch all parking spaces", async () => {
+      // Mocking an error by making the findAll() method throw an exception
+      jest.spyOn(ParkingSpace, 'findAll').mockImplementation(() => {
+        throw new Error('Failed to fetch parking spaces');
+      });
+
+      const response = await request(app).get("/parkingSpace");
+
+      expect(response.status).toBe(500);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Internal server error");
+
+      // Restore the original implementation of the findAll() method
+      jest.spyOn(ParkingSpace, 'findAll').mockRestore();
+    });
+
+  });
+
+  describe("GET /parkingSpace/:id - fetchParkingSpaceWithRelations", () => {
+    test("should fetch a parking space with related data", async () => {
+      const response = await request(app).get(`/parkingSpace/1`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("name");
+      expect(response.body).toHaveProperty("ParkingSpaceReviews");
+    });
+
+
+    test("should handle errors and call the error handler", async () => {
+      const response = await request(app).get("/parkingSpace/123");
 
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty("message");

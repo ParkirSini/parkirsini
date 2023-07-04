@@ -1,213 +1,140 @@
-const request = require("supertest");
-const app = require("../app");
-
-const { ParkingSpaceReview, Landlord, Customer, ParkingSpace } = require('./../models')
-
-afterAll(done => {
-    ParkingSpaceReview.destroy({ truncate: true, cascade: true, restartIdentity: true })
-        .then(_ => {
-            return ParkingSpace.destroy({ truncate: true, cascade: true, restartIdentity: true })
-                .then(() => {
-                    return Landlord.destroy({ truncate: true, cascade: true, restartIdentity: true });
-                })
-                .then(() => {
-                    return Customer.destroy({ truncate: true, cascade: true, restartIdentity: true });
-                })
-                .then(() => {
-                    done();
-                })
-        })
-        .catch(err => {
-            done(err);
+const request = require('supertest');
+const app = require('../app');
+const { sequelize, ParkingSpaceReview, Customer } = require('../models');
+const { hashPassword } = require('../helpers/bcrypt');
+const data = require('../db.json');
+let access_token;
+beforeAll(async () => {
+    await Promise.allSettled([
+        sequelize.queryInterface.bulkInsert(
+            "Landlords",
+            data.landlords.map((el) => {
+                delete el.id;
+                el.password = hashPassword(el.password);
+                el.createdAt = el.updatedAt = new Date();
+                return el;
+            })
+        ),
+        sequelize.queryInterface.bulkInsert(
+            "Customers",
+            data.customers.map((customer) => {
+                delete customer.id;
+                customer.password = hashPassword(customer.password);
+                customer.createdAt = customer.updatedAt = new Date();
+                return customer;
+            })
+        ),
+        sequelize.queryInterface.bulkInsert(
+            "ParkingSpaces",
+            data.parkingSpaces.map((parkingSpace) => {
+                delete parkingSpace.id;
+                parkingSpace.createdAt = parkingSpace.updatedAt = new Date();
+                return parkingSpace;
+            })
+        ),
+    ]);
+    await ParkingSpaceReview.destroy({ truncate: true, cascade: true });
+    const response = await request(app)
+        .post('/pub/login')
+        .send({
+            email: 'customer1@example.com',
+            password: 'password3',
         });
+    access_token = response.body.access_token;
 });
 
-
-beforeAll(done => {
-    const landlordData = [{ email: 'malik@gmail.com', password: '12345', username: 'malik', phoneNumber: '000', address: "asdf", amount: 1234 }]
-    const parkingSpaceData = [{ landlordId: 1, stock: 12, mapLong: 116, mapLat: 116, name: "new Lahan parkir", subtitle: "indo", description: "gak ada", city: "Jogja" }]
-    const customerData = [{ email: 'malik@gmail.com', password: '12345', username: 'malik', phoneNumber: '000', address: "asdf" }]
-
-    const insertLandlords = Landlord.bulkCreate(landlordData);
-    const insertParkingSpace = ParkingSpace.bulkCreate(parkingSpaceData);
-    const insertCustomers = Customer.bulkCreate(customerData);
-
-    Promise.all([insertLandlords, insertParkingSpace, insertCustomers])
-        .then(() => {
-            done();
-        })
-        .catch(err => {
-            done(err);
-        });
-});
-
-
-describe('Review Routes Test', () => {
-    describe('POST /review - create new review', () => {
-        test('201 Success create review - should create new review', async () => {
-
-            const bodyData = {
-                parkingSpaceId: 1, customerId: 1,
-                review: 'Mantull',
-                rating: 5,
-            }
-            const response = await request(app).post('/review').send(bodyData)
-            expect(response.status).toBe(201);
-            expect(response.body).toEqual(expect.any(Object));
-            expect(response.body).toHaveProperty('msg', expect.any(String));
-
-            // expect(response.body).toHaveProperty('id', expect.any(Number));
-            // expect(response.body).toHaveProperty('email', bodyData.email);
-        });
-
-        // test('400 Failed register - should return error if email is null', async () => {
-
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: null,
-        //         password: '12345',
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "email is required");
-        // });
-
-        // test('400 Failed register - should return error if password is null', async () => {
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: 'kilamReve@gmail.com',
-        //         password: null,
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "password is required");
-        // });
-
-        // test('400 Failed register - should return error if email is empty string', async () => {
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: '',
-        //         password: '12345',
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "email is required");
-        // });
-
-
-        // test('400 Failed register - should return error if password is empty string', async () => {
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: 'kilamReve@gmail.com',
-        //         password: '',
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "password is required");
-        // });
-
-        // test('400 Failed register - should return error if email is already used', async () => {
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: 'kilamReve@gmail.com',
-        //         password: '12345',
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "email already used");
-        // });
-
-        // test('400 Failed register - should return error if email format is invalid', async () => {
-
-        //     const bodyData = {
-        //         username: 'malik',
-        //         email: 'kilamReve@gmai',
-        //         password: '12345',
-        //         phoneNumber: '3456',
-        //         address: 'Jl. Iskandar Muda'
-        //     }
-        //     const response = await request(app).post('/customers/register').send(bodyData)
-        //     expect(response.status).toBe(400);
-        //     expect(response.body).toEqual(expect.any(Object));
-        //     expect(response.body).toHaveProperty('msg', "email format is incorrect");
-        // });
-
+afterAll(async () => {
+    await sequelize.queryInterface.bulkDelete('ParkingSpaceReviews', null,  {
+        cascade: true,
+        restartIdentity: true,
+        truncate: true,
+    });
+    await sequelize.queryInterface.bulkDelete("ParkingSpaces", null, {
+        cascade: true,
+        restartIdentity: true,
+        truncate: true,
     });
 
-    describe('PUT /review/:id - edit review', () => {
-        test('201 Success update review - should return message', async () => {
-            const bodyData = {
-                email: 'kilamReve@gmail.com',
-                password: '12345'
-            }
-            const response = await request(app).post('/customers/login').send(bodyData)
-            expect(response.status).toBe(200)
-            expect(response.body).toEqual(expect.any(Object));
-            expect(response.body).toHaveProperty('accest_token', expect.any(String));
+    await sequelize.queryInterface.bulkDelete("Customers", null, {
+        cascade: true,
+        restartIdentity: true,
+        truncate: true,
+    });
 
+    await sequelize.queryInterface.bulkDelete("Landlords", null, {
+        cascade: true,
+        restartIdentity: true,
+        truncate: true,
+    });
+});
+
+describe('ReviewController', () => {
+    describe('GET /reviews/:id - getReviewbyParkingSpaceId', () => {
+        test('should fetch reviews for a specific parking space', async () => {
+            const parkingSpaceId = 1;
+            const response = await request(app).get(`/review/${parkingSpaceId}`);
+            expect(response.status).toBe(201);
+            expect(response.body).toEqual(expect.any(Array));
+        });
+    });
+    describe('GET /review - getAllReview', () => {
+        test('should fetch all reviews', async () => {
+            const response = await request(app).get('/review');
+            expect(response.status).toBe(201);
+            expect(response.body).toEqual(expect.any(Array));
+        });
+        test('should handle errors when fetching reviews', async () => {
+            // Mocking the error by throwing an exception
+            ParkingSpaceReview.findAll = jest.fn(() => {
+                throw new Error('Failed to fetch reviews');
+            });
+
+            const response = await request(app).get('/review');
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({
+                "message": "Internal server error",
+            });
+        });
+    });
+
+    describe('POST /reviews/:parkingSpaceId - createReview', () => {
+        test('should create a new review', async () => {
+            const parkingSpaceId = 1;
+            const reviewData = {
+                review: 'Great parking space!',
+                rating: 5,
+            };
+            const response = await request(app)
+                .post(`/review/1`)
+                .set({
+                    access_token,
+                })
+                .send(reviewData);
+            expect(response.status).toBe(201);
+            expect(response.body).toEqual({ msg: 'Review successfully sent' });
         });
 
-        test('401 Failed login - should return error when password is wrong', async () => {
-            const bodyData = {
-                email: 'kilamReve@gmail.com',
-                password: '1234'
-            }
-            const response = await request(app).post('/customers/login').send(bodyData)
-            expect(response.status).toBe(401)
-            expect(response.body).toEqual(expect.any(Object));
-            expect(response.body).toHaveProperty('msg', 'Email / Password is incorrect');
+        test('should handle errors when creating a review', async () => {
+            // Mocking the error by throwing an exception
+            ParkingSpaceReview.create = jest.fn(() => {
+                throw new Error('Failed to create review');
+            });
 
+            const parkingSpaceId = 1;
+            const reviewData = {
+                review: 'Great parking space!',
+                rating: 5,
+            };
+            const response = await request(app)
+                .post(`/review/${parkingSpaceId}`)
+                .set({
+                    access_token,
+                })
+                .send(reviewData);
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({
+                "message": "Internal server error",
+            });
         });
-
-        test('401 Failed login - should return error when email is not registered', async () => {
-            const bodyData = {
-                email: 'kilamReve@gmail.commm',
-                password: '12345'
-            }
-            const response = await request(app).post('/customers/login').send(bodyData)
-            expect(response.status).toBe(401)
-            expect(response.body).toEqual(expect.any(Object));
-            expect(response.body).toHaveProperty('msg', 'Email / Password is incorrect');
-
-        });
-
-
-        // test('401 Failed login - should return error when user not found', (done) => {
-        //     request(app)
-        //         .post('/login')
-        //         .send({
-        //             email: 'hello@mail.com',
-        //             password: 'salahpassword',
-        //         })
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
-
-        //             expect(status).toBe(401);
-        //             expect(body).toEqual(expect.any(Object));
-        //             expect(body).toHaveProperty('message', 'Invalid email/password');
-        //             return done();
-        //         });
-        // });
     });
 });
