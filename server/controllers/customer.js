@@ -1,6 +1,6 @@
 const { compareHash } = require("../helpers/bcrypt");
 const { createToken, verifyToken } = require("../helpers/jwt");
-const { Customer, ParkingSpace, Facility, Landlord, FacilityParking, Booking, ParkingSpaceReview } = require("../models");
+const { Customer, ParkingSpace, Facility, Landlord, FacilityParking, Booking, ParkingSpaceReview, ParkingSpaceImage } = require("../models");
 
 class customerController {
     static async register(req, res, next) {
@@ -13,7 +13,13 @@ class customerController {
                 phoneNumber,
                 address
             });
-            res.status(201).json({ id: customer.id, email });
+            res.status(201).json({
+                id: customer.id,
+                email: customer.email,
+                username: customer.username,
+                phoneNumber: customer.phoneNumber,
+                address: customer.address
+            });
         } catch (error) {
             next(error);
         }
@@ -95,7 +101,7 @@ class customerController {
                 include: [
                     {
                         model: Landlord,
-                        // attributes: { exclude: ['password'] },
+                        attributes: { exclude: ['password'] },
                     },
                     {
                         model: FacilityParking,
@@ -105,6 +111,9 @@ class customerController {
                     },
                     {
                         model: ParkingSpaceReview,
+                    },
+                    {
+                        model: ParkingSpaceImage,
                     },
                 ],
             });

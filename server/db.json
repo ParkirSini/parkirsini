@@ -140,5 +140,39 @@
       "rating": 5,
       "review": "Excellent parking space"
     }
+  ],
+  "parkingSpaceImages":[
+    {
+      "parkingSpaceId": 1,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/357/0835790_PE667051_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 1,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/357/0835770_PE667049_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 1,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/357/0835768_PE667048_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 1,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/103/1010338_PH163577_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 2,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/708/0870808_PE716735_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 2,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/708/0870801_PE640070_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 2,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/715/0871536_PE640577_S4.jpg"
+    },
+    {
+      "parkingSpaceId": 2,
+      "imgUrl": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/708/0870804_PE640576_S4.jpg"
+    }
   ]
 }

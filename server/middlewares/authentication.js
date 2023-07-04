@@ -33,6 +33,10 @@ async function authenticationCustomer(req, res, next) {
 
     req.user = {
       id: customer.id,
+      email: customer.email,
+      username: customer.username,
+      phoneNumber: customer.phoneNumber,
+      address: customer.address
     };
 
     next();
