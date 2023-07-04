@@ -1,11 +1,14 @@
-const { ParkingSpaceReview, ParkingSpace } = require('./../models')
+const { ParkingSpaceReview, ParkingSpace, Landlord } = require('./../models')
 
 class ParkingSpaceController {
     static async findAllParkingSpace(req, res, next) {
+        console.log("masukkk");
+
         try {
             const parkingSpaces = await ParkingSpace.findAll()
             res.status(200).json(parkingSpaces)
         } catch (error) {
+            console.log(error);
             next(error)
         }
     }
@@ -16,6 +19,7 @@ class ParkingSpaceController {
             const parkingSpace = await ParkingSpace.findByPk(id, {
                 include: [
                     { model: ParkingSpaceReview },
+                    { model: Landlord, attributes: ["email"] }
                 ],
             })
             if (!parkingSpace) {

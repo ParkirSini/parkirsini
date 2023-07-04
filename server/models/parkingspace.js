@@ -22,16 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  // <<<<<<< malik-1
-  //   ParkingSpace.init({
-  //     landlordId: DataTypes.INTEGER,
-  //     stock: {
-  //       allowNull: false,
-  //       type: DataTypes.INTEGER,
-  //       validate: {
-  //         notNull: {
-  //           msg: "Stock is required"
-  // =======
 
   ParkingSpace.init(
     {
