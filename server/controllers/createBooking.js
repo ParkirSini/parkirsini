@@ -1,4 +1,4 @@
-const { Booking, Landlord, Customer } = require("../models");
+const { Booking, Landlord, Customer, ParkingSpace } = require("../models");
 const midtransClient = require('midtrans-client');
 const { sequelize } = require("../models");
 const SibApiV3Sdk = require('sib-api-v3-sdk')
@@ -80,6 +80,27 @@ class CreateBooking {
       } catch (error) {
          await t.rollback()
          console.log(error)
+         next(error)
+      }
+   }
+
+   // TODO find All Bookings based on Logged in user
+   static async getAllBookings(req, res, next) {
+      // console.log(req.customer.id, '<<<<<<<<< customer ID');
+      // console.log(req.params.productId, '<<<<<<<<<<< product ID');
+      try {
+         const bookings = await Booking.findAll({
+            include: {
+               model: ParkingSpace,
+               attributes: { exclude: ['createdAt', 'updatedAt'] }
+            },
+            where: {
+               customerId: req.user.id
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt'] }
+         })
+         res.status(200).json({ bookings })
+      } catch (error) {
          next(error)
       }
    }
