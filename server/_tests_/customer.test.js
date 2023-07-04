@@ -11,7 +11,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  // Clean up the Customers table after running the tests
   await sequelize.queryInterface.bulkDelete("Customers", null, {
     cascade: true,
     restartIdentity: true,

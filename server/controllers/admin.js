@@ -190,7 +190,7 @@ class Admin {
   static async fetchParkingSpaceImages(req, res, next) {
     try {
       const data = await ParkingSpaceImage.findAll({ order: [["id", "ASC"]] });
-      res.json(data);
+      res.status(200).json(data);
     } catch (error) {
       next(error);
     }
