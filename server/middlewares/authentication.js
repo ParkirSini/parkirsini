@@ -1,4 +1,4 @@
-const { Landlord } = require("../models");
+const { Landlord, Customer } = require("../models");
 const { verifyToken } = require("../helpers/jwt");
 
 async function authenticationAdmin(req, res, next) {
@@ -14,7 +14,7 @@ async function authenticationAdmin(req, res, next) {
       username: admin.username,
       role: admin.role,
     };
-    
+
     next();
   } catch (error) {
     next(error);
@@ -61,10 +61,10 @@ async function authenticationLandlord(req, res, next) {
     next(error);
   }
 }
-    
+
 module.exports = {
-  authenticationCustomer, 
-  authenticationLandlord, 
+  authenticationCustomer,
+  authenticationLandlord,
   authenticationAdmin
 }
 
