@@ -8,7 +8,11 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await sequelize.queryInterface.bulkDelete("Landlords", null, {});
+    await sequelize.queryInterface.bulkDelete("Landlords", null, {
+        cascade: true,
+        restartIdentity: true,
+        truncate: true,
+      });
 });
 
 describe("landlordController", () => {

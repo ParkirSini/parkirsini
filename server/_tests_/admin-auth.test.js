@@ -17,12 +17,17 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await Landlord.destroy({ truncate: true, cascade: true });
-  await sequelize.queryInterface.bulkDelete("Landlords", null, {
+  await Landlord.destroy({
     cascade: true,
+    restartIdentity: true,
     truncate: true,
   });
-  await sequelize.query('ALTER SEQUENCE "Landlords_id_seq" RESTART WITH 1;');
+  await sequelize.queryInterface.bulkDelete("Landlords", null, {
+    cascade: true,
+    restartIdentity: true,
+    truncate: true,
+  });
+  // await sequelize.query('ALTER SEQUENCE "Landlords_id_seq" RESTART WITH 1;');
 });
 
 describe("admin-auth", () => {

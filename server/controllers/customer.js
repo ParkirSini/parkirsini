@@ -40,43 +40,43 @@ class customerController {
         }
     }
 
-    static async googleSignIn(req, res, next) {
-        try {
-            const googleToken = req.headers["google-oauth-token"];
-            const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-            const ticket = await client.verifyIdToken({
-                idToken: googleToken,
-                audience: process.env.GOOGLE_CLIENT_ID,
-            });
-            const payload = ticket.getPayload();
-            let customer = await Customer.findOne({
-                where: {
-                    email: payload.email,
-                },
-            });
-            if (!customer) {
-                customer = await Customer.create(
-                    {
-                        username: payload.name,
-                        email: payload.email,
-                        password: "password",
-                    },
-                    {
-                        hooks: false,
-                    }
-                );
-            }
-            const access_token = verifyToken({
-                id: customer.id,
-            });
-            res.status(200).json({
-                access_token
-            });
-        } catch (error) {
-            console.log(error);
-            next(error);
-        }
-    }
+    // static async googleSignIn(req, res, next) {
+    //     try {
+    //         const googleToken = req.headers["google-oauth-token"];
+    //         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    //         const ticket = await client.verifyIdToken({
+    //             idToken: googleToken,
+    //             audience: process.env.GOOGLE_CLIENT_ID,
+    //         });
+    //         const payload = ticket.getPayload();
+    //         let customer = await Customer.findOne({
+    //             where: {
+    //                 email: payload.email,
+    //             },
+    //         });
+    //         if (!customer) {
+    //             customer = await Customer.create(
+    //                 {
+    //                     username: payload.name,
+    //                     email: payload.email,
+    //                     password: "password",
+    //                 },
+    //                 {
+    //                     hooks: false,
+    //                 }
+    //             );
+    //         }
+    //         const access_token = verifyToken({
+    //             id: customer.id,
+    //         });
+    //         res.status(200).json({
+    //             access_token
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //         next(error);
+    //     }
+    // }
 
     static async fetchAllParkingSpaces(req, res, next) {
         try {
@@ -95,7 +95,7 @@ class customerController {
                 include: [
                     {
                         model: Landlord,
-                        attributes: { exclude: ['password'] },
+                        // attributes: { exclude: ['password'] },
                     },
                     {
                         model: FacilityParking,

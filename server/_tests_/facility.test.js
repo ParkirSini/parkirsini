@@ -14,7 +14,11 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await sequelize.queryInterface.bulkDelete("Facilities", null, {});
+  await sequelize.queryInterface.bulkDelete("Facilities", null, {
+    cascade: true,
+    restartIdentity: true,
+    truncate: true,
+  });
 });
 
 describe("facilityController", () => {

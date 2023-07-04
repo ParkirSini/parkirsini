@@ -12,7 +12,11 @@ beforeAll(async () => {
 
 afterAll(async () => {
   // Clean up the Customers table after running the tests
-  await sequelize.queryInterface.bulkDelete("Customers", null, {});
+  await sequelize.queryInterface.bulkDelete("Customers", null, {
+    cascade: true,
+    restartIdentity: true,
+    truncate: true,
+  });
 });
 
 describe("customerController", () => {
@@ -95,7 +99,7 @@ describe("customerController", () => {
     });
   });
 
-  describe("POST /pub/google-sign-in - googleSignIn", () => {
+  // describe("POST /pub/google-sign-in - googleSignIn", () => {
     // test("should sign in a customer with valid Google OAuth token", async () => {
     //   // Mock the Google OAuth token
     //   const googleToken = "mockGoogleToken";
@@ -131,34 +135,34 @@ describe("customerController", () => {
     //   expect(response.body).toHaveProperty("access_token");
     // });
 
-    test("should handle errors and call the error handler", async () => {
-      // Mock the Google OAuth token
-      const googleToken = "mockGoogleToken";
+  //   test("should handle errors and call the error handler", async () => {
+  //     // Mock the Google OAuth token
+  //     const googleToken = "mockGoogleToken";
 
-      // Mock the response from the Google API
-      const googleAPIResponse = {
-        error: "Google API error",
-      };
+  //     // Mock the response from the Google API
+  //     const googleAPIResponse = {
+  //       error: "Google API error",
+  //     };
 
-      // Mock the verification of Google OAuth token to throw an error
-      const verifyIdTokenMock = jest
-        .fn()
-        .mockRejectedValue(new Error(googleAPIResponse.error));
+  //     // Mock the verification of Google OAuth token to throw an error
+  //     const verifyIdTokenMock = jest
+  //       .fn()
+  //       .mockRejectedValue(new Error(googleAPIResponse.error));
 
-      // Mock the OAuth2Client and assign the verifyIdTokenMock
-      const OAuth2ClientMock = jest.fn().mockReturnValue({
-        verifyIdToken: verifyIdTokenMock,
-      });
+  //     // Mock the OAuth2Client and assign the verifyIdTokenMock
+  //     const OAuth2ClientMock = jest.fn().mockReturnValue({
+  //       verifyIdToken: verifyIdTokenMock,
+  //     });
 
-      // Assign the mocked OAuth2Client to the app.locals
-      app.locals.client = new OAuth2ClientMock();
+  //     // Assign the mocked OAuth2Client to the app.locals
+  //     app.locals.client = new OAuth2ClientMock();
 
-      const response = await request(app)
-        .post("/pub/google-sign-in")
-        .set("Authorization", `Bearer ${googleToken}`);
-      expect(response.status).toBe(500);
-      expect(response.body).toHaveProperty("message");
-      expect(response.body.message).toBe("Internal server error");
-    });
-  });
+  //     const response = await request(app)
+  //       .post("/pub/google-sign-in")
+  //       .set("Authorization", `Bearer ${googleToken}`);
+  //     expect(response.status).toBe(500);
+  //     expect(response.body).toHaveProperty("message");
+  //     expect(response.body.message).toBe("Internal server error");
+  //   });
+  // });
 });

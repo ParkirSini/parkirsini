@@ -44,7 +44,7 @@ class landlordController {
         try {
             const LandlordId = req.user.id;
             console.log(LandlordId);
-            const parkingSpace = await ParkingSpace.findOne({
+            const parkingSpace = await ParkingSpace.findAll({
                 where: { landlordId: LandlordId },
                 include: [
                     {
@@ -63,15 +63,8 @@ class landlordController {
                 ],
             });
 
-            if (!parkingSpace) {
-                const error = new Error("ParkingSpace not found");
-                error.name = "Not Found";
-                throw error;
-            }
-
             res.status(200).json(parkingSpace);
         } catch (error) {
-            console.log(error);
             next(error);
         }
     }
