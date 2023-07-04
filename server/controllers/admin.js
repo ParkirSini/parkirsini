@@ -72,17 +72,17 @@ class Admin {
   static async createParkingSpaceTransaction(req, res, next) {
     const transaction = await sequelize.transaction();
     try {
-      const {
-        stock,
-        name,
-        subtitle,
-        description,
-        city,
-        price,
-        mainImg,
-        facilities,
-        images,
-      } = req.body;
+      const mainImg = req.files[0].path;
+      const images = req.files
+        .filter((el, index) => {
+          return index !== 0;
+        })
+        .map((el) => {
+          return el.path;
+        });
+
+      const { stock, name, subtitle, description, city, price, facilities } =
+        req.body;
       const landlordId = req.user.id;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
@@ -214,7 +214,7 @@ class Admin {
   static async uploadParkingSpaceImage(req, res, next) {
     try {
       const parkingSpaceId = req.params.id;
-      const { imgUrl } = req.body;
+      const imgUrl = req.file.path;
 
       const newImage = await ParkingSpaceImage.create({
         parkingSpaceId,
