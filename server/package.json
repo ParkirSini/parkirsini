@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --coverage",
-    "test1": "jest parkingSpaceImage.test.js --detectOpenHandles --forceExit --coverage",
+    "test1": "jest booking.test.js --detectOpenHandles --forceExit --coverage",
     "start": "nodemon bin/www"
   },
   "keywords": [],
