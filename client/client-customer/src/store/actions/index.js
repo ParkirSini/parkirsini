@@ -378,7 +378,7 @@ export const fetchFacilityDetail = () => {
   }
 }
 
-export const fetchParkingSpaceRelation= (id) => {
+export const fetchParkingSpaceRelation = (id) => {
   return async (dispatch) => {
     try {
       const response = await fetch('http://localhost:3000/pub/spaces/' + id)
@@ -437,14 +437,14 @@ export const fetchParkingSpacesDetail = (id) => {
 }
 
 export const addParkingSpaces = (name,
-                                 subtitle,
-                                 description,
-                                 city,
-                                 stock,
-                                 mapLong,
-                                 mapLat,
-                                 price,
-                                 mainImg) => {
+  subtitle,
+  description,
+  city,
+  stock,
+  mapLong,
+  mapLat,
+  price,
+  mainImg) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("access_token");
@@ -593,6 +593,36 @@ export const login = (email, password) => {
   return async (dispatch) => {
     try {
       const response = await fetch('http://localhost:3000/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        const access_token = data.access_token;
+        localStorage.setItem('access_token', access_token);
+        dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+      } else {
+        dispatch({ type: 'LOGIN_FAILURE', payload: 'Invalid email or password' });
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const loginCustomer = (email, password) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/pub/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
