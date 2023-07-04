@@ -2,6 +2,7 @@ const {
   ParkingSpace,
   ParkingSpaceImage,
   Landlord,
+  FacilityParking,
   sequelize,
 } = require("../models");
 class Admin {
@@ -79,6 +80,7 @@ class Admin {
         city,
         price,
         mainImg,
+        facilities,
         images,
       } = req.body;
       const landlordId = req.user.id;
@@ -101,6 +103,18 @@ class Admin {
         { transaction }
       );
 
+      const facilityPromises = facilities.map(async (facilityId) => {
+        await FacilityParking.create(
+          {
+            facilityId,
+            parkingSpaceId: newSpace.id,
+          },
+          { transaction }
+        );
+      });
+
+      await Promise.all(facilityPromises);
+
       const imagePromises = images.map(async (imgUrl) => {
         await ParkingSpaceImage.create(
           {
@@ -119,6 +133,7 @@ class Admin {
         .json({ message: "Create parking space success", data: newSpace });
     } catch (error) {
       await transaction.rollback();
+      console.log(error);
       next(error);
     }
   }
