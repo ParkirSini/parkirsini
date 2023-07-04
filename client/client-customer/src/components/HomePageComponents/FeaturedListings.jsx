@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {fetchParkingSpaces} from "../../store/actions/index.js";
-import {Link} from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchParkingSpaces } from "../../store/actions/index.js";
+import { Link } from "react-router-dom";
 
 const FeaturedListings = () => {
   const parkingSpaces = useSelector((state) => state.data.data);
-  const reviews = useSelector(state => state.reviewDetail.reviewDetail);
+  const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const dispatch = useDispatch();
-
+  console.log(parkingSpaces);
   useEffect(() => {
     dispatch(fetchParkingSpaces());
   }, [dispatch]);
@@ -24,10 +24,14 @@ const FeaturedListings = () => {
           </div>
         </div>
         <div className="row">
-          {parkingSpaces.map(space => (
+          {parkingSpaces.map((space) => (
             <div className="col-md-4 card-2" key={space.id}>
               <div className="card">
-                <img className="card-img-top" src={space.mainImg} alt="Card image cap" />
+                <img
+                  className="card-img-top"
+                  src={space.mainImg}
+                  alt="Card image cap"
+                />
                 <div className="card-body">
                   <h5 className="card-title">{space.name}</h5>
                   {/*<ul className="card-rating">*/}
@@ -36,9 +40,17 @@ const FeaturedListings = () => {
                   {/*</ul>*/}
                   <p className="card-text">{space.description}</p>
                   <div className="card-bottom">
-                    <p><i className="ti-location-pin"></i>{space.city}</p>
+                    <p>
+                      <i className="ti-location-pin"></i>
+                      {space.city}
+                    </p>
                   </div>
-                  <Link to={`/detail/${space.id}`} className="btn btn-outline-primary">Lihat Detail</Link>
+                  <Link
+                    to={`/detail/${space.id}`}
+                    className="btn btn-outline-primary"
+                  >
+                    Lihat Detail
+                  </Link>
                 </div>
               </div>
             </div>

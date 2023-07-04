@@ -1,5 +1,5 @@
 
-const { ParkingSpaceReview } = require('./../models')
+const { ParkingSpaceReview, Customer } = require('./../models')
 class ReviewController {
     static async getAllReview(req, res, next) {
         try {
@@ -15,6 +15,9 @@ class ReviewController {
             const id = req.params.id
             // console.log(id, "<<<<<<<<<<<<<");
             const reviews = await ParkingSpaceReview.findAll({
+                include: [
+                    { model: Customer }
+                ],
                 where: {
                     parkingSpaceId: id
                 }

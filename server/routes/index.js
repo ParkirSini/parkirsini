@@ -42,8 +42,6 @@ router
   .use("/owner", landlordRouter)
   .use("/admin", adminRouter)
   .use("/booking", bookingRouter)
-  .use(parkingSpaceRouter)
   .use(errorHandler);
-router.use(parkingSpaceRouter)
 
 module.exports = router;

@@ -33,6 +33,7 @@ class CreateBooking {
          console.log(midtransToken, "<<<<<<<<<<<<<<<");
          res.status(201).json(midtransToken)
       } catch (error) {
+         console.log(error);
          next(error)
       }
    }
@@ -42,7 +43,8 @@ class CreateBooking {
       try {
          const { id } = req.user
          const { amount, email, parkingSpaceId, price } = req.body
-         let findUser = await Customer.findByPk(id)
+         // email ini untuk landlord
+         let findUser = await Customer.findByPk(id) // ini untuk customer (findCustomer)
          const booking = await Booking.create({
             parkingSpaceId,
             customerId: id,
@@ -57,6 +59,7 @@ class CreateBooking {
          apiKey.apiKey = process.env.SENDINBLUE_KEY
          const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
          const sender = {
+            // kalau bisa pakai email aktif
             email: "parkirsini@gmail.com",
             name: "Parkir Sini"
          }
