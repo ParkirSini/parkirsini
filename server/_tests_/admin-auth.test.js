@@ -46,6 +46,7 @@ describe("admin-auth", () => {
         "message",
         "Create user admin admin2@example.com success"
       );
+      expect(response.body).toHaveProperty("amount", expect.any(Number));
     });
 
     test("should return error for empty email", async () => {
