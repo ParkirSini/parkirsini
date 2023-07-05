@@ -1,7 +1,9 @@
 function errorHandler(error, req, res, next) {
     let code = 500;
     let message = "Internal server error";
-  
+
+    console.log(error)
+
     if (
       error.name === "SequelizeValidationError" ||
       error.name === "SequelizeUniqueConstraintError"
@@ -30,7 +32,7 @@ function errorHandler(error, req, res, next) {
       code = 400;
       message = "Email or Password is required";
     }
-  
+
     res.status(code).json({ message });
   }
   module.exports = errorHandler;

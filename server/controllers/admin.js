@@ -86,7 +86,7 @@ class Admin {
       const landlordId = req.user.id;
       const mapLong = req.body.mapLong || 0;
       const mapLat = req.body.mapLat || 0;
-
+      console.log(stock, name, subtitle, description, city, price, facilities, '<----ini di transaction')
       const newSpace = await ParkingSpace.create(
         {
           landlordId,
@@ -102,6 +102,8 @@ class Admin {
         },
         { transaction }
       );
+
+
 
       const facilityPromises = facilities.map(async (facilityId) => {
         await FacilityParking.create(
@@ -133,7 +135,7 @@ class Admin {
         .json({ message: "Create parking space success", data: newSpace });
     } catch (error) {
       await transaction.rollback();
-      console.log(error);
+      console.log(error.message);
       next(error);
     }
   }
