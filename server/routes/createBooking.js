@@ -16,7 +16,7 @@ async function authorizationCustomer(req, res, next) {
          attributes: { exclude: ['createdAt', 'updatedAt'] }
       })
       // console.log(req.body, "<<<<<< BODYYYYY")
-      if (foundBooking.length > 0) throw { name: "Forbidden" }
+      if (foundBooking.length > 0 && foundBooking[0].paid) throw { name: "Forbidden" }
       next();
    } catch (error) {
       console.log(error);

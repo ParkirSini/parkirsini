@@ -130,6 +130,16 @@ class customerController {
             next(error);
         }
     }
+
+    static async getAllCustomer(req, res, next) {
+        try {
+            const customers = await Customer.findAll()
+            res.status(200).json(customers)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
 }
 
 module.exports = customerController

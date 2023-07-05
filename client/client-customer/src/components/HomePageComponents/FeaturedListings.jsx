@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {fetchParkingSpaces} from "../../store/actions/index.js";
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import NotesIcon from '@mui/icons-material/Notes';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchParkingSpaces } from "../../store/actions/index.js";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import NotesIcon from "@mui/icons-material/Notes";
 const FeaturedListings = () => {
   const parkingSpaces = useSelector((state) => state.data.data);
-  const reviews = useSelector(state => state.reviewDetail.reviewDetail);
+  const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchParkingSpaces());
   }, [dispatch]);
-
+  console.log(parkingSpaces, ">>>>>>>>>>>>>>>>>");
   return (
     <section className="main-block featured-wrap">
       <div className="container-fluid">
@@ -29,35 +29,47 @@ const FeaturedListings = () => {
 
         <div className="row">
           {parkingSpaces.map((parkingSpace) => (
-            <div className="col-md-6 col-lg-3 article-first" key={parkingSpace.id}>
+            <div
+              className="col-md-6 col-lg-3 article-first"
+              key={parkingSpace.id}
+            >
               <div className="news-block">
                 <img
                   src={parkingSpace.mainImg}
                   alt={parkingSpace.name}
                   className="img-fluid"
                   style={{
-                    width: '100%',
-                    height: '250px',
-                    objectFit: 'cover',
+                    width: "100%",
+                    height: "250px",
+                    objectFit: "cover",
                   }}
                 />
                 <div className="news-title">
                   <h5>{parkingSpace.name}</h5>
-                  <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
+                  <p className="blog2-thumbnail-name">
+                    {parkingSpace.subtitle}
+                  </p>
 
                   <hr />
-                  <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
-                  <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>
+                  <p className="blog2-thumbnail-name">
+                    {parkingSpace.description}
+                  </p>
+                  <p className="blog2-thumbnail-name">
+                    <LocationOnIcon />
+                    <span> {parkingSpace.city}</span>
+                  </p>
                   <br />
-                  <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat
+                  <Link
+                    to={`/detail/${parkingSpace.id}`}
+                    className="btn-primary"
+                  >
+                    Lihat
                   </Link>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-
       </div>
     </section>
   );

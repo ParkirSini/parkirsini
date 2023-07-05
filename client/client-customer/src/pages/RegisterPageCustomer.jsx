@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { newLandlord } from "../store/actions/index.js";
+import { newLandlord, registerCustomer } from "../store/actions/index.js";
 
 const RegisterPageCustomer = () => {
   const [email, setEmail] = useState("");
@@ -17,9 +17,9 @@ const RegisterPageCustomer = () => {
 
     try {
       await dispatch(
-        newLandlord(email, password, username, phoneNumber, address)
+        registerCustomer(email, password, username, phoneNumber, address)
       );
-      navigate("/login");
+      navigate("/loginCustomer");
       setEmail("");
       setPassword("");
       setUsername("");

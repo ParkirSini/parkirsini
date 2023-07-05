@@ -643,7 +643,8 @@ export const newLandlord = (email, password, username, phoneNumber, address) => 
           address
         }),
       })
-      console.log(response)
+      if (!response.ok)
+        console.log(response)
       dispatch(fetchLandlords())
 
     } catch (error) {
@@ -711,6 +712,38 @@ export const loginCustomer = (email, password) => {
     }
   };
 };
+
+
+export const registerCustomer = (email, password, username, phoneNumber, address) => {
+
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/pub/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          username,
+          phoneNumber,
+          address
+        }),
+      })
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data, "<<<<<<<< new customer")
+
+      } else {
+        throw new Error("Internal Server Error");
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const getBookingByCustomerId = () => {
   return async (dispatch) => {
