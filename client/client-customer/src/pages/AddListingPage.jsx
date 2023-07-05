@@ -118,7 +118,6 @@ const AddListingPage = () => {
     mapLong: '',
     mapLat: '',
     price: '',
-    mainImg: '',
     images: [],
     facilities: []
   });
@@ -137,13 +136,21 @@ const AddListingPage = () => {
       navigate('/dashboard-landlord');
     };
 
+    // const handlePhotoChange = (event) => {
+    //   const files = Array.from(event.target.files);
+    //   const images = files.map((file) => file.name);
+    //   setFormData((prevFormData) => ({
+    //     ...prevFormData,
+    //     images,
+    //     mainImg: images[0],
+    //   }));
+    // };
+
     const handlePhotoChange = (event) => {
       const files = Array.from(event.target.files);
-      const images = files.map((file) => file.name);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        images,
-        mainImg: images[0],
+        images: files,
       }));
     };
 
@@ -168,7 +175,6 @@ const AddListingPage = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
       console.log('---> formData AddListingPage', formData);
-      const mainImg = formData.images[0];
       dispatch(
         addParkingSpaces(
           formData.name,
@@ -179,7 +185,6 @@ const AddListingPage = () => {
           formData.mapLong,
           formData.mapLat,
           formData.price,
-          formData.mainImg,
           formData.images,
           formData.facilities
         )
@@ -193,7 +198,6 @@ const AddListingPage = () => {
         mapLong: '',
         mapLat: '',
         price: '',
-        mainImg: '',
         images: [],
         facilities: []
       });
@@ -207,9 +211,15 @@ const AddListingPage = () => {
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-md-8">
-                <button className="btn btn-primary" onClick={handleBackButtonClick}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleBackButtonClick}
+                  style={{marginBottom: '20px'}}
+                >
                   ← Kembali
                 </button>
+
+
                 <div className="listing-wrap">
                   <form onSubmit={handleSubmit}>
                     <div className="listing-title">
@@ -324,9 +334,12 @@ const AddListingPage = () => {
 
                         </div>
                       </div>
-
+                      <hr />
                       <div className="form-group">
-                        <label>Fasilitas Lahan Parkir</label>
+                        <label style={{fontSize: '20px', color: 'black', fontWeight: 'bold', textDecoration: 'underline'}}>Fasilitas Lahan Parkir</label>
+
+
+
                         <div className="row justify-content-start">
                           <div className="col-md-4">
                             {facilitiesData.slice(0, 4).map((facility) => (

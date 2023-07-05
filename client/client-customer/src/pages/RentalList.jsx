@@ -43,10 +43,14 @@ const RentalList = () => {
       </div>
 
       <div className="container-fluid" style={{ width: '80%', margin: '0 auto' }}>
-        <button className="btn btn-primary" onClick={handleBackButtonClick}>
+        <button
+          className="btn btn-primary"
+          onClick={handleBackButtonClick}
+          style={{marginBottom: '20px'}}
+        >
           ← Kembali
         </button>
-        <br />
+
         <div className="row">
           <div className="col-md-12">
             <table className="table">
