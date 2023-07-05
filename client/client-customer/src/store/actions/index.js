@@ -436,47 +436,110 @@ export const fetchParkingSpacesDetail = (id) => {
   }
 }
 
-export const addParkingSpaces = (name,
-  subtitle,
-  description,
-  city,
-  stock,
-  mapLong,
-  mapLat,
-  price,
-  mainImg) => {
+// export const addParkingSpaces = (name,
+//                                  subtitle,
+//                                  description,
+//                                  city,
+//                                  stock,
+//                                  mapLong,
+//                                  mapLat,
+//                                  price,
+//                                  mainImg,
+//                                  images,
+//                                  facilities,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const token = localStorage.getItem("access_token");
+//       const response = await fetch('http://localhost:3000/admin/parking-space-transaction', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'access_token': `${token}`
+//         },
+//         body: JSON.stringify({
+//           name,
+//           subtitle,
+//           description,
+//           city,
+//           stock,
+//           mapLong,
+//           mapLat,
+//           price,
+//           mainImg,
+//           images,
+//           facilities
+//         }),
+//       })
+//       console.log(response)
+//       const data = await response.json();
+//       console.log(data);
+//
+//       dispatch(fetchParkingSpaces())
+//
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// }
+
+// export const addParkingSpaces = (name, subtitle, description, city, stock, mapLong, mapLat, price, mainImg, images, facilities) => {
+export const addParkingSpaces = (name, subtitle, description, city, stock, mapLong, mapLat, price, images, facilities) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("access_token");
-      const response = await fetch('http://localhost:3000/admin/parking-space', {
+      // console.log('---> ini di actions 491', name, subtitle, description, city, stock, mapLong, mapLat, price, images, facilities)
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('subtitle', subtitle);
+      formData.append('description', description);
+      formData.append('city', city);
+      formData.append('stock', stock);
+      formData.append('mapLong', mapLong);
+      formData.append('mapLat', mapLat);
+      formData.append('price', price);
+
+      images.forEach((image) => {
+        formData.append('images', image);
+      });
+
+      facilities.forEach((facility) => {
+        formData.append('facilities', facility);
+      });
+
+
+      // formData.append('facilities', JSON.stringify(facilities));
+
+
+      // console.log('---> ini di actions 510', formData)
+
+      const response = await fetch('http://localhost:3000/admin/parking-space-transaction', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'access_token': `${token}`
         },
-        body: JSON.stringify({
-          name,
-          subtitle,
-          description,
-          city,
-          stock,
-          mapLong,
-          mapLat,
-          price,
-          mainImg
-        }),
-      })
-      console.log(response)
+        body: formData
+        // body: formData,
+      });
+
+      // console.log('---> ini di actions 518', formData)
+      // for (let pair of formData.entries()) {
+      //   console.log(pair[0] + ', ' + pair[1]);
+      // }
+
+      console.log(response);
       const data = await response.json();
       console.log(data);
 
-      dispatch(fetchParkingSpaces())
+      dispatch(fetchParkingSpaces());
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};
+
 
 export const addParkingSpaceReview = (parkingSpaceId, review, rating) => {
   return async (dispatch) => {
@@ -649,7 +712,6 @@ export const loginCustomer = (email, password) => {
   };
 };
 
-
 export const getBookingByCustomerId = () => {
   return async (dispatch) => {
     try {
@@ -676,7 +738,19 @@ export const getBookingByCustomerId = () => {
   };
 };
 
-
-
-
+export const fetchParkingSpacesImages = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/admin/parking-space/' + id)
+      const data = await response.json()
+      const action = {
+        type: "parkingSpaceImages/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}
 

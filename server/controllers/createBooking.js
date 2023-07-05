@@ -11,6 +11,7 @@ class CreateBooking {
       try {
          console.log("masukk")
          const { amount } = req.body
+         if (!amount) throw { name: "Error" }
          const { id } = req.user
          let findUser = await Customer.findByPk(id)
          let snap = new midtransClient.Snap({
@@ -73,7 +74,7 @@ class CreateBooking {
             sender,
             to: receivers,
             subject: "Payment Receipt",
-            htmlContent: generateHTML(amount, findUser.email, date)
+            htmlContent: generateHTML(amount, findUser.email, date, findUser.address, findUser.username)
          })
          await t.commit()
          res.status(201).json({ message: 'Successfully added a new booking' })

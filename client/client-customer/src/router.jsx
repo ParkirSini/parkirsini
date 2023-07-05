@@ -15,6 +15,8 @@ import RentalApproval from "./pages/RentalApproval.jsx";
 import DashboardLandlord from "./pages/DashboardLandlord.jsx";
 import LoginPageCustomer from "./pages/LoginPageCustomer.jsx";
 import RegisterPageCustomer from "./pages/RegisterPageCustomer.jsx";
+import RentalList from "./pages/RentalList.jsx";
+import TalkJsInbox from "./pages/TalkJsInbox";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +85,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard-landlord",
         element: <DashboardLandlord />,
+      },
+      {
+        path: "/rental-list/:id",
+        element: <RentalList />
+      },
+      {
+        path: "/inbox",
+        element: <TalkJsInbox />
       },
     ],
   },

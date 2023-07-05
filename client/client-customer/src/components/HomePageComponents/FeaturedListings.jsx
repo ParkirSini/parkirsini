@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchParkingSpaces } from "../../store/actions/index.js";
-import { Link } from "react-router-dom";
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {fetchParkingSpaces} from "../../store/actions/index.js";
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import NotesIcon from '@mui/icons-material/Notes';
 const FeaturedListings = () => {
   const parkingSpaces = useSelector((state) => state.data.data);
-  const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
+  const reviews = useSelector(state => state.reviewDetail.reviewDetail);
   const dispatch = useDispatch();
-  console.log(parkingSpaces);
+
   useEffect(() => {
     dispatch(fetchParkingSpaces());
   }, [dispatch]);
@@ -16,46 +18,46 @@ const FeaturedListings = () => {
     <section className="main-block featured-wrap">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-md-10">
+          <div className="col-md-12 text-center">
             <div className="title-block">
-              <h2>Parking Space Listings</h2>
-              <p>Tempat parkir dengan rating tinggi di sini</p>
+              <h2>Daftar Lahan Parkir Tersedia</h2>
+              {/*<p>Tempat parkir dengan rating tinggi di sini</p>*/}
             </div>
           </div>
         </div>
+        <br />
+
         <div className="row">
-          {parkingSpaces.map((space) => (
-            <div className="col-md-4 card-2" key={space.id}>
-              <div className="card">
+          {parkingSpaces.map((parkingSpace) => (
+            <div className="col-md-6 col-lg-3 article-first" key={parkingSpace.id}>
+              <div className="news-block">
                 <img
-                  className="card-img-top"
-                  src={space.mainImg}
-                  alt="Card image cap"
+                  src={parkingSpace.mainImg}
+                  alt={parkingSpace.name}
+                  className="img-fluid"
+                  style={{
+                    width: '100%',
+                    height: '250px',
+                    objectFit: 'cover',
+                  }}
                 />
-                <div className="card-body">
-                  <h5 className="card-title">{space.name}</h5>
-                  {/*<ul className="card-rating">*/}
-                  {/*  <li>{space.rating || "no rating yet"}</li>*/}
-                  {/*  <li>{space.reviewCount || 0} ratings</li>*/}
-                  {/*</ul>*/}
-                  <p className="card-text">{space.description}</p>
-                  <div className="card-bottom">
-                    <p>
-                      <i className="ti-location-pin"></i>
-                      {space.city}
-                    </p>
-                  </div>
-                  <Link
-                    to={`/detail/${space.id}`}
-                    className="btn btn-outline-primary"
-                  >
-                    Lihat Detail
+                <div className="news-title">
+                  <h5>{parkingSpace.name}</h5>
+                  <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
+
+                  <hr />
+                  <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
+                  <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>
+                  <br />
+                  <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat
                   </Link>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+
       </div>
     </section>
   );

@@ -26,12 +26,12 @@ const Hero = () => {
                     <div className="col-md-12">
                       <div className="search-box2">
                         <div className="search-box-title">
-                          <label>Cari nama jalan atau nama daerah</label><br />
+                          <label>Cari nama kota atau keterangan lain sesuai kebutuhan</label><br />
                           <input
                             type="text"
                             name="#"
                             className="search-form"
-                            placeholder="Contoh: jl. kuningan raya"
+                            placeholder="Cari..."
                             onClick={handleClick}
                           />
                         </div>

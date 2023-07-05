@@ -1,4 +1,4 @@
-const generateHTML = (amount, email, date) => {
+const generateHTML = (amount, email, date, address, username) => {
    return `<!DOCTYPE html
    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
@@ -107,8 +107,8 @@ const generateHTML = (amount, email, date) => {
                            style="padding-left:20px;border-style:solid;border-color:white;border-width:0px 1px 1px 0px;height:44px">
                            <p style="font-size:10px;line-height:1.4;margin:0;padding:0;color:rgb(102,102,102)">BILLED TO
                            </p>
-                           <p style="font-size:12px;line-height:1.4;margin:0;padding:0">Username</p>
-                           <p style="font-size:12px;line-height:1.4;margin:0;padding:0">Address</p>
+                           <p style="font-size:12px;line-height:1.4;margin:0;padding:0">${username}</p>
+                           <p style="font-size:12px;line-height:1.4;margin:0;padding:0">${address}</p>
                            <p style="font-size:12px;line-height:1.4;margin:0;padding:0">INDONESIA</p>
                         </td>
                      </tr>

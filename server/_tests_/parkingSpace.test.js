@@ -238,4 +238,232 @@ describe("Parking Spaces API", () => {
       expect(response.body.message).toBe("Data not found!!");
     });
   });
+
+  describe("GET /admin/parking-space - fetchAllParkingSpaces", () => {
+    test("should fetch all parking spaces", async () => {
+      const response = await request(app).get("/admin/parking-space").set({
+        access_token,
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.any(Array));
+    });
+
+    test("should fetch all parking spaces", async () => {
+      // Mocking an error by making the findAll() method throw an exception
+      jest.spyOn(ParkingSpace, 'findAll').mockImplementation(() => {
+        throw new Error('Failed to fetch parking spaces');
+      });
+
+      const response = await request(app).get("/pub/spaces");
+
+      expect(response.status).toBe(500);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Internal server error");
+
+      // Restore the original implementation of the findAll() method
+      jest.spyOn(ParkingSpace, 'findAll').mockRestore();
+    });
+
+  });
+
+  describe("GET /admin/parking-space/:id - fetchParkingSpaces", () => {
+    test("should fetch a parking space with related data", async () => {
+      const response = await request(app).get(`/admin/parking-space/1`).set({
+        access_token,
+      });;
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("name");
+      expect(response.body).toHaveProperty("ParkingSpaceImages");
+    });
+
+
+    test("should handle errors and call the error handler", async () => {
+      const response = await request(app).get("/admin/parking-space/123").set({
+        access_token,
+      });;;
+
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Data not found!!");
+    });
+  });
+
+  describe("POST /admin/parking-space - createParkingSpace", () => {
+    test("should create a new parking space", async () => {
+      const response = await request(app)
+        .post("/admin/parking-space")
+        .set({ access_token })
+        .send({
+          stock: 10,
+          name: "Parking Space 1",
+          subtitle: "Subtitle",
+          description: "Description",
+          city: "City",
+          price: 10.0,
+          mainImg: "image.jpg",
+        });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message", "Create parking space success");
+      expect(response.body).toHaveProperty("data");
+      expect(response.body.data).toHaveProperty("id");
+      expect(response.body.data).toHaveProperty("landlordId");
+      expect(response.body.data).toHaveProperty("stock", 10);
+      expect(response.body.data).toHaveProperty("name", "Parking Space 1");
+      expect(response.body.data).toHaveProperty("subtitle", "Subtitle");
+      expect(response.body.data).toHaveProperty("description", "Description");
+      expect(response.body.data).toHaveProperty("city", "City");
+      expect(response.body.data).toHaveProperty("price", 10.0);
+      expect(response.body.data).toHaveProperty("mainImg", "image.jpg");
+    });
+
+    test("should handle errors and call the error handler", async () => {
+      const response = await request(app)
+        .post("/admin/parking-space")
+        .set({ access_token })
+        .send({
+          stock: 10,
+          name: "Parking Space 1",
+          subtitle: "Subtitle",
+          description: "Description",
+          // Missing required fields
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("message", "City is required");
+    });
+
+    test("should handle unauthorized access", async () => {
+      const response = await request(app)
+        .post("/admin/parking-space")
+        // Missing access_token
+        .send({
+          stock: 10,
+          name: "Parking Space 1",
+          subtitle: "Subtitle",
+          description: "Description",
+          city: "City",
+          price: 10.0,
+          mainImg: "image.jpg",
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty("message", "Unauthenticated");
+    });
+  });
+
+  describe("PUT /admin/parking-space/:id - editParkingSpace", () => {
+    test("should edit an existing parking space", async () => {
+      const parkingSpaceId = 1
+      const response = await request(app)
+        .put(`/admin/parking-space/${parkingSpaceId}`)
+        .set({ access_token })
+        .send({
+          stock: 20,
+          name: "Updated Parking Space",
+          subtitle: "Updated Subtitle",
+          description: "Updated Description",
+          city: "Updated City",
+          price: 15.0,
+          mainImg: "updated_image.jpg",
+        });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message", "Update parking space success");
+
+      const updatedSpaceResponse = await request(app)
+        .get(`/admin/parking-space/${parkingSpaceId}`).set({ access_token });
+
+      expect(updatedSpaceResponse.status).toBe(200);
+      expect(updatedSpaceResponse.body).toHaveProperty("id", parkingSpaceId);
+      expect(updatedSpaceResponse.body).toHaveProperty("stock", 20);
+      expect(updatedSpaceResponse.body).toHaveProperty("name", "Updated Parking Space");
+      expect(updatedSpaceResponse.body).toHaveProperty("subtitle", "Updated Subtitle");
+      expect(updatedSpaceResponse.body).toHaveProperty("description", "Updated Description");
+      expect(updatedSpaceResponse.body).toHaveProperty("city", "Updated City");
+      expect(updatedSpaceResponse.body).toHaveProperty("price", 15.0);
+      expect(updatedSpaceResponse.body).toHaveProperty("mainImg", "updated_image.jpg");
+    });
+
+    test("should handle errors and call the error handler", async () => {
+      const parkingSpaceId = 123;
+      const response = await request(app)
+        .put(`/admin/parking-space/${parkingSpaceId}`)
+        .set({ access_token })
+        .send({
+          stock: 20,
+          name: "Updated Parking Space",
+          subtitle: "Updated Subtitle",
+          description: "Updated Description",
+          city: "Updated City",
+          price: 15.0,
+          mainImg: "updated_image.jpg",
+        });
+
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("message", "Data not found!!");
+    });
+
+    test("should handle unauthorized access", async () => {
+      const parkingSpaceId = 1;
+      const response = await request(app)
+        .put(`/admin/parking-space/${parkingSpaceId}`)
+        // Missing access_token
+        .send({
+          stock: 20,
+          name: "Updated Parking Space",
+          subtitle: "Updated Subtitle",
+          description: "Updated Description",
+          city: "Updated City",
+          price: 15.0,
+          mainImg: "updated_image.jpg",
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty("message", "Unauthenticated");
+    });
+  });
+
+  describe("DELETE /admin/parking-space/:id - deleteParkingSpace", () => {
+    test("should delete an existing parking space", async () => {
+      const parkingSpaceId = 3;
+      const response = await request(app)
+        .delete(`/admin/parking-space/${parkingSpaceId}`)
+        .set({ access_token });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("message", "Parking Space Deleted");
+
+      const deletedSpaceResponse = await request(app)
+        .get(`/admin/parking-space/${parkingSpaceId}`)
+        .set({ access_token });
+
+      expect(deletedSpaceResponse.status).toBe(404);
+      expect(deletedSpaceResponse.body).toHaveProperty("message", "Data not found!!");
+    });
+
+    test("should handle errors and call the error handler", async () => {
+      const parkingSpaceId = 123;
+      const response = await request(app)
+        .delete(`/admin/parking-space/${parkingSpaceId}`)
+        .set({ access_token });
+
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("message", "Data not found!!");
+    });
+
+    test("should handle unauthorized access", async () => {
+      const parkingSpaceId = 1;
+      const response = await request(app)
+        .delete(`/admin/parking-space/${parkingSpaceId}`)
+        // Missing access_token
+        .send();
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty("message", "Unauthenticated");
+    });
+  });
+
 });

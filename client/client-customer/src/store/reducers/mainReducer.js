@@ -1,7 +1,7 @@
 
 import { combineReducers } from "redux";
 import {
-  parkingSpaceDetailReducer,
+  parkingSpaceDetailReducer, parkingSpaceImages,
   parkingSpaceReducer,
   parkingSpaceReducerByLandlord,
   parkingSpaceRelation
@@ -19,7 +19,8 @@ const mainReducer = combineReducers({
   reviewDetail: reviewDetailReducer,
   facilityDetail: facilityDetailReducer,
   relation: parkingSpaceRelation,
-  booking: bookingReducer
+  booking: bookingReducer,
+  images: parkingSpaceImages
 })
 
 
