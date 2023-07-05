@@ -55,7 +55,7 @@ const ImageSlider = ({ relation }) => {
   }
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '700px', margin: '0 auto' }}>
       <div className="image-slider-container">
         <Slider ref={slider => (sliderRef = slider)} {...settings}>
           {parkingSpaceImages.map(image => (

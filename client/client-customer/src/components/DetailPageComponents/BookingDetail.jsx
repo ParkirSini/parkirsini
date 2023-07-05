@@ -2,14 +2,20 @@ import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider.jsx";
 import MapComponent from "../MapComponent.jsx";
-import { addParkingSpaceReview } from "../../store/actions/index.js";
+import {addParkingSpaceReview, fetchParkingSpaceRelation, fetchParkingSpacesDetail} from "../../store/actions/index.js";
 import Talk from "talkjs";
 import {Rating} from "@mui/material";
+import { createAvatar } from '@dicebear/avatars';
+import * as style from '@dicebear/avatars-identicon-sprites';
+import {useParams} from "react-router-dom";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const BookingDetail = () => {
   const dispatch = useDispatch();
   const parkingSpace = useSelector((state) => state.detail.detail);
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
+  const { id } = useParams();
+  const [isReady, setIsReady] = useState(false);
   const facilities = useSelector(
     (state) => state.facilityDetail.facilityDetail
   );
@@ -18,6 +24,17 @@ const BookingDetail = () => {
   // console.log(facilities)
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(fetchParkingSpaceRelation(id));
+      setTimeout(() => {
+        setIsReady(true);
+      }, 500);
+    };
+
+    fetchData();
+  }, [dispatch, id]);
 
   const handleRatingChange = (event) => {
     setRating(Number(event.target.value));
@@ -44,6 +61,21 @@ const BookingDetail = () => {
     setReviewText("");
   };
 
+  const getAvatarUrl = (id) => {
+    return createAvatar(style, { seed: id.toString() });
+  }
+
+  const getInitials = (name) => {
+    const parts = name.split(' ');
+    let initials = '';
+    if (parts.length > 1) {
+      initials = parts[0][0] + parts[parts.length - 1][0];
+    } else if (parts.length === 1) {
+      initials = parts[0][0];
+    }
+    return initials.toUpperCase();
+  }
+
   //////////////// TALK JS START /////////////////
   const chatboxEl = useRef();
 
@@ -66,7 +98,7 @@ const BookingDetail = () => {
       });
 
       const otherUser = new Talk.User({
-        id: relation.Landlord.id,
+        id: relation.Landlord.id + 30,
         name: relation.Landlord.username,
         email: relation.Landlord.email,
         welcomeMessage: `Selamat datang di ${relation.name}. Terimakasih sudah menghubungi kami, akan kami reply segera. Tunggu ya...`,
@@ -89,7 +121,10 @@ const BookingDetail = () => {
     }
   }
   ///////////////// TALK JS END ////////////////////
-  // console.log(reviews)
+  if (!relation || !isReady) {
+    return <div></div>;
+  }
+  console.log(reviews)
   return (
     <>
       <section className="gray-dark booking-details_wrap" ref={chatboxEl}>
@@ -118,9 +153,8 @@ const BookingDetail = () => {
                       return (
                         <div className="col-md-4" key={facility.id}>
                           <label className="custom-checkbox">
-                            <span className="ti-check-box"></span>
                             <span className="custom-control-description">
-                              {facility.name}
+                              <CheckCircleIcon /> {facility.name}
                             </span>
                           </label>
                         </div>
@@ -216,13 +250,36 @@ const BookingDetail = () => {
                 <hr />
                 {reviews.map((review) => (
                   <div className="customer-review_wrap" key={review.id}>
-                    <div className="customer-img">
-                      <p>{review.Customer?.username}</p>
+                  {/*  <div className="customer-img">*/}
+                  {/*  /!*  <div dangerouslySetInnerHTML={{__html: getAvatarUrl(review.Customer?.id)}} />*!/*/}
+
+                  {/*  <div className="avatar" style={{background: '#'+Math.floor(Math.random()*16777215).toString(16)}}>*/}
+                  {/*    {getInitials(review.Customer?.username)}*/}
+                  {/*  </div>*/}
+                  {/*</div>*/}
+
+                    <div className="customer-img" style={{ position: 'relative', width: '100px', height: '100px' }}>
+                      <div className="avatar" style={{
+                        position: 'absolute',
+                        top: '0',
+                        left: '0',
+                        width: '90%',
+                        height: '90%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontSize: '50px',
+                        background: '#'+Math.floor(Math.random()*16777215).toString(16)
+                      }}>
+                        {getInitials(review.Customer?.username)}
+                      </div>
                     </div>
+
+
                     <div className="customer-content-wrap">
                       <div className="customer-content">
                         <div className="customer-review">
-                          <h5>{review.review} </h5>
+                          <h5>{review.Customer?.username} </h5>
                         </div>
                         <div className="customer-rating customer-rating-red">
                           {review.rating}
@@ -250,8 +307,12 @@ const BookingDetail = () => {
                 <div className="address">
                   <span className="icon-screen-smartphone"></span>
                   <p>
+                    Pemilik: {relation.Landlord.username}
+                  </p>
+                  <p>
                     {relation.Landlord ? relation.Landlord.phoneNumber : ""}
                   </p>
+
                 </div>
                 <div className="address">
                   <span className="icon-clock"></span>
@@ -263,20 +324,7 @@ const BookingDetail = () => {
                 </div>
                 <a type="button" onClick={sendMessage}  className="btn btn-outline-danger btn-contact" data-bs-toggle="modal" data-bs-target="#modalTalkJsResa">Chat Pemilik Lahan</a>
               </div>
-              <div className="follow">
-                <div className="follow-img">
-                  {relation.Landlord ? (
-                    <>
-                      <h6>Pemilik: {relation.Landlord.username}</h6>
-                    </>
-                  ) : (
-                    <>
-                      <h6>Unknown Landlord</h6>
-                      <span>{parkingSpace.city}</span>
-                    </>
-                  )}
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

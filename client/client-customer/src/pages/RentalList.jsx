@@ -30,6 +30,8 @@ const RentalList = () => {
     return <div></div>;
   }
 
+  console.log(relation)
+
   return (
     <>
       <div className="container-fluid" style={{ width: '80%', margin: '0 auto' }}>
@@ -60,6 +62,10 @@ const RentalList = () => {
                 <td>{relation.name}</td>
               </tr>
               <tr>
+                <td>Lahan Parkir Tersedia</td>
+                <td>{relation.stock}</td>
+              </tr>
+              <tr>
                 <td>Harga</td>
                 <td>Rp. {relation.price.toLocaleString('id-ID')} / 30 hari</td>
               </tr>
@@ -72,7 +78,7 @@ const RentalList = () => {
                 </td>
               </tr>
               <tr>
-                <td>Deskripsi</td>
+                <td>Keterangan</td>
                 <td>
                   <p>{relation.subtitle}</p>
                 </td>
@@ -81,7 +87,7 @@ const RentalList = () => {
                 <td>Penyewa</td>
                 <td style={{ verticalAlign: 'middle' }}>
                   {relation.Bookings ? (
-                    relation.Bookings.map((booking) => <p key={booking.id}>{booking.customerId}</p>)
+                    relation.Bookings.map((booking) => <p key={booking.id}>Customer ID: {booking.customerId} tersisa {booking.duration} hari</p>)
                   ) : (
                     <p>No bookings available</p>
                   )}
