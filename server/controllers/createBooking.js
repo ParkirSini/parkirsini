@@ -11,7 +11,6 @@ class CreateBooking {
       try {
          console.log("masukk")
          const { amount } = req.body
-         if (!amount) throw { name: "Error" }
          const { id } = req.user
          let findUser = await Customer.findByPk(id)
          let snap = new midtransClient.Snap({
@@ -46,6 +45,7 @@ class CreateBooking {
          const { amount, email, parkingSpaceId, price } = req.body
          // email ini untuk landlord
          let findUser = await Customer.findByPk(id) // ini untuk customer (findCustomer)
+         let findParkingSpace = await ParkingSpace.findByPk(parkingSpaceId)
          const booking = await Booking.create({
             parkingSpaceId,
             customerId: id,
@@ -74,7 +74,15 @@ class CreateBooking {
             sender,
             to: receivers,
             subject: "Payment Receipt",
-            htmlContent: generateHTML(amount, findUser.email, date, findUser.address, findUser.username)
+            htmlContent: generateHTML(
+               amount,
+               findUser.email,
+               date,
+               findUser.address,
+               findUser.username,
+               findUser.phoneNumber,
+               findParkingSpace.name
+            )
          })
          await t.commit()
          res.status(201).json({ message: 'Successfully added a new booking' })
@@ -109,6 +117,7 @@ class CreateBooking {
          next(error)
       }
    }
+
 }
 
 module.exports = CreateBooking

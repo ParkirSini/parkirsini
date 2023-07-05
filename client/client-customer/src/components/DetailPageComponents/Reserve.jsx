@@ -1,4 +1,5 @@
 
+
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
@@ -21,12 +22,6 @@ const Reserve = () => {
     dispatch(fetchParkingSpaceRelation(parkingSpace.id));
   }, [dispatch, parkingSpace]);
   console.log(relation, "<<<<<<<<<< relasi di reserve");
-
-  const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((total, review) => total + review.rating, 0) /
-      reviews.length
-      : "belum ada ulasan";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,9 +98,11 @@ const Reserve = () => {
       } else {
         console.log("error nih >>>>>>>>>:", response);
         if (response.statusText === "Unauthorized") {
+
           return swal("Error", "Silakan login terlebih dahulu.", "error");
         } else if (response.statusText === "Forbidden") {
           return swal("Error", "Mohon maaf tidak dapat order 2x", "error");
+
         }
       }
     } catch (error) {

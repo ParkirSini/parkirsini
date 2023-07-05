@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
@@ -17,7 +17,18 @@ import LoginPageCustomer from "./pages/LoginPageCustomer.jsx";
 import RegisterPageCustomer from "./pages/RegisterPageCustomer.jsx";
 import RentalList from "./pages/RentalList.jsx";
 import TalkJsInbox from "./pages/TalkJsInbox";
+
 import About from "./pages/About.jsx";
+
+import EmptyPage from "./pages/EmptyPage.jsx";
+
+function guard() {
+  let token = localStorage.getItem("access_token");
+  if (!token) {
+    return redirect("/empty");
+  }
+  return null;
+}
 
 const router = createBrowserRouter([
   {
@@ -32,32 +43,47 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
+        path: "/result",
+        element: <ResultPage />,
+      },
+      {
+        path: "/empty",
+        element: <EmptyPage />,
+      },
+      {
         path: "/landlordListings",
         element: <LandlordListings />,
+        loader: guard,
       },
       {
         path: "/landlordListings/:id",
         element: <LandlordListings />,
+        loader: guard,
       },
       {
         path: "/add-listing",
         element: <AddListingPage />,
+        loader: guard,
       },
       {
         path: "/thankyou-listing",
         element: <ThankYouListing />,
+        loader: guard,
       },
       {
         path: "/thankyou-payment",
         element: <ThankYouPayment />,
+        loader: guard,
       },
       {
         path: "/location",
         element: <LocationComponent />,
+        loader: guard,
       },
       {
         path: "/rented",
         element: <CustomerRent />,
+        loader: guard,
       },
       {
         path: "/login",
@@ -76,24 +102,24 @@ const router = createBrowserRouter([
         element: <RegisterPageCustomer />,
       },
       {
-        path: "/result",
-        element: <ResultPage />,
-      },
-      {
         path: "/approval",
         element: <RentalApproval />,
+        loader: guard,
       },
       {
         path: "/dashboard-landlord",
         element: <DashboardLandlord />,
+        loader: guard,
       },
       {
         path: "/rental-list/:id",
-        element: <RentalList />
+        element: <RentalList />,
+        loader: guard,
       },
       {
         path: "/inbox",
-        element: <TalkJsInbox />
+        element: <TalkJsInbox />,
+        loader: guard,
       },
       {
         path: "/about",
