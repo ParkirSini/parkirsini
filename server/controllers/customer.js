@@ -46,6 +46,15 @@ class customerController {
         }
     }
 
+    static async getAllCustomer(req, res, next) {
+        try {
+            const customers = await Customer.findAll()
+            res.status(200).json(customers)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    }
     // static async googleSignIn(req, res, next) {
     //     try {
     //         const googleToken = req.headers["google-oauth-token"];

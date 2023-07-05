@@ -78,6 +78,19 @@ describe("customerController", () => {
       const response = await request(app)
         .post("/pub/login")
         .send({
+          email: "johndoasde@example.com",
+          password: "wrongpassword",
+        });
+
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Invalid email/password");
+    });
+
+    test("should handle errors and call the error handler", async () => {
+      const response = await request(app)
+        .post("/pub/login")
+        .send({
           email: "johndoe@example.com",
           password: "wrongpassword",
         });
@@ -85,6 +98,16 @@ describe("customerController", () => {
       expect(response.status).toBe(401);
       expect(response.body).toHaveProperty("message");
       expect(response.body.message).toBe("Invalid email/password");
+    });
+
+    test("should handle missing password and call the error handler", async () => {
+      const response = await request(app)
+        .post("/pub/login")
+        .send({ email: "johndoe@example.com" });
+  
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.message).toBe("Email or Password is required");
     });
 
     test("should handle empty input data and call the error handler", async () => {
@@ -98,6 +121,39 @@ describe("customerController", () => {
     });
   });
 
+  describe("GET /customers - getAllCustomer", () => {
+    test("should get all customers", async () => {
+      // Create some sample customers
+      const customer2 = await Customer.create({
+        username: "JaneDoe",
+        email: "janedoe@example.com",
+        password: "password",
+        phoneNumber: "987654321",
+        address: "456 Elm St",
+      });
+
+      // Make the request to get all customers
+      const response = await request(app).get("/pub/customers");
+
+      // Assert the response
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(2);
+      expect(response.body[0]).toHaveProperty("id", 1);
+      expect(response.body[1]).toHaveProperty("id", customer2.id);
+    });
+
+    test("should handle errors and call the error handler", async () => {
+      // Mock an error in the findAll method
+      jest.spyOn(Customer, "findAll").mockRejectedValue(new Error("Database error"));
+
+      // Make the request to get all customers
+      const response = await request(app).get("/pub/customers");
+
+      // Assert the response
+      expect(response.status).toBe(500);
+      expect(response.body).toHaveProperty("message", "Internal server error");
+    });
+  });
   // describe("POST /pub/google-sign-in - googleSignIn", () => {
     // test("should sign in a customer with valid Google OAuth token", async () => {
     //   // Mock the Google OAuth token
