@@ -242,6 +242,21 @@ class Admin {
       next(error);
     }
   }
+
+  //FETCH LANDLORD DATA
+  static async fetchLandlordData(req, res, next) {
+    try {
+      const id = req.user.id;
+      const data = await Landlord.findOne({
+        attributes: { exclude: ["password"] },
+        where: { id },
+        order: [["id", "ASC"]],
+      });
+      res.json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Admin;
