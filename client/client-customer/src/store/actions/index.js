@@ -346,6 +346,22 @@ export const fetchParkingSpaces = () => {
   }
 }
 
+export const fetchCustomers = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/pub/customers')
+      const data = await response.json()
+      const action = {
+        type: "customers/fetch",
+        payload: data
+      }
+      dispatch(action)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+}
+
 export const fetchReviewDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -532,7 +548,7 @@ export const addParkingSpaces = (name, subtitle, description, city, stock, mapLo
       const data = await response.json();
       console.log(data);
 
-      dispatch(fetchParkingSpaces());
+      dispatch(fetchParkingSpacesByLandlord());
 
     } catch (error) {
       console.log(error);

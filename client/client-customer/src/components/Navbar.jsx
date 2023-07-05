@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 const NavigationBar = () => {
+  function handleLogout() {
+    // Use either clear or removeItem method
+    // clear removes everything
+    localStorage.clear();
+
+    // removeItem removes a specific item
+    // replace 'itemKey' with the key of the item you want to remove
+    // localStorage.removeItem('itemKey');
+  }
   return (
     <>
       {/*navbar utama*/}
@@ -71,8 +80,18 @@ const NavigationBar = () => {
                         </NavDropdown.Item>
                       </NavDropdown>
                       <Nav.Item>
-                        <Nav.Link as={Link} to="/">
+                        <Nav.Link as={Link} to="/" onClick={handleLogout}>
                           Logout
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link as={Link} to="/about">
+                          Tentang
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link as={Link} to="/reg">
+                          Mulai Sewakan Parkiran
                         </Nav.Link>
                       </Nav.Item>
                     </Nav>

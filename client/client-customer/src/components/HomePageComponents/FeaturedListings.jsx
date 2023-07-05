@@ -43,10 +43,10 @@ const FeaturedListings = () => {
                 />
                 <div className="news-title">
                   <h5>{parkingSpace.name}</h5>
-                  <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
+                  <p className="blog2-thumbnail-name ellipsis">{parkingSpace.subtitle}</p>
 
                   <hr />
-                  <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
+                  <p className="blog2-thumbnail-name ellipsis">{parkingSpace.description}</p>
                   <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>
                   <br />
                   <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat

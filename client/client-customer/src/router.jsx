@@ -17,6 +17,7 @@ import LoginPageCustomer from "./pages/LoginPageCustomer.jsx";
 import RegisterPageCustomer from "./pages/RegisterPageCustomer.jsx";
 import RentalList from "./pages/RentalList.jsx";
 import TalkJsInbox from "./pages/TalkJsInbox";
+import About from "./pages/About.jsx";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/inbox",
         element: <TalkJsInbox />
+      },
+      {
+        path: "/about",
+        element: <About />
       },
     ],
   },

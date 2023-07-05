@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchParkingSpaceRelation } from '../store/actions';
+import {fetchCustomers, fetchParkingSpaceRelation} from '../store/actions';
 import { useNavigate, useParams } from 'react-router-dom';
+import Logout from "../components/Logout.jsx";
 
 const RentalList = () => {
   const relation = useSelector((state) => state.relation.relation);
+  const customers = useSelector((state) => state.customers.customers);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -13,6 +15,7 @@ const RentalList = () => {
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchParkingSpaceRelation(id));
+      await dispatch(fetchCustomers());
       setTimeout(() => {
         setIsReady(true);
       }, 500);
@@ -30,11 +33,14 @@ const RentalList = () => {
     return <div></div>;
   }
 
-  console.log(relation)
+  // console.log(relation)
 
   return (
     <>
-      <div className="container-fluid" style={{ width: '80%', margin: '0 auto' }}>
+      <div className="container-fluid" style={{ width: '80%', margin: '0 auto', position: 'relative' }}>
+        <div style={{ position: 'absolute', top: 0, right: 0 }}>
+          <Logout />
+        </div>
         <div className="row justify-content-center">
           <div className="col-md-10">
             <div className="titile-block title-block_subpage">
@@ -63,7 +69,7 @@ const RentalList = () => {
               </tr>
               <tr>
                 <td>Lahan Parkir Tersedia</td>
-                <td>{relation.stock}</td>
+                <td>{relation.stock - relation.Bookings?.length}</td>
               </tr>
               <tr>
                 <td>Harga</td>
@@ -87,12 +93,20 @@ const RentalList = () => {
                 <td>Penyewa</td>
                 <td style={{ verticalAlign: 'middle' }}>
                   {relation.Bookings ? (
-                    relation.Bookings.map((booking) => <p key={booking.id}>Customer ID: {booking.customerId} tersisa {booking.duration} hari</p>)
+                    relation.Bookings.map((booking) => {
+                      const customer = customers.find((customer) => customer.id === booking.customerId);
+                      return (
+                        <p key={booking.id}>
+                          Ussername: {customer?.username} ~~ Nomor Handphone: {customer?.phoneNumber} ~~ Sisa durasi parkir: {booking.duration} hari
+                        </p>
+                      );
+                    })
                   ) : (
                     <p>No bookings available</p>
                   )}
                 </td>
               </tr>
+
               </tbody>
             </table>
           </div>

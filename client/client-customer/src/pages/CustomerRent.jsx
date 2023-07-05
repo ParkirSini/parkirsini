@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import RentCard from "../components/CustomerRentComponents/RentCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getBookingByCustomerId } from "../store/actions";
+import Logout from "../components/Logout.jsx";
 
 const CustomerRent = () => {
   // const parkingSpaces = useSelector((state) => state.data.data);
@@ -13,9 +14,10 @@ const CustomerRent = () => {
   useEffect(() => {
     dispatch(getBookingByCustomerId());
   }, [dispatch]);
+
   return (
-    <section className="main-block featured-wrap">
-      <div className="container-fluid">
+    <section className="main-block featured-wrap" style={{ position: 'relative' }}>
+      <div className="container-fluid" >
         <div className="row justify-content-center">
           <div className="col-md-10">
             <div className="titile-block">

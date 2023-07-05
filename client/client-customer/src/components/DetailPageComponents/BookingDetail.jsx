@@ -335,8 +335,8 @@ const BookingDetail = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Send A Message</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h4 className="modal-title fs-5" id="exampleModalLabel">Send A Message</h4>
+              <button className="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div className="modal-body">
               <div ref={chatboxEl} style={{height: '80vh'}}/>

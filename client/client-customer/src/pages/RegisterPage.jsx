@@ -37,7 +37,8 @@ const RegisterPage = () => {
               <div className="listing-wrap">
                 <form onSubmit={handleSubmit}>
                   <div className="listing-title">
-                    <h4>Pendaftaran</h4>
+                    <h4>Pendaftaran Pemilik Lahan Parkir</h4>
+                    <img src="images/clip3.jpg" alt="memajukan umkm" style={{ width: "35vw" }} />
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-group">
