@@ -1,17 +1,29 @@
+
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import LocalOfferSharpIcon from '@mui/icons-material/LocalOfferSharp';
 import {fetchParkingSpacesDetail} from "../../store/actions/index.js";
+import { fetchParkingSpaceRelation } from "../../store/actions";
+
 
 const Reserve = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const parkingSpace = useSelector((state) => state.detail.detail);
-  const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const { id } = useParams();
   const [isReady, setIsReady] = useState(false);
-
+  const parkingSpace = useSelector((state) => state.detail.detail);
+  const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
+  const relation = useSelector((state) => state.relation.relation);
+  const averageRating =
+    reviews.length > 0
+      ? reviews.reduce((total, review) => total + review.rating, 0) /
+        reviews.length
+      : "no rating yet";
+  useEffect(() => {
+    dispatch(fetchParkingSpaceRelation(parkingSpace.id));
+  }, [dispatch, parkingSpace]);
+  console.log(relation, "<<<<<<<<<< relasi di reserve");
 
   const averageRating =
     reviews.length > 0
@@ -75,6 +87,7 @@ const Reserve = () => {
           },
           body: JSON.stringify({
             amount: parkingSpace.price,
+            parkingSpaceId: parkingSpace.id,
           }),
         }
       );
@@ -110,6 +123,12 @@ const Reserve = () => {
               <br />
               <p>
                 <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')} / 30 hari</span>
+              </p>
+              <br />
+
+              <h5>Stock</h5>
+              <p>
+                <span>{parkingSpace.stock - relation.Bookings?.length}</span>
               </p>
               <br />
               <p className="reserve-description">{parkingSpace.subtitle}</p>
