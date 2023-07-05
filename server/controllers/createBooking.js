@@ -11,7 +11,6 @@ class CreateBooking {
       try {
          console.log("masukk")
          const { amount } = req.body
-         if (!amount) throw { name: "Error" }
          const { id } = req.user
          let findUser = await Customer.findByPk(id)
          let snap = new midtransClient.Snap({
@@ -118,6 +117,7 @@ class CreateBooking {
          next(error)
       }
    }
+
 }
 
 module.exports = CreateBooking

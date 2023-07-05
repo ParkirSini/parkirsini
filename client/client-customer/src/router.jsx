@@ -33,6 +33,13 @@ const router = createBrowserRouter([
       {
         path: "/landlordListings",
         element: <LandlordListings />,
+        // loader: () => {
+        //   let token = localStorage.getItem("access_token");
+        //   if (!token) {
+        //     return redirect("/login");
+        //   }
+        //   return null;
+        // },
       },
       {
         path: "/landlordListings/:id",
@@ -88,11 +95,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/rental-list/:id",
-        element: <RentalList />
+        element: <RentalList />,
       },
       {
         path: "/inbox",
-        element: <TalkJsInbox />
+        element: <TalkJsInbox />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 
+
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
@@ -6,6 +7,8 @@ import LocalOfferSharpIcon from '@mui/icons-material/LocalOfferSharp';
 import {fetchParkingSpacesDetail} from "../../store/actions/index.js";
 import StarIcon from '@mui/icons-material/Star';
 import { fetchParkingSpaceRelation } from "../../store/actions";
+import swal from "sweetalert";
+
 
 const Reserve = () => {
   const dispatch = useDispatch();
@@ -24,12 +27,6 @@ const Reserve = () => {
     dispatch(fetchParkingSpaceRelation(parkingSpace.id));
   }, [dispatch, parkingSpace]);
   console.log(relation, "<<<<<<<<<< relasi di reserve");
-
-  const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((total, review) => total + review.rating, 0) /
-      reviews.length
-      : "belum ada ulasan";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,9 +99,17 @@ const Reserve = () => {
             cb();
           },
         });
+      } else {
+        console.log("error nih >>>>>>>>>:", response);
+        if (response.statusText === "Unauthorized") {
+          return swal("Error", "Login dulu boss!!!", "error");
+        } else if (response.statusText === "Forbidden") {
+          return swal("Error", "Gak bisa order dua kali woii!!", "error");
+        }
       }
     } catch (error) {
       console.error("Payment error:", error);
+
       // Handle kesalahan pembayaran
     }
   };

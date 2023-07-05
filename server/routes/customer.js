@@ -7,4 +7,5 @@ router.post("/login", customerController.login);
 router.get("/spaces", customerController.fetchAllParkingSpaces);
 router.get("/spaces/:id", customerController.fetchParkingSpaceWithRelations);
 router.get("/customers", customerController.getAllCustomer)
+
 module.exports = router;

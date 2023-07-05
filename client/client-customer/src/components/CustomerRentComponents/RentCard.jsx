@@ -31,6 +31,8 @@ function RentCard({ booking }) {
               </li>
             </ul>
             <p className="card-text">duration : {booking.duration} hari</p>
+            <p className="card-text">paid : {booking.paid.toString()}</p>
+
             <p className="card-text">{booking.ParkingSpace?.description}</p>
             <div className="card-bottom">
               <p>
