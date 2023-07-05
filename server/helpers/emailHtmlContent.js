@@ -1,4 +1,5 @@
-const generateHTML = (amount, email, date, address, username) => {
+const generateHTML = (amount, email, date, address, username, phoneNumber, parkingSpaceName) => {
+   amount = Number(amount).toLocaleString()
    return `<!DOCTYPE html
    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
@@ -89,15 +90,15 @@ const generateHTML = (amount, email, date, address, username) => {
                                        style="padding-left:20px;border-style:solid;border-color:white;border-width:0px 1px 1px 0px;height:44px">
                                        <p
                                           style="font-size:10px;line-height:1.4;margin:0;padding:0;color:rgb(102,102,102)">
-                                          ORDER ID</p><a target="_blank"
-                                          style="color:#15c;text-decoration:underline;font-size:12px;margin:0;padding:0;line-height:1.4">ML4F5L8522</a>
+                                          Phone Number</p><a target="_blank"
+                                          style="color:#15c;text-decoration:underline;font-size:12px;margin:0;padding:0;line-height:1.4">${phoneNumber}</a>
                                     </td>
                                     <td
                                        style="padding-left:20px;border-style:solid;border-color:white;border-width:0px 1px 1px 0px;height:44px">
                                        <p
                                           style="font-size:10px;line-height:1.4;margin:0;padding:0;color:rgb(102,102,102)">
                                           PRODUCT NAME</p>
-                                       <p style="font-size:12px;line-height:1.4;margin:0;padding:0">Parking Space</p>
+                                       <p style="font-size:12px;line-height:1.4;margin:0;padding:0">${parkingSpaceName}</p>
                                     </td>
                                  </tr>
                               </tbody>

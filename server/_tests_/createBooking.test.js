@@ -117,6 +117,7 @@ describe("createBooking", () => {
             .post("/booking/generate-midtrans")
             .send({
                amount: "20000",
+               parkingSpaceId: 1
             })
             .set("access_token", token)
 

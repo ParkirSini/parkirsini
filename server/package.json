@@ -4,8 +4,9 @@
   "description": "parkir sini repository",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --coverage",
-    "test1": "jest booking.test.js --detectOpenHandles --forceExit --coverage",
+    "test": "jest --detectOpenHandles --forceExit --coverage --verbose=false --silent",
+    "test1": "jest customer.test.js --detectOpenHandles --forceExit --coverage",
+    "test2": "jest --detectOpenHandles --forceExit --coverage parkingSpaceImage.test.js parkingSpace.test.js review.test.js customer.test.js booking.test.js landlord.test.js admin-auth.test.js facility.test.js",
     "start": "nodemon bin/www"
   },
   "keywords": [],

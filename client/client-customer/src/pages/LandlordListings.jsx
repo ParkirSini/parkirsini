@@ -52,10 +52,10 @@ const LandlordListings = () => {
               <div className="news-block">
                 <img src={space.mainImg} alt="#" className="img-fluid" />
                 <div className="news-title">
-                  <p>Rp. {space.price.toLocaleString('id-ID')}</p>
+                  <p>Rp. {space.price.toLocaleString('id-ID')} / 30 hari</p>
                   <h5>{space.name}</h5>
                   <p className="blog2-thumbnail-name">{space.description}</p>
-                  <Link to={`/rental-list/${space.id}`} className="blog2-link">Lihat ➝</Link>
+                  <Link to={`/rental-list/${space.id}`}className="btn-primary">Lihat</Link>
                 </div>
               </div>
             </div>
