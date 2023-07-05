@@ -46,7 +46,6 @@ describe("admin-auth", () => {
         "message",
         "Create user admin admin2@example.com success"
       );
-      expect(response.body).toHaveProperty("amount", expect.any(Number));
     });
 
     test("should return error for empty email", async () => {
@@ -96,6 +95,7 @@ describe("admin-auth", () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("access_token");
+      expect(response.body).toHaveProperty("amount", expect.any(Number));
     });
 
     test("should return error for empty email", async () => {
