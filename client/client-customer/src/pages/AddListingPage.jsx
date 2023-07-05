@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addParkingSpaces } from '../store/actions/index.js';
 import MapComponent from '../components/MapComponent.jsx';
+import SwalTimer from "../components/SwalTimer.jsx";
 
 const facilitiesData = [
   {
@@ -85,7 +86,7 @@ const AddListingPage = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isSubmitted, setIsSubmitted] = useState(false); //1
 
 
   useEffect(() => {
@@ -202,12 +203,16 @@ const AddListingPage = () => {
         facilities: []
       });
 
-      navigate('/dashboard-landlord');
+      setTimeout(() => {
+        navigate('/dashboard-landlord');
+      }, 1000);
+      setIsSubmitted(true); //2
     };
 
     return (
       <>
         <section className="main-block">
+          {isSubmitted && <SwalTimer msg={'Sudah Menambah Lahan Parkir Baru'}/>} //3
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-md-8">

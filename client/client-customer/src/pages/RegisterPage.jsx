@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {Link, useNavigate} from "react-router-dom";
 import {newLandlord} from "../store/actions/index.js";
+import SwalTimer from "../components/SwalTimer.jsx";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -11,13 +12,19 @@ const RegisterPage = () => {
   const [address, setAddress] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false); //1
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await dispatch(newLandlord(email, password, username, phoneNumber, address));
-      navigate('/login')
+      // navigate('/login')
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+      setIsSubmitted(true); //2
       setEmail('');
       setPassword('');
       setUsername('');
@@ -31,6 +38,7 @@ const RegisterPage = () => {
   return (
     <>
       <section className="main-block">
+        {isSubmitted && <SwalTimer msg={'Berhasil Mendaftar'}/>}
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-md-8">
@@ -108,7 +116,7 @@ const RegisterPage = () => {
                           Daftar
                         </button>
                         <p>
-                          Sudah daftar?{' '}
+                          Sudah pernah daftar?{' '}
                           <Link to="/login">Login di sini</Link>
                         </p>
                       </div>

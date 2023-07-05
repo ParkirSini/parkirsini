@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/actions/index';
+import SwalTimer from "../components/SwalTimer.jsx";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isSubmitted, setIsSubmitted] = useState(false); //1
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,11 +22,15 @@ const LoginPage = () => {
     setPassword('');
 
     // Redirect to another page after successful login
-    navigate('/dashboard-landlord')
+    setTimeout(() => {
+      navigate('/dashboard-landlord');
+    }, 1000);
+    setIsSubmitted(true); //2
   };
 
   return (
     <section className="main-block">
+      {isSubmitted && <SwalTimer msg={'Berhasil Login'}/>}
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-md-8">

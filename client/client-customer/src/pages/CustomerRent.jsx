@@ -17,11 +17,15 @@ const CustomerRent = () => {
 
   return (
     <section className="main-block featured-wrap" style={{ position: 'relative' }}>
-      <div className="container-fluid" >
+
+      <div className="container-fluid" style={{ position: 'relative' }}>
+        <div style={{ position: 'absolute', top: 0, right: 0 }}>
+          <Logout />
+        </div>
         <div className="row justify-content-center">
           <div className="col-md-10">
             <div className="titile-block">
-              <h2>Lahan Parkir</h2>
+              <h2>Tempat Parkir Mobilmu</h2>
               <p>Daftar tempat parkir yang telah kamu sewa</p>
             </div>
           </div>

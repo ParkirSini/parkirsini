@@ -27,11 +27,28 @@ function RentCard({ booking }) {
                   booking.ParkingSpace?.ParkingSpaceReviews?.length}
               </li>
               <li>
-                {booking.ParkingSpace?.ParkingSpaceReviews?.length} ratings
+                {booking.ParkingSpace?.ParkingSpaceReviews?.length} ulasan
               </li>
             </ul>
-            <p className="card-text">duration : {booking.duration} hari</p>
-            <p className="card-text">paid : {booking.paid.toString()}</p>
+
+
+            <table className="table">
+              <tbody>
+              <tr>
+                <td>Durasi </td>
+                <td>{booking.duration} hari lagi</td>
+              </tr>
+              <tr>
+                <td>Pembayaran</td>
+                <td>{booking.paid ? 'Sudah Membayar' : 'Belum Membayar'}</td>
+              </tr>
+              <tr>
+                <td>Harga</td>
+                <td>Rp. {booking.price.toLocaleString('id-ID')}  / 30 hari</td>
+              </tr>
+
+              </tbody>
+            </table>
 
             <p className="card-text">{booking.ParkingSpace?.description}</p>
             <div className="card-bottom">

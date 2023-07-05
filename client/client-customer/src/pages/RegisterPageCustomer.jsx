@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { newLandlord, registerCustomer } from "../store/actions/index.js";
+import SwalTimer from "../components/SwalTimer.jsx";
 
 const RegisterPageCustomer = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const RegisterPageCustomer = () => {
   const [address, setAddress] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false); //1
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,12 @@ const RegisterPageCustomer = () => {
       await dispatch(
         registerCustomer(email, password, username, phoneNumber, address)
       );
-      navigate("/loginCustomer");
+
+      setTimeout(() => {
+        navigate('/loginCustomer');
+      }, 1000);
+      setIsSubmitted(true); //2
+
       setEmail("");
       setPassword("");
       setUsername("");
@@ -33,6 +40,7 @@ const RegisterPageCustomer = () => {
   return (
     <>
       <section className="main-block">
+        {isSubmitted && <SwalTimer msg={'Berhasil Mendaftar'}/>}
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-md-8">
@@ -110,7 +118,7 @@ const RegisterPageCustomer = () => {
                           Daftar
                         </button>
                         <p>
-                          Sudah daftar?{" "}
+                          Sudah pernah daftar?{" "}
                           <Link to="/loginCustomer">Login di sini</Link>
                         </p>
                       </div>

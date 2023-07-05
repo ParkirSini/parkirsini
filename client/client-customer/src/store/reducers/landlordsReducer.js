@@ -1,6 +1,7 @@
 const initialState = {
   landlords: [],
-  landlordDetail: {}
+  landlordDetail: {},
+  saldo: {}
 };
 
 export const landlordsReducer = (state = initialState, action) => {
@@ -28,3 +29,16 @@ export const landlordDetailReducer = (state = initialState, action) => {
       return state
   }
 };
+export const saldoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'saldo/fetch':
+      return {
+        ...state,
+        saldo: action.payload
+      }
+
+    default:
+      return state
+  }
+};
+

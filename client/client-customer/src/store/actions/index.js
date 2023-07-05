@@ -599,6 +599,29 @@ export const fetchLandlords = () => {
   }
 }
 
+export const fetchSaldo = () => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch('http://localhost:3000/admin/landlord-data', {
+        headers: {
+          'Content-Type': 'application/json',
+          'access_token': `${token}`
+        },
+      });
+      const data = await response.json();
+      const action = {
+        type: "saldo/fetch",
+        payload: data
+      };
+      dispatch(action);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+};
+
+
 export const fetchLandlordDetail = (id) => {
   return async (dispatch) => {
     try {
