@@ -27,7 +27,8 @@ class Auth {
       if (!email) throw { message: "Email is required" };
       if (!password) throw { message: "Password is required" };
       const access_token = await processLogin(email, password);
-      res.json({ access_token });
+      const userData = await Landlord.findOne({ where: { email } });
+      res.json({ access_token, amount: userData.amount });
     } catch (error) {
       console.log(error);
       next(error);

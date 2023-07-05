@@ -11,6 +11,8 @@ router.post("/register", Auth.register);
 
 router.use(authenticationAdmin);
 
+router.get("/landlord-data", Admin.fetchLandlordData);
+
 router.get("/parking-space", Admin.fetchParkingSpace);
 router.get("/parking-space/:id", Admin.fetchParkingSpaceDetail);
 router.post("/parking-space", Admin.createParkingSpace);
