@@ -8,8 +8,8 @@ const ThankYouPayment = () => {
           <div className="col-md-12">
             <div className="confirmation-wrap">
               <span className="ti-check"></span>
-              <h2>Makasih Customer Karena Sudah Bayar</h2>
-              <p>You'll receive a confirmation email at mail@yourgmail.com</p>
+              <h2>Terimakasih karena telah melakukan pembayaran...</h2>
+              <p>Akan dikirimkan bukti pembayarannya melalui emailmu</p>
               <a href="#" className="btn btn-outline-danger btn-confirmation">CHECK INVOICE</a>
             </div>
           </div>

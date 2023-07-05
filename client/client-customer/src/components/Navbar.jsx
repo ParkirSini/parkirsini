@@ -42,58 +42,37 @@ const NavigationBar = () => {
                           Home
                         </Nav.Link>
                       </Nav.Item>
-                      <NavDropdown title="Halaman Customer" id="nav-dropdown">
-                        <NavDropdown.Item as={Link} to="/detail/1">
-                          Detail Page
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/thankyou-payment">
-                          Thank You Payment
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/rented">
-                          Lahan Disewa
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/result">
-                          Hasil Pencarian
+
+                      <NavDropdown title="Penyewa Parkir" id="nav-dropdown">
+                        <NavDropdown.Item as={Link} to="/regCustomer">
+                          Daftar
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/loginCustomer">
-                          Login Customer
+                          Login
                         </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/inbox">
-                          Inbox talkjs
+                        <NavDropdown.Item as={Link} to="/rented">
+                          Detail Sewa
                         </NavDropdown.Item>
                       </NavDropdown>
-                      <NavDropdown title="Halaman Landlord" id="nav-dropdown">
-                        <NavDropdown.Item as={Link} to="/add-listing">
-                          Add Listing
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/landlordListings">
-                          Landlord Listings
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/thankyou-listing">
-                          Thank You Listing
+
+                      <NavDropdown title="Pemilik Lahan Parkir" id="nav-dropdown">
+                        <NavDropdown.Item as={Link} to="/reg">
+                          Daftar
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/login">
                           Login
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/dashboard-landlord">
-                          Dashboard
+                          Detail Lahan
                         </NavDropdown.Item>
                       </NavDropdown>
-                      <Nav.Item>
-                        <Nav.Link as={Link} to="/" onClick={handleLogout}>
-                          Logout
-                        </Nav.Link>
-                      </Nav.Item>
+
                       <Nav.Item>
                         <Nav.Link as={Link} to="/about">
                           Tentang
                         </Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link as={Link} to="/reg">
-                          Mulai Sewakan Parkiran
-                        </Nav.Link>
-                      </Nav.Item>
+
                     </Nav>
                   </Navbar.Collapse>
                 </Navbar>

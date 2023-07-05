@@ -6,7 +6,7 @@ import {
   parkingSpaceReducerByLandlord,
   parkingSpaceRelation
 } from "./parkingSpaceReducer.js";
-import { landlordDetailReducer, landlordsReducer } from "./landlordsReducer.js";
+import {landlordDetailReducer, landlordsReducer, saldoReducer} from "./landlordsReducer.js";
 import { facilityDetailReducer, reviewDetailReducer } from "./reviewReducer.js";
 import { bookingReducer } from "./bookingReducer.js";
 import {customersReducer} from "./customerReducer.js";
@@ -22,7 +22,8 @@ const mainReducer = combineReducers({
   relation: parkingSpaceRelation,
   booking: bookingReducer,
   images: parkingSpaceImages,
-  customers: customersReducer
+  customers: customersReducer,
+  saldo: saldoReducer
 })
 
 

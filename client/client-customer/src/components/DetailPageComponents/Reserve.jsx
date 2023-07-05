@@ -18,6 +18,12 @@ const Reserve = () => {
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const relation = useSelector((state) => state.relation.relation);
 
+  const averageRating =
+    reviews.length > 0
+      ? reviews.reduce((total, review) => total + review.rating, 0) /
+      reviews.length
+      : "belum ada ulasan";
+
   useEffect(() => {
     dispatch(fetchParkingSpaceRelation(parkingSpace.id));
   }, [dispatch, parkingSpace]);

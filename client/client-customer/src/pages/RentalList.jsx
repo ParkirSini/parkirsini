@@ -92,20 +92,43 @@ const RentalList = () => {
               <tr>
                 <td>Penyewa</td>
                 <td style={{ verticalAlign: 'middle' }}>
-                  {relation.Bookings ? (
-                    relation.Bookings.map((booking) => {
-                      const customer = customers.find((customer) => customer.id === booking.customerId);
-                      return (
-                        <p key={booking.id}>
-                          Ussername: {customer?.username} ~~ Nomor Handphone: {customer?.phoneNumber} ~~ Sisa durasi parkir: {booking.duration} hari
-                        </p>
-                      );
-                    })
+                  {relation.Bookings && relation.Bookings.length > 0 ? (
+                    <table style={{ width: '100%' }}>
+                      <tbody>
+                      {relation.Bookings.map((booking, i) => {
+                        const customer = customers.find((customer) => customer.id === booking.customerId);
+                        return (
+                          <React.Fragment key={i}>
+                            <tr>
+                              <td>Nomor:</td>
+                              <td>{i+1}</td>
+                            </tr>
+                            <tr>
+                              <td>Username:</td>
+                              <td>{customer?.username}</td>
+                            </tr>
+                            <tr>
+                              <td>Nomor Handphone:</td>
+                              <td>{customer?.phoneNumber}</td>
+                            </tr>
+                            <tr>
+                              <td>Sisa durasi parkir:</td>
+                              <td>{booking.duration} hari</td>
+                            </tr>
+                            <hr style={{ visibility: 'hidden' }} />
+                          </React.Fragment>
+                        );
+                      })}
+                      </tbody>
+                    </table>
                   ) : (
-                    <p>No bookings available</p>
+                    <p>Belum ada penyewa</p>
                   )}
                 </td>
               </tr>
+
+
+
 
               </tbody>
             </table>

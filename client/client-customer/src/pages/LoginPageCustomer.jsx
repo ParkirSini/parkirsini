@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, loginCustomer } from "../store/actions/index";
+import SwalTimer from "../components/SwalTimer.jsx";
 // import { GoogleLogin } from "react-google-login";
 
 const LoginPageCustomer = () => {
@@ -9,6 +10,7 @@ const LoginPageCustomer = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isSubmitted, setIsSubmitted] = useState(false); //1
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,11 +23,15 @@ const LoginPageCustomer = () => {
     setPassword("");
 
     // Redirect to another page after successful login
-    navigate("/");
+    setTimeout(() => {
+      navigate('/result');
+    }, 1000);
+    setIsSubmitted(true); //2
   };
 
   return (
     <section className="main-block">
+      {isSubmitted && <SwalTimer msg={'Berhasil Login'}/>}
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-md-8">
