@@ -1,13 +1,14 @@
 
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import {
   parkingSpaceDetailReducer,
   parkingSpaceReducer,
   parkingSpaceReducerByLandlord,
   parkingSpaceRelation
 } from "./parkingSpaceReducer.js";
-import {landlordDetailReducer, landlordsReducer} from "./landlordsReducer.js";
-import {facilityDetailReducer, reviewDetailReducer} from "./reviewReducer.js";
+import { landlordDetailReducer, landlordsReducer } from "./landlordsReducer.js";
+import { facilityDetailReducer, reviewDetailReducer } from "./reviewReducer.js";
+import { bookingReducer } from "./bookingReducer.js";
 
 const mainReducer = combineReducers({
   data: parkingSpaceReducer,
@@ -17,7 +18,8 @@ const mainReducer = combineReducers({
   landlordDetail: landlordDetailReducer,
   reviewDetail: reviewDetailReducer,
   facilityDetail: facilityDetailReducer,
-  relation: parkingSpaceRelation
+  relation: parkingSpaceRelation,
+  booking: bookingReducer
 })
 
 

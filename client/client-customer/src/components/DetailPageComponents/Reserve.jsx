@@ -1,17 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchParkingSpaceRelation } from "../../store/actions";
 
 const Reserve = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const parkingSpace = useSelector((state) => state.detail.detail);
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
+  const relation = useSelector((state) => state.relation.relation);
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((total, review) => total + review.rating, 0) /
         reviews.length
       : "no rating yet";
-
+  useEffect(() => {
+    dispatch(fetchParkingSpaceRelation(parkingSpace.id));
+  }, [dispatch, parkingSpace]);
+  console.log(relation, "<<<<<<<<<< relasi di reserve");
   const creteBooking = async () => {
     // const { amount, email, parkingSpaceId, price } = req.body
     try {
@@ -57,6 +63,7 @@ const Reserve = () => {
           },
           body: JSON.stringify({
             amount: parkingSpace.price,
+            parkingSpaceId: parkingSpace.id,
           }),
         }
       );
@@ -87,6 +94,12 @@ const Reserve = () => {
               <h5>{parkingSpace.name}</h5>
               <p>
                 <span>Rp. {parkingSpace.price}</span>
+              </p>
+              <br />
+
+              <h5>Stock</h5>
+              <p>
+                <span>{parkingSpace.stock - relation.Bookings?.length}</span>
               </p>
               <br />
               <p className="reserve-description">{parkingSpace.subtitle}</p>

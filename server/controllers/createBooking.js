@@ -1,4 +1,4 @@
-const { Booking, Landlord, Customer, ParkingSpace } = require("../models");
+const { Booking, Landlord, Customer, ParkingSpace, ParkingSpaceReview } = require("../models");
 const midtransClient = require('midtrans-client');
 const { sequelize } = require("../models");
 const SibApiV3Sdk = require('sib-api-v3-sdk')
@@ -92,7 +92,11 @@ class CreateBooking {
          const bookings = await Booking.findAll({
             include: {
                model: ParkingSpace,
-               attributes: { exclude: ['createdAt', 'updatedAt'] }
+               attributes: { exclude: ['createdAt', 'updatedAt'] },
+               include: {
+                  model: ParkingSpaceReview,
+                  attributes: { exclude: ['createdAt', 'updatedAt'] },
+               }
             },
             where: {
                customerId: req.user.id

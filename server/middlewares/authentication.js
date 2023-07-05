@@ -46,26 +46,6 @@ async function authenticationCustomer(req, res, next) {
   }
 }
 
-// async function authenticationLandlord(req, res, next) {
-//   try {
-//     let { access_token } = req.headers;
-//     if (!access_token) throw { name: "Unauthenticated" };
-
-//     let payload = verifyToken(access_token);
-
-//     let landlord = await Landlord.findByPk(payload.id);
-//     if (!landlord) throw { name: "Unauthenticated" };
-
-//     req.user = {
-//       id: landlord.id,
-//     };
-
-//     next();
-//   } catch (error) {
-//     next(error);
-//   }
-// }
-
 module.exports = {
   authenticationCustomer,
   // authenticationLandlord,
