@@ -31,7 +31,8 @@ const LoginPage = () => {
             <div className="listing-wrap">
               <form onSubmit={handleSubmit}>
                 <div className="listing-title">
-                  <h4>Login</h4>
+                  <h4>Login Pemilik Lahan Parkir</h4>
+                  <img src="images/clip3.jpg" alt="memajukan umkm" style={{ width: "35vw" }} />
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group">

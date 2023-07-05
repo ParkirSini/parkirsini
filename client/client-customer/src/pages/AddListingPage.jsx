@@ -182,8 +182,8 @@ const AddListingPage = () => {
           formData.description,
           formData.city,
           formData.stock,
-          formData.mapLong,
           formData.mapLat,
+          formData.mapLong,
           formData.price,
           formData.images,
           formData.facilities

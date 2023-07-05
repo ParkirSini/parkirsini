@@ -9,7 +9,6 @@ import StarIcon from '@mui/icons-material/Star';
 import { fetchParkingSpaceRelation } from "../../store/actions";
 import swal from "sweetalert";
 
-
 const Reserve = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,11 +17,7 @@ const Reserve = () => {
   const parkingSpace = useSelector((state) => state.detail.detail);
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const relation = useSelector((state) => state.relation.relation);
-  const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((total, review) => total + review.rating, 0) /
-        reviews.length
-      : "no rating yet";
+
   useEffect(() => {
     dispatch(fetchParkingSpaceRelation(parkingSpace.id));
   }, [dispatch, parkingSpace]);
@@ -59,6 +54,7 @@ const Reserve = () => {
         }
       );
       if (response.ok) {
+        console.log('---> reserve line 61',response)
         setTimeout(function () {
           // Kode yang akan dijalankan setelah jangka waktu tertentu
           navigate("/rented");
@@ -102,9 +98,11 @@ const Reserve = () => {
       } else {
         console.log("error nih >>>>>>>>>:", response);
         if (response.statusText === "Unauthorized") {
-          return swal("Error", "Login dulu boss!!!", "error");
+
+          return swal("Error", "Silakan login terlebih dahulu.", "error");
         } else if (response.statusText === "Forbidden") {
-          return swal("Error", "Gak bisa order dua kali woii!!", "error");
+          return swal("Error", "Mohon maaf tidak dapat order 2x", "error");
+
         }
       }
     } catch (error) {
@@ -130,11 +128,7 @@ const Reserve = () => {
                 <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')}<sub> / 30 hari</sub></span>
               </p>
               <br />
-
-              <h5>Stock</h5>
-              <p>
-                <span>{parkingSpace.stock - relation.Bookings?.length}</span>
-              </p>
+              <p className="reserve-description">Lahan parkir tersedia: {parkingSpace.stock - relation.Bookings?.length}</p>
               <br />
               <p className="reserve-description">{parkingSpace.subtitle}</p>
             </div>

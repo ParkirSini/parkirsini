@@ -17,6 +17,9 @@ import LoginPageCustomer from "./pages/LoginPageCustomer.jsx";
 import RegisterPageCustomer from "./pages/RegisterPageCustomer.jsx";
 import RentalList from "./pages/RentalList.jsx";
 import TalkJsInbox from "./pages/TalkJsInbox";
+
+import About from "./pages/About.jsx";
+
 import EmptyPage from "./pages/EmptyPage.jsx";
 
 function guard() {
@@ -117,6 +120,10 @@ const router = createBrowserRouter([
         path: "/inbox",
         element: <TalkJsInbox />,
         loader: guard,
+      },
+      {
+        path: "/about",
+        element: <About />
       },
     ],
   },

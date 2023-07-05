@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateParkingSpace } from '../store/actions';
+import Logout from "../components/Logout.jsx";
 
 const RentalApproval = () => {
   const [consumerName, setConsumerName] = useState('');
@@ -18,7 +19,10 @@ const RentalApproval = () => {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid" style={{ position: 'relative' }}>
+        <div style={{ position: 'absolute', top: 0, right: 0 }}>
+          <Logout />
+        </div>
         <div className="row justify-content-center">
           <div className="col-md-10">
             <div className="titile-block title-block_subpage">

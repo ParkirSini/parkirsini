@@ -33,6 +33,7 @@ const LoginPageCustomer = () => {
               <form onSubmit={handleSubmit}>
                 <div className="listing-title">
                   <h4>Login Penyewa Lahan Parkir</h4>
+                  <img src="images/clip4.jpg" alt="memajukan umkm" style={{ width: "35vw" }} />
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group">
