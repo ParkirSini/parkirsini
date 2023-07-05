@@ -82,6 +82,28 @@ const ResultPage = () => {
             <div className="row">
               {filteredSpaces.map((parkingSpace) => (
                 <div className="col-md-6 col-lg-3 article-first" key={parkingSpace.id}>
+                  {/*<div className="news-block">*/}
+                  {/*  <img*/}
+                  {/*    src={parkingSpace.mainImg}*/}
+                  {/*    alt={parkingSpace.name}*/}
+                  {/*    className="img-fluid"*/}
+                  {/*    style={{*/}
+                  {/*      width: '100%',*/}
+                  {/*      height: '250px',*/}
+                  {/*      objectFit: 'cover',*/}
+                  {/*    }}*/}
+                  {/*  />*/}
+                  {/*  <div className="news-title">*/}
+                  {/*    <h5>{parkingSpace.name}</h5>*/}
+                  {/*    <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>*/}
+                  {/*    <hr />*/}
+                  {/*    <p className="blog2-thumbnail-name">{parkingSpace.description}</p>*/}
+                  {/*    <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>*/}
+                  {/*    <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat*/}
+                  {/*    </Link>*/}
+                  {/*  </div>*/}
+                  {/*</div>*/}
+
                   <div className="news-block">
                     <img
                       src={parkingSpace.mainImg}
@@ -95,14 +117,16 @@ const ResultPage = () => {
                     />
                     <div className="news-title">
                       <h5>{parkingSpace.name}</h5>
-                      <p className="blog2-thumbnail-name">{parkingSpace.subtitle}</p>
+                      <p className="blog2-thumbnail-name ellipsis">{parkingSpace.subtitle}</p>
                       <hr />
-                      <p className="blog2-thumbnail-name">{parkingSpace.description}</p>
+                      <p className="blog2-thumbnail-name ellipsis">{parkingSpace.description}</p>
                       <p className="blog2-thumbnail-name"><LocationOnIcon /><span> {parkingSpace.city}</span></p>
-                      <Link to={`/detail/${parkingSpace.id}`}className="btn-primary">Lihat
+                      <Link to={`/detail/${parkingSpace.id}`} className="btn-primary">Lihat
                       </Link>
                     </div>
                   </div>
+
+
                 </div>
               ))}
             </div>

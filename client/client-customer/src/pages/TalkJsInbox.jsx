@@ -1,28 +1,34 @@
 import Talk from 'talkjs';
 import { useEffect, useState, useRef } from 'react';
+import {useSelector} from "react-redux";
+import {
+  fetchFacilityDetail,
+  fetchParkingSpaceRelation,
+  fetchParkingSpacesDetail,
+  fetchReviewDetail
+} from "../store/actions/index.js";
 
 function App() {
+  const relation = useSelector((state) => state.relation.relation);
   const chatboxEl = useRef();
 
   // wait for TalkJS to load
   const [talkLoaded, markTalkLoaded] = useState(false);
+  // useEffect(() => {
+  //   dispatch(fetchParkingSpacesDetail(id));
+  //   dispatch(fetchReviewDetail(id));
+  //   dispatch(fetchFacilityDetail())
+  //   dispatch(fetchParkingSpaceRelation(id))
+  // }, [dispatch, id]);
 
   useEffect(() => {
     Talk.ready.then(() => markTalkLoaded(true));
 
-    if (talkLoaded) {
+    if (talkLoaded) { // <--- ini si landlord, id dllnya landlord
       const currentUser = new Talk.User({
-        id: '4',
-        name: 'Benzema',
-        email: 'ronaldo@example.com',
-        photoUrl: 'https://shorturl.at/avJM3',
-        role: 'default',
-      });
-
-      const otherUser = new Talk.User({
-        id: '3',
-        name: 'Lewandowski',
-        email: 'messi@example.com',
+        id: relation.Landlord.id + 30,
+        name: relation.Landlord.username,
+        email: relation.Landlord.email,
         photoUrl: 'https://shorturl.at/avJM3',
         role: 'default',
       });

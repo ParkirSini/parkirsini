@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import LocalOfferSharpIcon from '@mui/icons-material/LocalOfferSharp';
 import {fetchParkingSpacesDetail} from "../../store/actions/index.js";
+import StarIcon from '@mui/icons-material/Star';
 import { fetchParkingSpaceRelation } from "../../store/actions";
-
 
 const Reserve = () => {
   const dispatch = useDispatch();
@@ -122,7 +122,7 @@ const Reserve = () => {
               <h5>{parkingSpace.name}</h5>
               <br />
               <p>
-                <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')} / 30 hari</span>
+                <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')}<sub> / 30 hari</sub></span>
               </p>
               <br />
 
@@ -136,7 +136,17 @@ const Reserve = () => {
             <div className="col-md-6">
               <div className="reserve-seat-block">
                 <div className="reserve-rating mx-0 mx-md-3">
-                  <span>{averageRating}</span>
+                  <span>
+  {typeof averageRating === 'number' ? (
+    <>
+      <StarIcon /> {averageRating}<sub>/5</sub>
+    </>
+  ) : (
+    averageRating
+  )}
+</span>
+
+
                 </div>
                 <div className="reserve-btn">
                   <div className="featured-btn-wrap">
