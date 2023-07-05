@@ -712,6 +712,32 @@ export const loginCustomer = (email, password) => {
   };
 };
 
+export const getBookingByCustomerId = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3000/booking/bookingByCustomerId', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data, "<<<<<<<< bookingss")
+        // const access_token = data.access_token;
+        // localStorage.setItem('access_token', access_token);
+        dispatch({ type: 'booking/fetch', payload: data.bookings });
+      } else {
+        throw new Error("Internal Server Error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const fetchParkingSpacesImages = (id) => {
   return async (dispatch) => {
     try {
@@ -727,3 +753,4 @@ export const fetchParkingSpacesImages = (id) => {
     }
   }
 }
+
