@@ -9,6 +9,16 @@ const HomePage = () => {
   return (
     <>
       <Hero />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '20px',
+        margin: '20px 0'
+      }}>
+        <img src="images/bn1.png" alt="lahan parkir mobil" style={{ width: "400px", borderRadius: "10px"}} />
+        <img src="images/bn2.png" alt="lahan parkir mobil" style={{ width: "400px", borderRadius: "10px"}} />
+      </div>
       <FeaturedListings />
       <DetailedItem />
       <HowItWorks />
@@ -17,4 +27,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default HomePage;

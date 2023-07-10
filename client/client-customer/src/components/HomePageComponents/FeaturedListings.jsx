@@ -22,6 +22,7 @@ const FeaturedListings = () => {
             <div className="title-block">
               <h2>Daftar Lahan Parkir Tersedia</h2>
               {/*<p>Tempat parkir dengan rating tinggi di sini</p>*/}
+
             </div>
           </div>
         </div>
