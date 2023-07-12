@@ -1,11 +1,9 @@
-
-
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router-dom";
-import LocalOfferSharpIcon from '@mui/icons-material/LocalOfferSharp';
-import {fetchParkingSpacesDetail} from "../../store/actions/index.js";
-import StarIcon from '@mui/icons-material/Star';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import LocalOfferSharpIcon from "@mui/icons-material/LocalOfferSharp";
+import { fetchParkingSpacesDetail } from "../../store/actions/index.js";
+import StarIcon from "@mui/icons-material/Star";
 import { fetchParkingSpaceRelation } from "../../store/actions";
 import swal from "sweetalert";
 
@@ -17,11 +15,13 @@ const Reserve = () => {
   const parkingSpace = useSelector((state) => state.detail.detail);
   const reviews = useSelector((state) => state.reviewDetail.reviewDetail);
   const relation = useSelector((state) => state.relation.relation);
+  const baseURL = "http://localhost:3000";
+  // const baseURL = "https://parkir-sini.maliksamansya.site";
 
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((total, review) => total + review.rating, 0) /
-      reviews.length
+        reviews.length
       : "belum ada ulasan";
 
   useEffect(() => {
@@ -43,24 +43,21 @@ const Reserve = () => {
   const creteBooking = async () => {
     // const { amount, email, parkingSpaceId, price } = req.body
     try {
-      const response = await fetch(
-        "http://localhost:3000/booking/create-booking",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            access_token: localStorage.access_token,
-          },
-          body: JSON.stringify({
-            amount: parkingSpace.price,
-            email: parkingSpace.Landlord?.email,
-            parkingSpaceId: parkingSpace.id,
-            price: parkingSpace.price,
-          }),
-        }
-      );
+      const response = await fetch(`${baseURL}/booking/create-booking`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+        body: JSON.stringify({
+          amount: parkingSpace.price,
+          email: parkingSpace.Landlord?.email,
+          parkingSpaceId: parkingSpace.id,
+          price: parkingSpace.price,
+        }),
+      });
       if (response.ok) {
-        console.log('---> reserve line 61',response)
+        console.log("---> reserve line 61", response);
         setTimeout(function () {
           // Kode yang akan dijalankan setelah jangka waktu tertentu
           navigate("/rented");
@@ -76,20 +73,17 @@ const Reserve = () => {
 
     try {
       // Mengirimkan permintaan ke server untuk menghasilkan token pembayaran
-      const response = await fetch(
-        "http://localhost:3000/booking/generate-midtrans",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            access_token: localStorage.access_token,
-          },
-          body: JSON.stringify({
-            amount: parkingSpace.price,
-            parkingSpaceId: parkingSpace.id,
-          }),
-        }
-      );
+      const response = await fetch(`${baseURL}/booking/generate-midtrans`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+        body: JSON.stringify({
+          amount: parkingSpace.price,
+          parkingSpaceId: parkingSpace.id,
+        }),
+      });
       if (response.ok) {
         const data = await response.json();
         // console.log(data, "<<<<<<<<<<<<<<<");
@@ -104,11 +98,11 @@ const Reserve = () => {
       } else {
         console.log("error nih >>>>>>>>>:", response);
         if (response.statusText === "Unauthorized") {
-
           return swal("Error", "Silakan login terlebih dahulu.", "error");
         } else if (response.statusText === "Forbidden") {
           return swal("Error", "Mohon maaf tidak dapat order 2x", "error");
-
+        } else if (!response.statusText) {
+          return swal("Error", "Silakan login terlebih dahulu.", "error");
         }
       }
     } catch (error) {
@@ -131,10 +125,17 @@ const Reserve = () => {
               <h5>{parkingSpace.name}</h5>
               <br />
               <p>
-                <LocalOfferSharpIcon /> <span>Rp. {parkingSpace.price.toLocaleString('id-ID')}<sub> / 30 hari</sub></span>
+                <LocalOfferSharpIcon />{" "}
+                <span>
+                  Rp. {parkingSpace.price.toLocaleString("id-ID")}
+                  <sub> / 30 hari</sub>
+                </span>
               </p>
               <br />
-              <p className="reserve-description">Lahan parkir tersedia: {parkingSpace.stock - relation.Bookings?.length}</p>
+              <p className="reserve-description">
+                Lahan parkir tersedia:{" "}
+                {parkingSpace.stock - relation.Bookings?.length}
+              </p>
               <br />
               <p className="reserve-description">{parkingSpace.subtitle}</p>
             </div>
@@ -142,16 +143,15 @@ const Reserve = () => {
               <div className="reserve-seat-block">
                 <div className="reserve-rating mx-0 mx-md-3">
                   <span>
-  {typeof averageRating === 'number' ? (
-    <>
-      <StarIcon /> {averageRating}<sub>/5</sub>
-    </>
-  ) : (
-    averageRating
-  )}
-</span>
-
-
+                    {typeof averageRating === "number" ? (
+                      <>
+                        <StarIcon /> {averageRating}
+                        <sub>/5</sub>
+                      </>
+                    ) : (
+                      averageRating
+                    )}
+                  </span>
                 </div>
                 <div className="reserve-btn">
                   <div className="featured-btn-wrap">

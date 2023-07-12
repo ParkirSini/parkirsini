@@ -5,4 +5,4 @@ const job = require("../crons/kernel")
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-job.start()
+// job.start()

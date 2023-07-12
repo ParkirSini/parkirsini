@@ -1,14 +1,18 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "./ImageSlider.jsx";
 import MapComponent from "../MapComponent.jsx";
-import {addParkingSpaceReview, fetchParkingSpaceRelation, fetchParkingSpacesDetail} from "../../store/actions/index.js";
+import {
+  addParkingSpaceReview,
+  fetchParkingSpaceRelation,
+  fetchParkingSpacesDetail,
+} from "../../store/actions/index.js";
 import Talk from "talkjs";
-import {Rating} from "@mui/material";
-import { createAvatar } from '@dicebear/avatars';
-import * as style from '@dicebear/avatars-identicon-sprites';
-import {useParams} from "react-router-dom";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Rating } from "@mui/material";
+import { createAvatar } from "@dicebear/avatars";
+import * as style from "@dicebear/avatars-identicon-sprites";
+import { useParams } from "react-router-dom";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const BookingDetail = () => {
   const dispatch = useDispatch();
@@ -47,9 +51,7 @@ const BookingDetail = () => {
   const handlePublishReview = () => {
     // Check if the rating and review text meet the minimum requirements
     if (rating === 0 || reviewText.length < 10) {
-      alert(
-        "Minimal 10 karakter untuk melakukan review."
-      );
+      alert("Minimal 10 karakter untuk melakukan review.");
       return;
     }
 
@@ -63,18 +65,18 @@ const BookingDetail = () => {
 
   const getAvatarUrl = (id) => {
     return createAvatar(style, { seed: id.toString() });
-  }
+  };
 
   const getInitials = (name) => {
-    const parts = name.split(' ');
-    let initials = '';
+    const parts = name.split(" ");
+    let initials = "";
     if (parts.length > 1) {
       initials = parts[0][0] + parts[parts.length - 1][0];
     } else if (parts.length === 1) {
       initials = parts[0][0];
     }
     return initials.toUpperCase();
-  }
+  };
 
   //////////////// TALK JS START /////////////////
   const chatboxEl = useRef();
@@ -89,25 +91,24 @@ const BookingDetail = () => {
   const sendMessage = () => {
     if (talkLoaded) {
       const currentUser = new Talk.User({
-        id: '4', // <-- customerId from access_token
-        name: 'Benzema',
-        email: 'ronaldo@example.com',
-        photoUrl: 'https://shorturl.at/avJM3',
-        role: 'default',
-
+        id: "4", // <-- customerId from access_token
+        name: "Benzema",
+        email: "ronaldo@example.com",
+        photoUrl: "https://shorturl.at/avJM3",
+        role: "default",
       });
 
       const otherUser = new Talk.User({
         id: relation.Landlord.id + 30,
-        name: relation.Landlord.username,
+        name: relation.Landlord?.username,
         email: relation.Landlord.email,
         welcomeMessage: `Selamat datang di ${relation.name}. Terimakasih sudah menghubungi kami, akan kami reply segera. Tunggu ya...`,
-        photoUrl: 'https://shorturl.at/avJM3',
-        role: 'default',
+        photoUrl: "https://shorturl.at/avJM3",
+        role: "default",
       });
 
       const session = new Talk.Session({
-        appId: 'tgKqA2yS',
+        appId: "tgKqA2yS",
         me: currentUser,
       });
 
@@ -119,12 +120,12 @@ const BookingDetail = () => {
       const chatbox = session.createChatbox(conversation);
       chatbox.mount(chatboxEl.current);
     }
-  }
+  };
   ///////////////// TALK JS END ////////////////////
   if (!relation || !isReady) {
     return <div></div>;
   }
-  console.log(reviews)
+  console.log(reviews);
   return (
     <>
       <section className="gray-dark booking-details_wrap" ref={chatboxEl}>
@@ -132,7 +133,6 @@ const BookingDetail = () => {
           <div className="row">
             <div className="col-md-8 responsive-wrap">
               <div className="booking-checkbox_wrap">
-
                 <ImageSlider relation={relation} parkingSpace={parkingSpace} />
 
                 <div className="booking-checkbox">
@@ -250,31 +250,42 @@ const BookingDetail = () => {
                 <hr />
                 {reviews.map((review) => (
                   <div className="customer-review_wrap" key={review.id}>
-                  {/*  <div className="customer-img">*/}
-                  {/*  /!*  <div dangerouslySetInnerHTML={{__html: getAvatarUrl(review.Customer?.id)}} />*!/*/}
+                    {/*  <div className="customer-img">*/}
+                    {/*  /!*  <div dangerouslySetInnerHTML={{__html: getAvatarUrl(review.Customer?.id)}} />*!/*/}
 
-                  {/*  <div className="avatar" style={{background: '#'+Math.floor(Math.random()*16777215).toString(16)}}>*/}
-                  {/*    {getInitials(review.Customer?.username)}*/}
-                  {/*  </div>*/}
-                  {/*</div>*/}
+                    {/*  <div className="avatar" style={{background: '#'+Math.floor(Math.random()*16777215).toString(16)}}>*/}
+                    {/*    {getInitials(review.Customer?.username)}*/}
+                    {/*  </div>*/}
+                    {/*</div>*/}
 
-                    <div className="customer-img" style={{ position: 'relative', width: '100px', height: '100px' }}>
-                      <div className="avatar" style={{
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        width: '90%',
-                        height: '90%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontSize: '50px',
-                        background: '#'+Math.floor(Math.random()*16777215).toString(16)
-                      }}>
+                    <div
+                      className="customer-img"
+                      style={{
+                        position: "relative",
+                        width: "100px",
+                        height: "100px",
+                      }}
+                    >
+                      <div
+                        className="avatar"
+                        style={{
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          width: "90%",
+                          height: "90%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "50px",
+                          background:
+                            "#" +
+                            Math.floor(Math.random() * 16777215).toString(16),
+                        }}
+                      >
                         {getInitials(review.Customer?.username)}
                       </div>
                     </div>
-
 
                     <div className="customer-content-wrap">
                       <div className="customer-content">
@@ -306,13 +317,10 @@ const BookingDetail = () => {
                 </div>
                 <div className="address">
                   <span className="icon-screen-smartphone"></span>
-                  <p>
-                    Pemilik: {relation.Landlord.username}
-                  </p>
+                  <p>Pemilik: {relation.Landlord?.username}</p>
                   <p>
                     {relation.Landlord ? relation.Landlord.phoneNumber : ""}
                   </p>
-
                 </div>
                 <div className="address">
                   <span className="icon-clock"></span>
@@ -322,27 +330,53 @@ const BookingDetail = () => {
                     OPEN NOW
                   </a>
                 </div>
-                <a type="button" onClick={sendMessage}  className="btn btn-outline-danger btn-contact" data-bs-toggle="modal" data-bs-target="#modalTalkJsResa">Chat Pemilik Lahan</a>
+                <a
+                  type="button"
+                  onClick={sendMessage}
+                  className="btn btn-outline-danger btn-contact"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalTalkJsResa"
+                >
+                  Chat Pemilik Lahan
+                </a>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-      <div className="modal fade" id="modalTalkJsResa" tabIndex="-1" aria-labelledby="exampleModalLabel"
-           aria-hidden="true">
+      <div
+        className="modal fade"
+        id="modalTalkJsResa"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title fs-5" id="exampleModalLabel">Send A Message</h4>
-              <button className="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+              <h4 className="modal-title fs-5" id="exampleModalLabel">
+                Send A Message
+              </h4>
+              <button
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                X
+              </button>
             </div>
             <div className="modal-body">
-              <div ref={chatboxEl} style={{height: '80vh'}}/>
+              <div ref={chatboxEl} style={{ height: "80vh" }} />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close Message</button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close Message
+              </button>
             </div>
           </div>
         </div>
